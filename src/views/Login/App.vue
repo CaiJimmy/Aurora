@@ -9,21 +9,24 @@
                 id="loginCard">
 
                 <figure class="logo">
-                    <img class="elevation-3" :src="config.logo">
+                    <img class="elevation-3"
+                        :src="config.logo">
                 </figure>
 
-                    <div class="loginCard--content">
-                        <h1 class="display-1 font-weight-light">{{ config.siteName }}</h1>
-                        <v-btn :loading="loading"
-                            :disabled="loading"
-                            color="blue-grey"
-                            class="white--text"
-                            @click="login()">
-                            Login
-                            <v-icon right
-                                dark>account_circle</v-icon>
-                        </v-btn>
-                    </div>
+                <div class="loginCard--content">
+                    <h1 class="display-1 font-weight-light">{{ config.siteName }}</h1>
+                    <p class="subheading">Por favor, inicia la sesión con la cuenta institucional.</p>
+
+                    <v-btn :loading="loading"
+                        :disabled="loading"
+                        color="blue-grey"
+                        class="white--text"
+                        @click="login()">
+                        <v-icon left
+                            dark>account_circle</v-icon>
+                        Iniciar Sesión
+                    </v-btn>
+                </div>
             </v-card>
         </div>
 
@@ -147,11 +150,21 @@ export default {
   #loginCard {
     margin: 0 auto;
     width: 100%;
-    max-width: 300px;
+    max-width: 400px;
+    max-height: 400px;
+    width: 100vw;
+    height: 100vw;
     text-align: center;
+    border-radius: 100%;
+    padding: 20px;
 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(255, 255, 255, 0.75);
     .logo {
-      transform: translateY(-50%);
       margin: 0;
       img {
         width: 120px;
@@ -163,10 +176,7 @@ export default {
     }
 
     .loginCard--content {
-      margin-top: -60px;
       padding-top: 30px;
-      display: flex;
-      flex-direction: column;
       h1 {
         margin-bottom: 15px;
       }

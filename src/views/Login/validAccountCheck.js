@@ -1,5 +1,6 @@
 import {
-    Firestore
+    Firestore,
+    firestore
 } from '@/firebase/firestore';
 import {
     Auth
@@ -18,7 +19,8 @@ function validAccountCheck() {
     return Firestore.collection('users').doc(user.uid).set({
         'displayName': user.displayName,
         'email': user.email,
-        'photoURL': user.photoURL
+        'photoURL': user.photoURL,
+        'lastLogin': firestore.FieldValue.serverTimestamp()
     }, {
         merge: true
     }).then(() => {
