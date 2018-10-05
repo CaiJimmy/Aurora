@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",
+    "@sentry/browser": "^4.0.6",
     "firebase": "^5.5.2",
     "node-sass": "^4.9.3",
     "sass-loader": "^7.1.0",
