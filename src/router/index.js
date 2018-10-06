@@ -13,6 +13,7 @@ function loadView(view) {
 }
 
 var router = new Router({
+    mode: 'history',
     routes: [{
             path: '/',
             component: loadView('Home/App'),
