@@ -16,9 +16,8 @@ import Console from '@/utils/Console';
 function validAccountCheck() {
     const user = Auth.currentUser;
 
-    return Firestore.collection('users').doc(user.uid).set({
+    return Firestore.collection('users').doc(user.email).set({
         'displayName': user.displayName,
-        'email': user.email,
         'photoURL': user.photoURL,
         'lastLogin': firestore.FieldValue.serverTimestamp()
     }, {
