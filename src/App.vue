@@ -5,7 +5,9 @@
             v-if="$store.state.loading.length || !auth.firebaseReady"></v-progress-linear>
 
         <template v-else>
-            <v-toolbar v-if="!$route.meta.hideNav">
+            <v-toolbar v-if="!$route.meta.hideNav"
+                :flat="$route.meta.flatToolbar"
+                :color="$route.meta.toolbarColor">
                 <v-toolbar-title>{{ config.siteName }}</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-toolbar>
