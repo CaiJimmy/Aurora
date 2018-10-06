@@ -16,7 +16,7 @@
             <v-btn flat
                 small
                 color="primary"
-                v-on:click="$router.push({ path: '/profile/' + user.uid})">Perfil</v-btn>
+                v-on:click="$router.push({ path: '/user/' + user.email})">Perfil</v-btn>
             <v-btn flat
                 small
                 color="warning"
