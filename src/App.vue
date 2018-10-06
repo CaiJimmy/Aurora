@@ -1,6 +1,7 @@
 <template>
     <v-app>
-        <v-progress-linear :indeterminate="true" height="4"
+        <v-progress-linear :indeterminate="true"
+            height="4"
             v-if="$store.state.loading.length || !auth.firebaseReady"></v-progress-linear>
 
         <template v-else>
@@ -10,16 +11,21 @@
                 <v-spacer></v-spacer>
             </v-toolbar>
 
-            <v-content>
+            <transition-page>
                 <router-view />
-            </v-content>
+            </transition-page>
         </template>
     </v-app>
 </template>
 
 <script>
+import TransitionPage from './transitions/TransitionPage.vue';
+
 export default {
     name: "app",
+    components: {
+        TransitionPage
+    },
     metaInfo: {
         changed (newInfo) {
             this.$root.title = newInfo.titleChunk;
@@ -37,7 +43,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.v-progress-linear{
-    margin: 0;   
+.v-progress-linear {
+  margin: 0;
 }
 </style>
