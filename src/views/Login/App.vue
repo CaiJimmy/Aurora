@@ -60,7 +60,7 @@ export default {
             }
         }
     },
-    created: function () {
+    created () {
         if (this.auth.loggedIn) {
             /*
                 User already logged in
