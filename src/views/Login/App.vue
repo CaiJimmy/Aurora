@@ -131,7 +131,7 @@ export default {
 #loginPage {
   display: flex;
   position: relative;
-  height: 100%;
+  min-height: 100vh;
   width: 100%;
   #loginPage--background {
     position: fixed;
