@@ -1,5 +1,6 @@
 <template>
-    <div id="loginPage">
+    <div id="loginPage"
+        v-if="!auth.loggedIn">
 
         <div id="loginPage--background"
             v-bind:style="{'background-image': `url(${config.login.background})`}"></div>
