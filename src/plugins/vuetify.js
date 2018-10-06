@@ -11,6 +11,7 @@ import {
     VGrid,
     VToolbar,
     VSnackbar,
+    VProgressLinear,
     transitions
 } from 'vuetify'
 import 'vuetify/src/stylus/app.styl';
@@ -29,6 +30,7 @@ Vue.use(Vuetify, {
         VGrid,
         VToolbar,
         VSnackbar,
+        VProgressLinear,
         transitions
     },
     theme: store.state.config.theme,
