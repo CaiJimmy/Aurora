@@ -1,17 +1,19 @@
 <template>
     <v-app>
-        <v-progress-linear :indeterminate="true"
-            v-if="$store.state.loading.length"></v-progress-linear>
+        <v-progress-linear :indeterminate="true" height="4"
+            v-if="$store.state.loading.length || !auth.firebaseReady"></v-progress-linear>
 
-        <v-toolbar app
-            v-if="!$route.meta.hideNav">
-            <v-toolbar-title>{{ config.siteName }}</v-toolbar-title>
-            <v-spacer></v-spacer>
-        </v-toolbar>
+        <template v-else>
+            <v-toolbar app
+                v-if="!$route.meta.hideNav">
+                <v-toolbar-title>{{ config.siteName }}</v-toolbar-title>
+                <v-spacer></v-spacer>
+            </v-toolbar>
 
-        <v-content>
-            <router-view />
-        </v-content>
+            <v-content>
+                <router-view />
+            </v-content>
+        </template>
     </v-app>
 </template>
 
@@ -34,3 +36,8 @@ export default {
     }
 };
 </script>
+<style lang="scss">
+.v-progress-linear{
+    margin: 0;   
+}
+</style>
