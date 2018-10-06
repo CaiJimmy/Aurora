@@ -4,6 +4,9 @@ const defaultConfig = {
     login: {
         background: 'https://i.imgur.com/a0cAhUZ.jpg'
     },
+    currentUserCard: {
+        background: 'https://i.imgur.com/a0cAhUZ.jpg'
+    },
     theme: {
         primary: '#ee44aa',
         secondary: '#424242',
