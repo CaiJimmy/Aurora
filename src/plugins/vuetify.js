@@ -2,6 +2,7 @@ import Vue from 'vue'
 import {
     Vuetify,
     VApp,
+    VAlert,
     VCard,
     VNavigationDrawer,
     VFooter,
@@ -21,6 +22,7 @@ import store from '../store';
 Vue.use(Vuetify, {
     components: {
         VApp,
+        VAlert,
         VCard,
         VNavigationDrawer,
         VFooter,
