@@ -24,6 +24,15 @@ var router = new Router({
             meta: {
                 hideNav: true
             }
+        },
+        {
+            path: '/user/:userEmail',
+            component: loadView('Profile/App'),
+            meta: {
+                flatToolbar: true,
+                toolbarColor: store.state.config.theme.primary
+            },
+            props: true
         }
     ]
 })
