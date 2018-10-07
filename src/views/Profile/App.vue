@@ -125,6 +125,8 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-right: 15px;
+    word-break: break-all;
     h1 {
       color: #000;
     }
