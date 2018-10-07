@@ -1,7 +1,7 @@
 const queue = {
     namespaced: true,
     state: {
-        pending: ['config/bindCloudConfig']
+        pending: ['config/bindCloudConfig', 'auth/suscribe']
     },
     mutations: {
         add(state, payload) {
@@ -28,7 +28,7 @@ const queue = {
             if (state.pending.length) {
                 for (const task of state.pending) {
 
-                    await dispatch(task, null, {
+                    dispatch(task, null, {
                         root: true
                     }).then(() => {
                         /**

@@ -41,32 +41,4 @@ const store = new Vuex.Store({
     }
 });
 
-import {
-    Auth
-} from '@/firebase/auth';
-
-import pick from '@/utils/pick';
-import Sentry from '@/plugins/sentry';
-
-Auth.onAuthStateChanged((user) => {
-    const allowedProps = ['displayName', 'email', 'photoURL', 'uid']
-    if (user) {
-        store.commit('auth/authStateChange', {
-            loggedIn: true,
-            currentUser: pick(user, allowedProps)
-        })
-    } else {
-        store.commit('auth/authStateChange', {
-            loggedIn: false,
-            currentUser: {}
-        })
-    }
-
-    Sentry.configureScope((scope) => {
-        scope.setUser({
-            "email": user.email
-        });
-    });
-});
-
 export default store;
