@@ -37,6 +37,6 @@ Vue.use(Vuetify, {
         VProgressLinear,
         transitions
     },
-    theme: store.state.config.theme,
+    theme: store.getters['config/merged'].theme,
     iconfont: 'md',
 })
