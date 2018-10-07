@@ -80,6 +80,13 @@ export default {
 
             this.redirect();
         }
+        else{
+            this.$store.commit('theme/set', {
+                toolbar: {
+                    hidden: true
+                }
+            })
+        }
     },
     methods: {
         redirect () {
