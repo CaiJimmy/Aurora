@@ -13,6 +13,7 @@ import {
     VGrid,
     VToolbar,
     VSnackbar,
+    VTextField,
     VProgressLinear,
     transitions
 } from 'vuetify'
@@ -34,6 +35,7 @@ Vue.use(Vuetify, {
         VGrid,
         VToolbar,
         VSnackbar,
+        VTextField,
         VProgressLinear,
         transitions
     },
