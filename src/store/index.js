@@ -15,7 +15,7 @@ Vue.use(Vuex);
 Vue.mixin({
     computed: {
         config: function () {
-            return this.$store.state.config;
+            return this.$store.getters['config/merged'];
         },
         auth: function () {
             return this.$store.state.auth;

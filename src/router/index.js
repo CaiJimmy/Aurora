@@ -30,8 +30,11 @@ var router = new Router({
             path: '/user/:userEmail',
             component: loadView('Profile/App'),
             meta: {
+                /** 
+                 * TODO: Move toolbar config to Vuex, be able to mutate it everywhere
+                */
                 flatToolbar: true,
-                toolbarColor: store.state.config.theme.primary
+                toolbarColor: store.getters['config/merged'].theme.primary
             },
             props: true
         }
