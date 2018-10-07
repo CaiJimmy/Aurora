@@ -36,6 +36,9 @@ export default {
             return titleChunk ? `${titleChunk} | ${this.config.siteName}` : this.config.siteName;
         }
     },
+    created(){
+        this.$store.dispatch('queue/process')
+    },
     methods: {
         goBack () {
             this.$router.push('/')
