@@ -80,6 +80,11 @@ export default {
     },
     methods: {
         init () {
+            this.$store.commit('theme/set', {
+                'toolbarColor': this.config.theme.primary,
+                'flatToolbar': true
+            });
+
             Firestore.collection('users').doc(this.userEmail).get().then((snapshot) => {
                 if (snapshot.exists) {
                     /* User ID found on databse */

@@ -5,6 +5,7 @@ import { firebaseMutations } from 'vuexfire'
 import moduleConfig from './modules/config';
 import moduleAuth from './modules/auth';
 import moduleQueue from './modules/queue';
+import moduleTheme from './modules/theme';
 
 Vue.use(Vuex);
 
@@ -19,6 +20,9 @@ Vue.mixin({
         },
         auth: function () {
             return this.$store.state.auth;
+        },
+        siteTheme: function(){
+            return this.$store.state.theme;
         }
     }
 });
@@ -32,7 +36,8 @@ const store = new Vuex.Store({
     modules: {
         config: moduleConfig,
         auth: moduleAuth,
-        queue: moduleQueue
+        queue: moduleQueue,
+        theme: moduleTheme
     }
 });
 
