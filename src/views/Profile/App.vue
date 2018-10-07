@@ -81,8 +81,10 @@ export default {
     methods: {
         init () {
             this.$store.commit('theme/set', {
-                'toolbarColor': this.config.theme.primary,
-                'flatToolbar': true
+                'toolbar': {
+                    'color': this.config.theme.primary,
+                    'flat': true
+                }
             });
 
             Firestore.collection('users').doc(this.userEmail).get().then((snapshot) => {

@@ -1,8 +1,12 @@
+import merge from 'deepmerge';
+
 const getDefaultState = () => {
     return {
-        flatToolbar: false,
-        toolbarColor: null,
-        hideNav: false
+        toolbar: {
+            flat: false,
+            color: null,
+            hidden: false,
+        }
     }
 }
 const theme = {
@@ -13,14 +17,13 @@ const theme = {
             /*
              *   payload:
              *       {
-             *           toolbarColor: '#000'
-             *           hideNav: true
+             *           toolbar: {
+             *              flat: true  
+             *           }
              *       }
              */
 
-            for (const key in payload) {
-                state[key] = payload[key];
-            }
+            Object.assign(state, merge(state, payload))
         }
     },
     actions: {

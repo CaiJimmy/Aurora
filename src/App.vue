@@ -5,9 +5,9 @@
             v-if="$store.state.queue.pending.length || !auth.firebaseReady"></v-progress-linear>
 
         <template v-else>
-            <v-toolbar v-if="!siteTheme.hideNav"
-                :flat="siteTheme.flatToolbar"
-                :color="siteTheme.toolbarColor">
+            <v-toolbar v-if="!siteTheme.toolbar.hidden"
+                :flat="siteTheme.toolbar.flat"
+                :color="siteTheme.toolbar.color">
                 <v-toolbar-title>{{ config.siteName }}</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-toolbar>
@@ -36,7 +36,7 @@ export default {
             return titleChunk ? `${titleChunk} | ${this.config.siteName}` : this.config.siteName;
         }
     },
-    created(){
+    created () {
         this.$store.dispatch('queue/process')
     },
     methods: {
