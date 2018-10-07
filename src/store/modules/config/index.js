@@ -5,6 +5,7 @@ import {
 import {
     firebaseAction
 } from 'vuexfire'
+import merge from 'deepmerge'
 
 const CONFIG_DOC = Firestore.collection('config').doc('default');
 
@@ -16,10 +17,10 @@ let config = {
     },
     getters: {
         merged: state => {
-            return {
-                ...state.defaultConfig,
-                ...state.cloudConfig
-            }
+            return merge(
+                state.defaultConfig,
+                state.cloudConfig
+            )
         }
     },
     mutations: {},
