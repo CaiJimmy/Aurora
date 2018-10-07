@@ -17,7 +17,7 @@ function validAccountCheck() {
     const user = Auth.currentUser;
 
     return Firestore.collection('users').doc(user.email).set({
-        'displayName': user.displayName,
+        'displayName': user.displayName.toLocaleUpperCase(),
         'photoURL': user.photoURL,
         'lastLogin': firestore.FieldValue.serverTimestamp()
     }, {
