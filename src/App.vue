@@ -2,7 +2,7 @@
     <v-app>
         <v-progress-linear :indeterminate="true"
             height="4"
-            v-if="$store.state.loading.length || !auth.firebaseReady"></v-progress-linear>
+            v-if="$store.state.queue.pending.length || !auth.firebaseReady"></v-progress-linear>
 
         <template v-else>
             <v-toolbar v-if="!$route.meta.hideNav"

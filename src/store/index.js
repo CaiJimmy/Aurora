@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { firebaseMutations } from 'vuexfire'
 
 import moduleConfig from './modules/config';
 import moduleAuth from './modules/auth';
+import moduleQueue from './modules/queue';
 
 Vue.use(Vuex);
 
@@ -22,45 +24,17 @@ Vue.mixin({
 });
 
 const store = new Vuex.Store({
-    state: {
-        loading: []
-    },
+    state: {},
     mutations: {
-        loading: (state, payload) => {
-            /**
-             * Example of payload:
-             * {
-             *      what: "UserData",
-             *      loaded: true
-             * }
-             */
-            if (!payload.loaded) {
-                /**  
-                 * Adding new item to loading queue
-                 */
-
-                if (!state.loading.includes(payload.what)) {
-                    state.loading.push(payload.what)
-                }
-            } else {
-                /**
-                 * Remove item from the queue
-                 */
-
-                const index = state.loading.indexOf(payload.what);
-
-                if (index > -1) {
-                    state.loading.splice(index, 1);
-                }
-            }
-        }
+        ...firebaseMutations
     },
+    actions: {},
     modules: {
         config: moduleConfig,
-        auth: moduleAuth
+        auth: moduleAuth,
+        queue: moduleQueue
     }
 });
-
 
 import {
     Auth
