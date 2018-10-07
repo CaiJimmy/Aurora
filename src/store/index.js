@@ -6,6 +6,7 @@ import moduleConfig from './modules/config';
 import moduleAuth from './modules/auth';
 import moduleQueue from './modules/queue';
 import moduleTheme from './modules/theme';
+import moduleUsers from './modules/users';
 
 Vue.use(Vuex);
 
@@ -37,7 +38,8 @@ const store = new Vuex.Store({
         config: moduleConfig,
         auth: moduleAuth,
         queue: moduleQueue,
-        theme: moduleTheme
+        theme: moduleTheme,
+        users: moduleUsers
     }
 });
 
