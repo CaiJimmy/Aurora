@@ -86,21 +86,31 @@ export default {
                     'flat': true
                 }
             });
+            if (this.$store.state.users.hasOwnProperty(this.userEmail)) {
+                /* 
+                    If that user ID is found under $store.state.users[], copy it directly
+                */
+                this.user = this.$store.state.users[this.userEmail];
+                this.loading.user = false;
+            }
+            else {
+                Firestore.collection('users').doc(this.userEmail).get().then((snapshot) => {
+                    if (snapshot.exists) {
+                        /* User ID found on databse */
+                        this.user = snapshot.data();
+                        this.user.email = this.userEmail;
 
-            Firestore.collection('users').doc(this.userEmail).get().then((snapshot) => {
-                if (snapshot.exists) {
-                    /* User ID found on databse */
-                    this.user = snapshot.data();
-                    this.user.email = this.userEmail;
-                    /// this.$store.commit('addUser', this.user);
-                    this.loading.user = false;
-                }
-                else {
-                    /* Wrong user ID, display not found error */
-                    this.notFound = true;
-                    this.loading.user = false;
-                }
-            });
+                        /* Save it to Vuex, avoid reload on next time */
+                        this.$store.commit('users/addUser', this.user);
+                        this.loading.user = false;
+                    }
+                    else {
+                        /* Wrong user ID, display not found error */
+                        this.notFound = true;
+                        this.loading.user = false;
+                    }
+                });
+            }
         }
     }
 }
