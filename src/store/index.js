@@ -23,6 +23,9 @@ Vue.mixin({
         auth: function () {
             return this.$store.state.auth;
         },
+        currentUser: function(){
+            return this.$store.getters['auth/currentUser'];
+        },
         siteTheme: function(){
             return this.$store.state.theme;
         }

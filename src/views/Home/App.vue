@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <currentUserCard :user="auth.currentUser"></currentUserCard>
+        <currentUserCard :user="currentUser"></currentUserCard>
         <searchUser></searchUser>
         <taxonomy></taxonomy>
     </v-container>

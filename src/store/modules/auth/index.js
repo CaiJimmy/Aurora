@@ -1,17 +1,33 @@
 import {
     Auth
 } from '@/firebase/auth';
+import {
+    Firestore
+} from '@/firebase/firestore';
+import {
+    firebaseAction
+} from 'vuexfire';
 
 import pick from '@/utils/pick';
 import Sentry from '@/plugins/sentry';
+import merge from 'deepmerge';
+
+const USER_COLLECTION = Firestore.collection('users');
 
 const authStore = {
     namespaced: true,
     state: {
         loggedIn: false,
         firebaseReady: false,
-        currentUser: {},
-        validUser: false
+        validUser: false,
+
+        firebaseCurrentUser: {},
+        cloudCurrentUser: {},
+    },
+    getters: {
+        currentUser: state => {
+            return merge(state.cloudCurrentUser, state.firebaseCurrentUser);
+        }
     },
     mutations: {
         authStateChange(state, payload) {
@@ -20,7 +36,7 @@ const authStore = {
             }
 
             state.loggedIn = payload.loggedIn;
-            state.currentUser = payload.currentUser;
+            state.firebaseCurrentUser = payload.firebaseCurrentUser;
         },
         userValidation(state, isUserValid) {
             /**
@@ -31,21 +47,36 @@ const authStore = {
         }
     },
     actions: {
+        bindCurrentUser: firebaseAction(({
+            bindFirebaseRef
+        }, firebaseCurrentUser) => {
+            return bindFirebaseRef('cloudCurrentUser', USER_COLLECTION.doc(firebaseCurrentUser.email))
+        }),
+        unbindCurrentUser: firebaseAction(({
+            unbindFirebaseRef
+        }) => {
+            unbindFirebaseRef('cloudCurrentUser')
+        }),
         async suscribe({
-            commit
+            commit,
+            dispatch
         }) {
             Auth.onAuthStateChanged((user) => {
                 const allowedProps = ['displayName', 'email', 'photoURL', 'uid']
                 if (user) {
+                    const firebaseCurrentUser = pick(user, allowedProps);
+
                     commit('authStateChange', {
                         loggedIn: true,
-                        currentUser: pick(user, allowedProps)
-                    })
+                        firebaseCurrentUser: firebaseCurrentUser
+                    });
+                    dispatch('bindCurrentUser', firebaseCurrentUser)
                 } else {
                     commit('authStateChange', {
                         loggedIn: false,
                         currentUser: {}
-                    })
+                    });
+                    dispatch('unbindCurrentUser');
                 }
 
                 Sentry.configureScope((scope) => {
