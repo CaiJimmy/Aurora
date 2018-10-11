@@ -34,12 +34,8 @@ export default {
                 "background-image": `url(${this.config.currentUserCard.background})`
             }
         },
-        isAdmin () {
-            /// TODO: Add isAdmin verification
-            return false;
-        },
         userRole () {
-            if (this.isAdmin) {
+            if (this.currentUser.isAdmin) {
                 return 'Admin'
             }
             else {
