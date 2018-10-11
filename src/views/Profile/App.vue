@@ -30,6 +30,8 @@
                             <div class="userProfile--meta">
                                 <h1 class="headline">{{ user.displayName }}</h1>
                                 <h2 class="subheading">{{ user.email }}</h2>
+                                <span v-if="user.lastLogin"
+                                    class="caption">Last Login: {{ user.lastLogin.toDate() }}</span>
                             </div>
                             <v-avatar :size="100">
                                 <img :src="user.photoURL"
