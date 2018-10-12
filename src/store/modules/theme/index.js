@@ -4,7 +4,7 @@ const getDefaultState = () => {
     return {
         toolbar: {
             flat: false,
-            color: null,
+            color: 'primary',
             hidden: false,
         }
     }
