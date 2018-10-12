@@ -10,7 +10,6 @@ import {
 
 import pick from '@/utils/pick';
 import Sentry from '@/plugins/sentry';
-import merge from 'deepmerge';
 
 const USER_COLLECTION = Firestore.collection('users');
 
@@ -26,7 +25,7 @@ const authStore = {
     },
     getters: {
         currentUser: state => {
-            return merge(state.cloudCurrentUser, state.firebaseCurrentUser);
+            return Object.assign(state.cloudCurrentUser, state.firebaseCurrentUser);
         }
     },
     mutations: {
