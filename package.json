@@ -17,7 +17,7 @@
     "vee-validate": "^2.1.0-beta.11",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
-    "vuetify": "^1.2.0",
+    "vuetify": "^1.2.9",
     "vuex": "^3.0.1",
     "vuexfire": "^3.0.0-alpha.9"
   },
