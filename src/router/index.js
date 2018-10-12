@@ -27,6 +27,19 @@ var router = new Router({
             path: '/user/:userEmail',
             component: loadView('Profile/App'),
             props: true
+        },
+        {
+            path: '/a/',
+            component: loadView('Admin/App'),
+            children: [{
+                    path: '',
+                    component: loadView('Admin/views/Home')
+                },
+                {
+                    path: 'taxonomy',
+                    component: loadView('Admin/views/Taxonomy')
+                }
+            ]
         }
     ]
 });
