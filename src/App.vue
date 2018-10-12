@@ -39,6 +39,15 @@ export default {
     created () {
         this.$store.dispatch('queue/process')
     },
+    watch: {
+        config () {
+            if(!this.config){
+                return;
+            }
+
+            this.$vuetify.theme = this.config.theme;
+        }
+    },
     methods: {
         goBack () {
             this.$router.push('/')

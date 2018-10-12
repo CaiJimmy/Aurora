@@ -31,11 +31,6 @@ Vue.mixin({
         siteTheme: function () {
             return this.$store.state.theme;
         }
-    },
-    watch: {
-        config() {
-            this.$vuetify.theme = this.config.theme;
-        }
     }
 });
 
