@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",
-    "@sentry/browser": "^4.0.6",
+    "@sentry/browser": "^4.1.1",
     "deepmerge": "^2.2.1",
     "firebase": "^5.5.3",
     "node-sass": "^4.9.3",
