@@ -5,13 +5,14 @@
 
             <v-layout row
                 wrap
+                justify-space-between
                 v-if="getTopicsByCategory(category.id).length">
 
                 <!-- Hide empty categories -->
-                <v-flex xs4>
+                <v-flex xs12 md2>
                     <h3 class="levelName">{{ category.name }}</h3>
                 </v-flex>
-                <v-flex xs8>
+                <v-flex xs12 md9>
                     <v-card v-for="topic in getTopicsByCategory(category.id)"
                         :key="topic.id"
                         color="blue-grey darken-2"
