@@ -48,8 +48,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .userCard {
-  margin-top: 1em;
-
   &.withHeaderImage {
     figure {
       margin: 1em auto;
