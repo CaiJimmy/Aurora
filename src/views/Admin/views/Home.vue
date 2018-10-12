@@ -23,6 +23,9 @@
 <script>
 export default {
     name: 'AdminPanelHome',
+    metaInfo: {
+        title: 'Administrar'
+    },
     data () {
         return {
             items: [{

@@ -44,6 +44,9 @@ import signOut from '@/utils/signOut';
 
 export default {
     name: 'Home',
+    metaInfo: {
+        title: 'Inicio'
+    },
     components: {
         userCard,
         searchUser,

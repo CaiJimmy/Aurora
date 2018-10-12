@@ -40,6 +40,11 @@ import userCard from '@/components/UserCard.vue';
 
 export default {
     name: 'Profile',
+    metaInfo () {
+        return {
+            title: this.user.displayName || 'Perfil'
+        }
+    },
     props: {
         userEmail: String
     },

@@ -28,6 +28,9 @@ import taxonomy from '@/components/Taxonomy.vue';
 
 export default {
     name: 'AdminTaxonomy',
+    metaInfo :{
+        title: 'Taxonomias'
+    },
     components: {
         taxonomy
     }
