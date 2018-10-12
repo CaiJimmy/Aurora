@@ -31,7 +31,7 @@ export default {
         changed (newInfo) {
             this.$root.title = newInfo.titleChunk;
         },
-        titleTemplate: (titleChunk) => {
+        titleTemplate: function (titleChunk) {
             // If undefined or blank then we don't need the hyphen
             return titleChunk ? `${titleChunk} | ${this.config.siteName}` : this.config.siteName;
         }

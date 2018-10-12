@@ -5,7 +5,10 @@ import {
 } from '@/firebase/auth'
 import store from '@/store'
 
+import Meta from 'vue-meta';
+
 Vue.use(Router)
+Vue.use(Meta);
 
 function loadView(view) {
     return () =>
