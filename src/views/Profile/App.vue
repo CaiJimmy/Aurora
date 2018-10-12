@@ -24,22 +24,11 @@
                 <!-- Profile header start -->
                 <header class="userProfile--header elevation-1"
                     :style="{'background': config.theme.primary}">
-                    <div class="container">
-                        <div class="userProfile--card elevation-2">
-
-                            <div class="userProfile--meta">
-                                <h1 class="headline">{{ user.displayName }}</h1>
-                                <h2 class="subheading">{{ user.email }}</h2>
-                                <span v-if="user.lastLogin"
-                                    class="caption">Last Login: {{ user.lastLogin.toDate() }}</span>
-                            </div>
-                            <v-avatar :size="100">
-                                <img :src="user.photoURL"
-                                    :alt="user.displayName">
-                            </v-avatar>
-                        </div>
-                    </div>
                 </header>
+                <div class="container">
+                    <userCard :user="user"
+                        class="userProfile--card"></userCard>
+                </div>
                 <!-- Profile header end -->
             </div>
         </div>
@@ -47,11 +36,15 @@
 </template>
 <script>
 import { Firestore } from '@/firebase/firestore';
+import userCard from '@/components/UserCard.vue';
 
 export default {
     name: 'Profile',
     props: {
         userEmail: String
+    },
+    components: {
+        userCard
     },
     data () {
         return {
@@ -119,33 +112,14 @@ export default {
 </script>
 <style lang="scss" scoped>
 .userProfile--header {
-  padding: 20px 0;
-  .container {
-    margin: 0 auto;
-    max-width: 550px;
-    padding: 0 15px;
-  }
-  .userProfile--card {
-    background: #fff;
-    transform: translateY(50%);
-    display: flex;
-    padding: 20px;
-    flex-direction: row;
-  }
-  .userProfile--meta {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-right: 15px;
-    word-break: break-all;
-    h1 {
-      color: #000;
-    }
-    h2 {
-      color: #999;
-      font-size: 15px;
-    }
-  }
+  padding: 80px 0;
+}
+.container {
+  margin: 0 auto;
+  max-width: 550px;
+  padding: 0 15px;
+}
+.userProfile--card {
+  margin-top: -70px;
 }
 </style>

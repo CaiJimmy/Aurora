@@ -9,7 +9,19 @@
                 order-xs1
                 order-sm1
                 order-md2>
-                <currentUserCard :user="currentUser"></currentUserCard>
+                <userCard :user="currentUser"
+                    :withHeaderImage="true"
+                    class="elevation-1"
+                    :background="'#fff'">
+                    <template slot="actions">
+                        <v-btn flat
+                            color="primary"
+                            v-on:click="$router.push({ path: '/user/' + currentUser.email})">Perfil</v-btn>
+                        <v-btn flat
+                            color="warning"
+                            v-on:click="signOut($route, $router)">Cerrar sesión</v-btn>
+                    </template>
+                </userCard>
                 <searchUser></searchUser>
             </v-flex>
 
@@ -25,16 +37,20 @@
     </v-container>
 </template>
 <script>
-import currentUserCard from '@/components/CurrentUserCard.vue';
+import userCard from '@/components/UserCard.vue';
 import searchUser from '@/components/SearchUser.vue';
 import taxonomy from '@/components/Taxonomy.vue';
+import signOut from '@/utils/signOut';
 
 export default {
     name: 'Home',
     components: {
-        currentUserCard,
+        userCard,
         searchUser,
         taxonomy
+    },
+    methods: {
+        signOut
     }
 }
 </script>
