@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { firebaseMutations } from 'vuexfire'
+import {
+    firebaseMutations
+} from 'vuexfire'
 
 import moduleConfig from './modules/config';
 import moduleAuth from './modules/auth';
@@ -23,11 +25,16 @@ Vue.mixin({
         auth: function () {
             return this.$store.state.auth;
         },
-        currentUser: function(){
+        currentUser: function () {
             return this.$store.getters['auth/currentUser'];
         },
-        siteTheme: function(){
+        siteTheme: function () {
             return this.$store.state.theme;
+        }
+    },
+    watch: {
+        config() {
+            this.$vuetify.theme = this.config.theme;
         }
     }
 });
