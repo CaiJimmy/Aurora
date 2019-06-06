@@ -2,7 +2,7 @@ import {
     Firestore
 } from '@/firebase/firestore';
 import {
-    firebaseAction
+    firestoreAction 
 } from 'vuexfire';
 
 const TAXONOMY_COLLECTION = Firestore.collection('taxonomy');
@@ -13,15 +13,15 @@ const taxonomy = {
         taxonomies: []
     },
     actions: {
-        bindTaxonomy: firebaseAction(({
-            bindFirebaseRef
+        bindTaxonomy: firestoreAction(({
+            bindFirestoreRef
         }) => {
-            return bindFirebaseRef('taxonomies', TAXONOMY_COLLECTION)
+            return bindFirestoreRef('taxonomies', TAXONOMY_COLLECTION)
         }),
-        unbindTaxonomy: firebaseAction(({
-            unbindFirebaseRef
+        unbindTaxonomy: firestoreAction(({
+            unbindFirestoreRef
         }) => {
-            return unbindFirebaseRef('taxonomies', TAXONOMY_COLLECTION)
+            return unbindFirestoreRef('taxonomies')
         })
     }
 };

@@ -3,7 +3,7 @@ import {
     Firestore
 } from '@/firebase/firestore';
 import {
-    firebaseAction
+    firestoreAction 
 } from 'vuexfire'
 import merge from 'deepmerge'
 
@@ -25,15 +25,15 @@ let config = {
     },
     mutations: {},
     actions: {
-        bindCloudConfig: firebaseAction(({
-            bindFirebaseRef
+        bindCloudConfig: firestoreAction(({
+            bindFirestoreRef
         }) => {
-            return bindFirebaseRef('cloudConfig', CONFIG_DOC)
+            return bindFirestoreRef('cloudConfig', CONFIG_DOC)
         }),
-        unbindCloudConfig: firebaseAction(({
-            unbindFirebaseRef
+        unbindCloudConfig: firestoreAction(({
+            unbindFirestoreRef
         }) => {
-            return unbindFirebaseRef('cloudConfig', CONFIG_DOC)
+            return unbindFirestoreRef('cloudConfig')
         })
     }
 };

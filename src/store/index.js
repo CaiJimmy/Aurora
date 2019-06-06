@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {
-    firebaseMutations
-} from 'vuexfire'
+import { vuexfireMutations } from 'vuexfire';
 
 import moduleConfig from './modules/config';
 import moduleAuth from './modules/auth';
@@ -37,7 +35,7 @@ Vue.mixin({
 const store = new Vuex.Store({
     state: {},
     mutations: {
-        ...firebaseMutations
+        ...vuexfireMutations
     },
     actions: {},
     modules: {
