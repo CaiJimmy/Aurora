@@ -5,7 +5,7 @@ import {
     Firestore
 } from '@/firebase/firestore';
 import {
-    firestoreAction 
+    firestoreAction
 } from 'vuexfire';
 
 import pick from '@/utils/pick';
@@ -46,12 +46,12 @@ const authStore = {
         }
     },
     actions: {
-        bindCurrentUser: firestoreAction (({
-            bindFirebaseRef
+        bindCurrentUser: firestoreAction(({
+            bindFirestoreRef
         }, firebaseCurrentUser) => {
-            return bindFirebaseRef('cloudCurrentUser', USER_COLLECTION.doc(firebaseCurrentUser.email))
+            return bindFirestoreRef('cloudCurrentUser', USER_COLLECTION.doc(firebaseCurrentUser.email), { reset: () => [{}] })
         }),
-        unbindCurrentUser: firestoreAction (({
+        unbindCurrentUser: firestoreAction(({
             unbindFirestoreRef
         }) => {
             return unbindFirestoreRef('cloudCurrentUser')
@@ -73,7 +73,7 @@ const authStore = {
                 } else {
                     commit('authStateChange', {
                         loggedIn: false,
-                        currentUser: {}
+                        firebaseCurrentUser: {}
                     });
                     dispatch('unbindCurrentUser');
                 }
