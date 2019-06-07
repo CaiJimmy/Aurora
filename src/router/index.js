@@ -18,32 +18,35 @@ function loadView(view) {
 var router = new Router({
     mode: 'history',
     routes: [{
-            path: '/',
-            component: loadView('Home/App'),
-            auth: true
+        path: '*',
+        component: loadView('NotFound')
+    }, {
+        path: '/',
+        component: loadView('Home/App'),
+        auth: true
+    },
+    {
+        path: '/login',
+        component: loadView('Login/App'),
+    },
+    {
+        path: '/user/:userEmail',
+        component: loadView('Profile/App'),
+        props: true
+    },
+    {
+        path: '/a/',
+        component: loadView('Admin/App'),
+        children: [{
+            path: '',
+            component: loadView('Admin/views/Home')
         },
         {
-            path: '/login',
-            component: loadView('Login/App'),
-        },
-        {
-            path: '/user/:userEmail',
-            component: loadView('Profile/App'),
-            props: true
-        },
-        {
-            path: '/a/',
-            component: loadView('Admin/App'),
-            children: [{
-                    path: '',
-                    component: loadView('Admin/views/Home')
-                },
-                {
-                    path: 'taxonomy',
-                    component: loadView('Admin/views/Taxonomy')
-                }
-            ]
+            path: 'taxonomy',
+            component: loadView('Admin/views/Taxonomy')
         }
+        ]
+    }
     ]
 });
 
