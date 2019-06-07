@@ -49,7 +49,7 @@ const authStore = {
         bindCurrentUser: firestoreAction(({
             bindFirestoreRef
         }, firebaseCurrentUser) => {
-            return bindFirestoreRef('cloudCurrentUser', USER_COLLECTION.doc(firebaseCurrentUser.email), { reset: () => [{}] })
+            return bindFirestoreRef('cloudCurrentUser', USER_COLLECTION.doc(firebaseCurrentUser.email), { reset: () => new Object() })
         }),
         unbindCurrentUser: firestoreAction(({
             unbindFirestoreRef
