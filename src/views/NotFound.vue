@@ -20,7 +20,7 @@
                     <v-card-actions>
                         <v-btn flat
                             to="/"
-                            replace="true">Volver al inicio</v-btn>
+                            :replace="true">Volver al inicio</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-flex>
