@@ -8,7 +8,9 @@
             <v-toolbar v-if="!siteTheme.toolbar.hidden"
                 :flat="siteTheme.toolbar.flat"
                 :color="siteTheme.toolbar.color">
-                <img :src="config.logo" width="40px" height="40px">
+                <img :src="config.logo"
+                    width="40px"
+                    height="40px">
                 <v-toolbar-title class="white--text">{{ config.siteName }}</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-toolbar>
@@ -42,7 +44,7 @@ export default {
     },
     watch: {
         config () {
-            if(!this.config){
+            if (!this.config) {
                 return;
             }
 
@@ -58,6 +60,9 @@ export default {
 </script>
 <style lang="scss">
 .v-progress-linear {
-  margin: 0;
+    margin: 0;
+}
+.v-toolbar{
+    z-index: 5;
 }
 </style>
