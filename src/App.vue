@@ -8,7 +8,8 @@
             <v-toolbar v-if="!siteTheme.toolbar.hidden"
                 :flat="siteTheme.toolbar.flat"
                 :color="siteTheme.toolbar.color">
-                <v-toolbar-title>{{ config.siteName }}</v-toolbar-title>
+                <img :src="config.logo" width="40px" height="40px">
+                <v-toolbar-title class="white--text">{{ config.siteName }}</v-toolbar-title>
                 <v-spacer></v-spacer>
             </v-toolbar>
 
