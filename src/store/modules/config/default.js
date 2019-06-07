@@ -8,7 +8,7 @@ const defaultConfig = {
         background: 'https://i.imgur.com/a0cAhUZ.jpg'
     },
     theme: {
-        primary: '#ee44aa',
+        primary: '#1976D2',
         secondary: '#424242',
         accent: '#82B1FF',
         error: '#FF5252',
@@ -21,7 +21,7 @@ const defaultConfig = {
             x: 'left',
             y: 'bottom'
         },
-        timeout: 5000 
+        timeout: 5000
     }
 }
 
