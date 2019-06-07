@@ -7,7 +7,6 @@
             <v-flex sm12
                 md3
                 lg3
-
                 order-xs1
                 order-sm1
                 order-md2>
@@ -19,6 +18,10 @@
                         <v-btn flat
                             color="primary"
                             v-on:click="$router.push({ path: '/user/' + currentUser.email})">Perfil</v-btn>
+                        <v-btn flat
+                            color="secondary"
+                            v-if="currentUser.isAdmin"
+                            to="/a/">Panel de control</v-btn>
                         <v-btn flat
                             color="warning"
                             v-on:click="signOut($route, $router)">Cerrar sesión</v-btn>
