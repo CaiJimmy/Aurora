@@ -2,7 +2,7 @@
     <v-container>
         <v-layout row
             wrap
-            justify-space-around>
+            justify-space-between>
 
             <v-flex sm12
                 md3
@@ -27,7 +27,6 @@
                             v-on:click="signOut($route, $router)">Cerrar sesión</v-btn>
                     </template>
                 </userCard>
-                <searchUser></searchUser>
             </v-flex>
 
             <v-flex sm12
@@ -44,7 +43,6 @@
 </template>
 <script>
 import userCard from '@/components/UserCard.vue';
-import searchUser from '@/components/SearchUser.vue';
 import taxonomy from '@/components/Taxonomy.vue';
 import signOut from '@/utils/signOut';
 
@@ -55,7 +53,6 @@ export default {
     },
     components: {
         userCard,
-        searchUser,
         taxonomy
     },
     methods: {

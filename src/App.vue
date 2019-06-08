@@ -5,15 +5,7 @@
             v-if="$store.state.queue.pending.length || !auth.firebaseReady"></v-progress-linear>
 
         <template v-else>
-            <v-toolbar v-if="!siteTheme.toolbar.hidden"
-                :flat="siteTheme.toolbar.flat"
-                :color="siteTheme.toolbar.color">
-                <img :src="config.logo"
-                    width="40px"
-                    height="40px">
-                <v-toolbar-title class="white--text">{{ config.siteName }}</v-toolbar-title>
-                <v-spacer></v-spacer>
-            </v-toolbar>
+            <AppBar v-if="!siteTheme.toolbar.hidden" />
 
             <transition-page>
                 <router-view />
@@ -24,11 +16,13 @@
 
 <script>
 import TransitionPage from './transitions/TransitionPage.vue';
+import AppBar from './components/AppBar.vue';
 
 export default {
     name: "app",
     components: {
-        TransitionPage
+        TransitionPage,
+        AppBar
     },
     metaInfo: {
         changed (newInfo) {
@@ -50,11 +44,6 @@ export default {
 
             this.$vuetify.theme = this.config.theme;
         }
-    },
-    methods: {
-        goBack () {
-            this.$router.push('/')
-        }
     }
 };
 </script>
@@ -62,7 +51,7 @@ export default {
 .v-progress-linear {
     margin: 0;
 }
-.v-toolbar{
+.v-toolbar {
     z-index: 5;
 }
 </style>
