@@ -22,7 +22,7 @@
                 </v-navigation-drawer>
             </v-flex>
 
-            <v-flex grow>
+            <v-flex>
                 <router-view />
             </v-flex>
         </v-layout>
