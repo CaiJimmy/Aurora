@@ -6,11 +6,12 @@
             solo
             clear-icon="cancel"
             clearable
-            label="Search user..."
+            label="Buscar a usuario..."
             type="text"
             @click:append="doSearch"
             v-on:keyup.enter="doSearch"
             @click:clear="clearKeyword"></v-text-field>
+
         <v-card v-if="results.length">
             <v-list>
                 <v-list-tile v-for="user in results"
@@ -28,6 +29,12 @@
                 </v-list-tile>
             </v-list>
         </v-card>
+
+        <v-alert v-if="!loading && searched && !results.length"
+            :value="true"
+            type="info">
+            No se ha encontrado ningún usuario relacionado con <code>{{ lastKeyword }}</code>
+        </v-alert>
     </div>
 </template>
 <script>
@@ -35,12 +42,17 @@ import firestoreSearch from '@/utils/firestoreSearch';
 import { Firestore } from '@/firebase/firestore';
 
 export default {
-    name: 'SearchUser',
+    name: 'AdminUser',
+    metaInfo: {
+        title: 'Usuarios'
+    },
     data () {
         return {
             keyword: null,
             results: [],
-            loading: false
+            loading: false,
+            searched: false,
+            lastKeyword: null
         }
     },
     methods: {
@@ -54,9 +66,12 @@ export default {
 
             this.loading = true;
             this.results = [];
+            this.lastKeyword = this.keyword;
 
             const firebaseRef = Firestore.collection('users');
             firestoreSearch(firebaseRef, 'displayName', this.keyword.toLocaleUpperCase()).get().then(snapshot => {
+                this.searched = true;
+
                 if (snapshot.empty) {
                     this.loading = false;
                     return;
@@ -77,3 +92,4 @@ export default {
     }
 }
 </script>
+

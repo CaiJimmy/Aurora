@@ -44,6 +44,11 @@ var router = new Router({
         {
             path: 'taxonomy',
             component: loadView('Admin/views/Taxonomy')
+        },
+        {
+            path: 'user',
+            component: loadView('Admin/views/User'),
+            
         }
         ]
     }
