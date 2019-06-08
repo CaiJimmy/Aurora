@@ -2,7 +2,6 @@
     <v-container class="navContainer">
         <v-app-bar color="white"
             light
-            hide-on-scroll
             :height="60"
             width>
 
