@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { vuexfireMutations } from 'vuexfire';
 
-import moduleConfig from './modules/config';
+import { moduleConfig } from './modules/config';
 import moduleAuth from './modules/auth';
 import moduleQueue from './modules/queue';
 import moduleTheme from './modules/theme';

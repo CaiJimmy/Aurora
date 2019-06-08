@@ -18,10 +18,10 @@
                     :key="user.email"
                     avatar
                     @click="$router.push('/user/' + user.email)">
-                    <v-list-tile-content>
+                    <v-list-item-title>
                         <v-list-tile-title>{{ user.displayName }}</v-list-tile-title>
                         <v-list-tile-sub-title>{{ user.email }}</v-list-tile-sub-title>
-                    </v-list-tile-content>
+                    </v-list-item-title>
 
                     <v-list-tile-avatar>
                         <img :src="user.photoURL">

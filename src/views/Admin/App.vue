@@ -14,9 +14,9 @@
                                 <v-icon>{{ item.icon }}</v-icon>
                             </v-list-tile-action>
 
-                            <v-list-tile-content>
+                            <v-list-item-title>
                                 <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                            </v-list-tile-content>
+                            </v-list-item-title>
                         </v-list-tile>
                     </v-list>
                 </v-navigation-drawer>
@@ -33,18 +33,25 @@ export default {
     name: 'AdminPanel',
     data () {
         return {
-            items: [{
-                id: 'taxonomy',
-                title: "Taxonomias",
-                description: "Añadir categorias y temas.",
-                icon: "category"
-            },
-            {
-                id: 'user',
-                title: "Usuarios",
-                description: "Buscar usuarios",
-                icon: "account_circle"
-            }],
+            items: [
+                {
+                    id: 'settings',
+                    title: "Ajustes",
+                    description: "Configuar la página",
+                    icon: "settings"
+                },
+                {
+                    id: 'taxonomy',
+                    title: "Taxonomias",
+                    description: "Añadir categorias y temas.",
+                    icon: "category"
+                },
+                {
+                    id: 'user',
+                    title: "Usuarios",
+                    description: "Buscar usuarios",
+                    icon: "account_circle"
+                }],
 
             windowWidth: 0
         }

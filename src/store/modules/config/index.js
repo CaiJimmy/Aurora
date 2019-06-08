@@ -9,7 +9,7 @@ import merge from 'deepmerge'
 
 const CONFIG_DOC = Firestore.collection('config').doc('default');
 
-let config = {
+let moduleConfig = {
     namespaced: true,
     state: {
         defaultConfig: defaultConfig,
@@ -38,4 +38,7 @@ let config = {
     }
 };
 
-export default config;
+export {
+    moduleConfig,
+    CONFIG_DOC
+};

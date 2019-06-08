@@ -42,13 +42,18 @@ var router = new Router({
             component: loadView('Admin/views/Home')
         },
         {
+            path: 'settings',
+            component: loadView('Admin/views/Settings'),
+            
+        },
+        {
             path: 'taxonomy',
             component: loadView('Admin/views/Taxonomy')
         },
         {
             path: 'user',
             component: loadView('Admin/views/User'),
-            
+
         }
         ]
     }
