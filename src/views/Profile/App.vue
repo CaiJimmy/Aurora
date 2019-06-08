@@ -1,12 +1,12 @@
 <template>
-    <div class="userProfile">
+    <v-container class="userProfile">
 
         <!-- Wait until user data is loaded -->
         <v-progress-linear :indeterminate="true"
             height="4"
             v-if="loading.user"></v-progress-linear>
 
-        <div v-else>
+        <template v-else>
 
             <!-- If user ID is not found in database -->
             <div v-if="notFound"
@@ -25,14 +25,13 @@
                 <header class="userProfile--header elevation-1"
                     :style="{'background': config.theme.primary}">
                 </header>
-                <div class="container">
-                    <userCard :user="user"
-                        class="userProfile--card"></userCard>
-                </div>
+                <userCard :user="user"
+                    class="userProfile--card"></userCard>
                 <!-- Profile header end -->
             </div>
-        </div>
-    </div>
+
+        </template>
+    </v-container>
 </template>
 <script>
 import { Firestore } from '@/firebase/firestore';
@@ -117,14 +116,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .userProfile--header {
-  padding: 80px 0;
-}
-.container {
-  margin: 0 auto;
-  max-width: 550px;
-  padding: 0 15px;
+    padding: 80px 0;
+    border-radius: 5px
 }
 .userProfile--card {
-  margin-top: -70px;
+    margin-top: -70px;
 }
 </style>
