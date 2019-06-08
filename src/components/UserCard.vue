@@ -48,65 +48,66 @@ export default {
 </script>
 <style lang="scss" scoped>
 .userCard {
-  &.withHeaderImage {
-    figure {
-      margin: 1em auto;
-      margin-top: -60px;
-      position: relative;
+    &.withHeaderImage {
+        figure {
+            margin: 1em auto;
+            margin-top: -60px;
+            position: relative;
+        }
+
+        .userCard--headerImage {
+            display: block;
+        }
+    }
+
+    header {
+        position: relative;
+        margin-bottom: 50px;
     }
 
     .userCard--headerImage {
-      display: block;
+        display: none;
+        width: 100%;
+        height: 150px;
+        position: relative;
+        overflow: hidden;
+        background-size: cover !important;
+        background-position: top center !important;
+        background-repeat: no-repeat !important;
     }
-  }
 
-  header {
-    position: relative;
-    margin-bottom: 50px;
-  }
+    figure {
+        margin: 1em auto;
+        height: 120px;
+        width: 120px;
 
-  .userCard--headerImage {
-    display: none;
-    width: 100%;
-    height: 150px;
-    position: relative;
-    overflow: hidden;
-    background-size: cover !important;
-    background-position: top center !important;
-    background-repeat: no-repeat !important;
-  }
-
-  figure {
-    margin: 1em auto;
-    height: 120px;
-    width: 120px;
-
-    img {
-      border-radius: 100%;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-      border: 2px solid #fff;
-      width: 100%;
+        img {
+            border-radius: 100%;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+                0 1px 2px rgba(0, 0, 0, 0.24);
+            border: 2px solid #fff;
+            width: 100%;
+        }
     }
-  }
 
-  .userCard--meta {
-    padding: 5px 15px;
-    text-align: center;
+    .userCard--meta {
+        padding: 5px 15px;
+        text-align: center;
 
-    h1 {
-      font-size: 20px;
-      margin-bottom: 10px;
+        h1 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #999;
+            font-size: 15px;
+            font-weight: normal;
+            margin-bottom: 10px;
+        }
     }
-    h2 {
-      color: #999;
-      font-size: 15px;
-      font-weight: normal;
-      margin-bottom: 10px;
+    .userCard--actions {
+        padding: 1em 0;
+        text-align: center;
     }
-  }
-  .userCard--actions {
-    padding: 1em 0;
-    text-align: center;
-  }
 }
 </style>
