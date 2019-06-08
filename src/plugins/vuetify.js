@@ -1,44 +1,11 @@
 import Vue from 'vue'
-import {
-    Vuetify,
-    VApp,
-    VAvatar,
-    VAlert,
-    VCard,
-    VNavigationDrawer,
-    VFooter,
-    VList,
-    VBtn,
-    VIcon,
-    VGrid,
-    VToolbar,
-    VSnackbar,
-    VTextField,
-    VProgressLinear,
-    transitions
-} from 'vuetify'
-import 'vuetify/src/stylus/app.styl';
-
+import Vuetify from 'vuetify/lib'
 import store from '../store';
 
-Vue.use(Vuetify, {
-    components: {
-        VApp,
-        VAvatar,
-        VAlert,
-        VCard,
-        VNavigationDrawer,
-        VFooter,
-        VList,
-        VBtn,
-        VIcon,
-        VGrid,
-        VToolbar,
-        VSnackbar,
-        VTextField,
-        VProgressLinear,
-        transitions
-    },
-    theme: store.getters['config/merged'].theme,
-    iconfont: 'md',
-})
+const opts = {
+    theme: store.getters['config/merged'].theme
+};
+
+Vue.use(Vuetify);
+
+export default new Vuetify(opts);
