@@ -12,6 +12,10 @@ function getTopicsByCategory (parent, taxonomies) {
     return filterTaxonomy('topic', taxonomies).filter(topic => topic.parent === parent);
 }
 
+function getTopicById (topicId, taxonomies) {
+    return filterTaxonomy('topic', taxonomies).filter(topic => topic.id === topicId)[0];
+}
+
 async function addTaxonomy (type, data) {
     let allowedFields = ['name', 'type', 'description']
     if (type == 'topic') {
@@ -33,5 +37,6 @@ async function addTaxonomy (type, data) {
 export {
     filterTaxonomy,
     getTopicsByCategory,
-    addTaxonomy
+    addTaxonomy,
+    getTopicById
 }

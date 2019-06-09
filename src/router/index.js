@@ -66,6 +66,17 @@ var router = new Router({
 
                 }
             ]
+        },
+        {
+            path: '/t/:topicId',
+            component: loadView('Topic/App'),
+            props: true,
+            children: [
+                {
+                    path: '',
+                    component: loadView('Topic/Home/App')
+                }
+            ]
         }
     ]
 });

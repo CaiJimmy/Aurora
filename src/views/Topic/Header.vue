@@ -1,0 +1,74 @@
+<template>
+    <header class="topicHeader elevation-1">
+        <div class="topicHeader--background"
+            v-if="topic.config.background.url"
+            :style="{ background: `url(${topic.config.background.url})`}"></div>
+
+        <div class="topicHeader--color"
+            v-if="topic.config.background.url"
+            :style="{ background: `linear-gradient(0deg, ${topic.config.background.color.Vibrant} 0%, ${topic.config.background.color.Muted} 100%)`}"></div>
+        <div class="topicHeader--meta">
+            <h1 class="font-weight-lighter">{{ topic.name }}</h1>
+            <h2 class="font-weight-thin">{{ topic.description }}</h2>
+        </div>
+    </header>
+</template>
+<script>
+export default {
+    name: "TopicHeader",
+    props: {
+        topic: Object
+    }
+}
+</script>
+<style lang="scss" scoped>
+.topicHeader {
+    min-height: 300px;
+    position: relative;
+    display: flex;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 30px;
+
+    @media (max-width: 960px) {
+        min-height: 150px;
+        .topicHeader--meta {
+            h1 {
+                font-size: 1.25em;
+            }
+        }
+    }
+
+    .topicHeader--background,
+    .topicHeader--color {
+        height: 100%;
+        width: 100%;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .topicHeader--background {
+        background-position: center center !important;
+        background-size: cover !important;
+        transition: all 0.5s ease;
+    }
+
+    .topicHeader--color {
+        opacity: 0.9;
+        transition: opacity 0.5s ease;
+    }
+
+    .topicHeader--meta {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 20px;
+        color: #fff;
+        font-weight: lighter;
+        h1 {
+            font-size: 2em;
+        }
+    }
+}
+</style>
