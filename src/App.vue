@@ -33,7 +33,7 @@ export default {
             return titleChunk ? `${titleChunk} | ${this.config.siteName}` : this.config.siteName;
         }
     },
-    created () {
+    beforeCreate () {
         this.$store.dispatch('queue/process')
     },
     watch: {

@@ -10,7 +10,7 @@ import Meta from 'vue-meta';
 Vue.use(Router)
 Vue.use(Meta);
 
-function loadView(view) {
+function loadView (view) {
     return () =>
         import( /* webpackChunkName: "view-[request]" */ `@/views/${view}.vue`)
 }
@@ -20,7 +20,12 @@ var router = new Router({
     routes: [{
         path: '*',
         component: loadView('NotFound')
-    }, {
+    },
+    {
+        path: '/restricted',
+        component: loadView('Restricted')
+    },
+    {
         path: '/',
         component: loadView('Home/App'),
         auth: true
@@ -37,6 +42,9 @@ var router = new Router({
     {
         path: '/a/',
         component: loadView('Admin/App'),
+        meta: {
+            isAdmin: true
+        },
         children: [{
             path: '',
             component: loadView('Admin/views/Home')
@@ -44,7 +52,7 @@ var router = new Router({
         {
             path: 'settings',
             component: loadView('Admin/views/Settings'),
-            
+
         },
         {
             path: 'taxonomy',
@@ -61,35 +69,30 @@ var router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.auth && !Auth.currentUser) {
+    if (to.path !== from.path) {
+        store.dispatch('theme/reset');
+    }
+
+    if (to.path !== '/login' && !Auth.currentUser) {
         next({
             path: '/login',
             query: {
-                go: to.path,
-            }
+                go: to.fullPath,
+            },
+            replace: true
         })
     } else {
-        if (to.matched.some(m => m.meta.isAdmin) && !store.state.user.isAdmin && !store.state.loading.user) {
+        if (to.matched.some(m => m.meta.isAdmin) && !store.getters["auth/currentUser"].isAdmin) {
             next({
-                path: '/403'
+                path: '/restricted',
+                query: {
+                    go: to.fullPath,
+                }
             })
         } else {
             next();
         }
     }
 });
-
-router.afterEach((to) => {
-    if (to.path !== '/login' && !Auth.currentUser) {
-        router.replace({
-            path: '/login',
-            query: {
-                go: to.fullPath,
-            },
-        });
-    }
-
-    store.dispatch('theme/reset');
-})
 
 export default router
