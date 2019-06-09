@@ -1,19 +1,21 @@
 <template>
     <section class="taxonomyList">
-        <div v-for="category in filterTaxonomy('category')"
+        <div v-for="category in filterTaxonomy('category', taxonomies)"
             :key="category.id">
 
             <v-layout row
                 wrap
                 justify-space-between
-                v-if="getTopicsByCategory(category.id).length">
+                v-if="getTopicsByCategory(category.id, taxonomies).length || showEmptyCategories">
 
-                <!-- Hide empty categories -->
-                <v-flex xs12 md2>
+                <v-flex xs12
+                    md2>
                     <h3 class="levelName">{{ category.name }}</h3>
                 </v-flex>
-                <v-flex xs12 md9>
-                    <v-card v-for="topic in getTopicsByCategory(category.id)"
+                
+                <v-flex xs12
+                    md9>
+                    <v-card v-for="topic in getTopicsByCategory(category.id, taxonomies)"
                         :key="topic.id"
                         color="blue-grey darken-2"
                         class="white--text">
@@ -22,7 +24,12 @@
                                 class="headline">{{ topic.name }}</router-link>
                         </v-card-title>
                     </v-card>
+
+                    <slot name="emptyCategory"
+                        v-if="!getTopicsByCategory(category.id, taxonomies).length"></slot>
+
                 </v-flex>
+
             </v-layout>
         </div>
     </section>
@@ -32,9 +39,17 @@
 import { filterTaxonomy, getTopicsByCategory } from '@/utils/taxonomy';
 export default {
     name: 'TaxonomyList',
+    props: {
+        showEmptyCategories: Boolean
+    },
     methods: {
         filterTaxonomy,
         getTopicsByCategory
+    },
+    computed: {
+        taxonomies () {
+            return this.$store.state.taxonomy.taxonomies;
+        }
     }
 }
 </script>
