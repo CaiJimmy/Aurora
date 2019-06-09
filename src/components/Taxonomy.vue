@@ -15,6 +15,7 @@
 
                     <v-flex xs12
                         md4
+                        lg3
                         v-for="topic in getTopicsByCategory(category.id, taxonomies)"
                         :key="topic.id">
                         <router-link :to="`/t/${topic.id}`"
@@ -25,7 +26,7 @@
 
                             <div class="taxonomyList--item-color"
                                 v-if="topic.config.background.url"
-                                :style="{ background: `linear-gradient(0deg, ${topic.config.background.color.Vibrant} 50%, ${topic.config.background.color.Muted} 100%)`}"></div>
+                                :style="{ background: `linear-gradient(0deg, ${topic.config.background.color.Vibrant} 0%, ${topic.config.background.color.Muted} 100%)`}"></div>
 
                             <div class="taxonomyList--item-meta">
                                 <h1 class="font-weight-thin">{{ topic.name }}</h1>
@@ -74,6 +75,15 @@ export default {
     margin: 10px;
     flex-grow: 1;
 
+    @media (max-width: 960px) {
+        min-height: 150px;
+        .taxonomyList--item-meta {
+            h1 {
+                font-size: 1.25em;
+            }
+        }
+    }
+
     &:hover {
         .taxonomyList--item-color {
             opacity: 0.7;
@@ -106,7 +116,9 @@ export default {
         padding: 20px;
         color: #fff;
         font-weight: lighter;
-        font-size: 1.25em;
+        h1 {
+            font-size: 1.5em;
+        }
     }
 }
 </style>
