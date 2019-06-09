@@ -47,20 +47,20 @@ var router = new Router({
         },
         children: [{
             path: '',
-            component: loadView('Admin/views/Home')
+            component: loadView('Admin/Home/App')
         },
         {
             path: 'settings',
-            component: loadView('Admin/views/Settings'),
+            component: loadView('Admin/Settings/App'),
 
         },
         {
             path: 'taxonomy',
-            component: loadView('Admin/views/Taxonomy')
+            component: loadView('Admin/Taxonomy/App')
         },
         {
             path: 'user',
-            component: loadView('Admin/views/User'),
+            component: loadView('Admin/User/App'),
 
         }
         ]
