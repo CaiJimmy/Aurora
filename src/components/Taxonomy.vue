@@ -61,6 +61,7 @@ export default {
 <style lang="scss" scoped>
 .taxonomyList--items {
     margin: 0 -10px;
+    margin-bottom: 30px;
 }
 
 .taxonomyList--name {
