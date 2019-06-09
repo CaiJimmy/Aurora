@@ -8,30 +8,31 @@
             clearable
             label="Buscar a usuario..."
             type="text"
-            @click:append="doSearch"
-            v-on:keyup.enter="doSearch"
+            @click:append="searchEvent"
+            v-on:keyup.enter="searchEvent"
             @click:clear="clearKeyword"></v-text-field>
 
         <v-card v-if="results.length">
+            <v-alert type="info">
+                Se ha encontrado {{ results.length }} usuarios relacionados con <code>{{ lastKeyword }}</code>
+            </v-alert>
             <v-list>
-                <v-list-tile v-for="user in results"
+                <v-list-item v-for="user in results"
                     :key="user.email"
-                    avatar
                     @click="$router.push('/user/' + user.email)">
-                    <v-list-item-title>
-                        <v-list-tile-title>{{ user.displayName }}</v-list-tile-title>
-                        <v-list-tile-sub-title>{{ user.email }}</v-list-tile-sub-title>
-                    </v-list-item-title>
+                    <v-list-item-content>
+                        <v-list-item-title>{{ user.displayName }}</v-list-item-title>
+                        <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
+                    </v-list-item-content>
 
-                    <v-list-tile-avatar>
+                    <v-list-item-avatar>
                         <img :src="user.photoURL">
-                    </v-list-tile-avatar>
-                </v-list-tile>
+                    </v-list-item-avatar>
+                </v-list-item>
             </v-list>
         </v-card>
 
         <v-alert v-if="!loading && searched && !results.length"
-            :value="true"
             type="info">
             No se ha encontrado ningún usuario relacionado con <code>{{ lastKeyword }}</code>
         </v-alert>
@@ -55,15 +56,37 @@ export default {
             lastKeyword: null
         }
     },
+    created () {
+        this.handleRouteChange();
+    },
+    watch: {
+        "$route.query.keyword" () {
+            this.handleRouteChange();
+        }
+    },
     methods: {
+        handleRouteChange () {
+            this.keyword = this.$route.query.keyword;
+            if (this.isKeywordValid()) {
+                this.doSearch();
+            }
+        },
         clearKeyword () {
             this.keyword = null
         },
-        doSearch () {
-            if (!this.keyword.length) {
-                return;
+        isKeywordValid () {
+            return this.keyword.length;
+        },
+        searchEvent () {
+            if (this.isKeywordValid()) {
+                this.$router.push({
+                    query: {
+                        keyword: this.keyword
+                    }
+                })
             }
-
+        },
+        doSearch () {
             this.loading = true;
             this.results = [];
             this.lastKeyword = this.keyword;
