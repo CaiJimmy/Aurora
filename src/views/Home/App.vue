@@ -15,14 +15,14 @@
                     class="elevation-1"
                     :background="'#fff'">
                     <template slot="actions">
-                        <v-btn flat
+                        <v-btn text
                             color="primary"
                             v-on:click="$router.push({ path: '/user/' + currentUser.email})">Perfil</v-btn>
-                        <v-btn flat
+                        <v-btn text
                             color="secondary"
                             v-if="currentUser.isAdmin"
                             to="/a/">Panel de control</v-btn>
-                        <v-btn flat
+                        <v-btn text
                             color="warning"
                             v-on:click="signOut($route, $router)">Cerrar sesión</v-btn>
                     </template>
