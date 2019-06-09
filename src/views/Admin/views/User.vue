@@ -75,7 +75,7 @@ export default {
             this.keyword = null
         },
         isKeywordValid () {
-            return this.keyword.length;
+            return this.keyword && this.keyword.length;
         },
         searchEvent () {
             if (this.isKeywordValid()) {
