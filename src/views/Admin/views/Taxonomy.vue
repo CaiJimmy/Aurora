@@ -6,7 +6,9 @@
                 <v-form ref="form">
                     <v-text-field v-model="form.name"
                         label="Nombre"
-                        required></v-text-field>
+                        v-validate="'required'"
+                        :error-messages="errors.collect('name')"
+                        data-vv-name="name"></v-text-field>
 
                     <v-select v-model="form.type"
                         :items="type"
@@ -14,7 +16,10 @@
                         item-value="value"
                         label="Tipo"></v-select>
 
-                    <v-select :disabled="form.type !== 'topic'"
+                    <v-select v-validate="'required'"
+                        :error-messages="errors.collect('category')"
+                        data-vv-name="category"
+                        v-if="form.type == 'topic'"
                         v-model="form.parent"
                         :items="filterTaxonomy('category', taxonomies)"
                         item-text="name"
@@ -47,7 +52,15 @@ import { filterTaxonomy, addTaxonomy } from '@/utils/taxonomy';
 import getColorFromImage from '@/utils/getColorFromImage';
 import uploadFile from '@/utils/uploadFile';
 
+import Vue from 'vue'
+import VeeValidate from 'vee-validate'
+
+Vue.use(VeeValidate)
+
 export default {
+    $_veeValidate: {
+        validator: 'new'
+    },
     name: 'AdminTaxonomy',
     metaInfo: {
         title: 'Taxonomias'
@@ -121,27 +134,31 @@ export default {
             })
         },
         async addTaxonomy () {
-            this.form.loading = true;
+            this.$validator.validateAll().then(async result => {
+                if (result) {
+                    this.form.loading = true;
 
-            if (this.form.type == 'topic') {
-                const randomPic = await this.getRandomPic();
-                /// By default, the image will be uploaded to /coverImage/ folder, because we don't have yet the topic id
-                const uploadImageURL = await uploadFile(randomPic.file, `coverImage/${this.randomID()}`);
-                this.form.config.background = {
-                    url: uploadImageURL,
-                    color: randomPic.color
-                };
-            }
+                    if (this.form.type == 'topic') {
+                        const randomPic = await this.getRandomPic();
+                        /// By default, the image will be uploaded to /coverImage/ folder, because we don't have yet the topic id
+                        const uploadImageURL = await uploadFile(randomPic.file, `coverImage/${this.randomID()}`);
+                        this.form.config.background = {
+                            url: uploadImageURL,
+                            color: randomPic.color
+                        };
+                    }
 
-            addTaxonomy(this.form.type, this.form).then(() => {
-                this.form.loading = false;
-            })
+                    addTaxonomy(this.form.type, this.form).then(() => {
+                        this.form.loading = false;
+                    })
+                }
+            });
         }
     }
 }
 </script>
 <style lang="scss" scoped>
-.addTaxonomy{
+.addTaxonomy {
     margin-bottom: 20px;
 }
 </style>
