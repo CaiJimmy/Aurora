@@ -60,10 +60,8 @@ export default {
     }
 
     .topicHeader--meta {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        padding: 20px;
+        z-index: 1;
+        padding: 100px 30px 80px 30px;
         color: #fff;
         font-weight: lighter;
         h1 {

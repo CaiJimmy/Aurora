@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <TopicHeader :topic="topic" />
-        <router-view :topic="topic" />
+        <router-view :topic="topic" :topicId="topicId" />
     </v-container>
 </template>
 <script>

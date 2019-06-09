@@ -1,13 +1,15 @@
 <template>
-    <v-layout fill-height>
-        <v-flex md3
-            shrink
+    <v-layout justify-space-between
+        v-bind="binding">
+        <v-flex xs12
+            md3
             class="sidebar">
             <Sidebar :topic="topic" />
         </v-flex>
 
-        <v-flex md8>
-
+        <v-flex xs12>
+            <QuestionList :topic="topic"
+                :topicId="topicId" />
         </v-flex>
     </v-layout>
 </template>
@@ -19,11 +21,36 @@ import Sidebar from './Sidebar.vue';
 export default {
     name: "TopicPage-Home",
     props: {
-        topic: Object
+        topic: Object,
+        topicId: String
     },
     components: {
         QuestionList,
         Sidebar
+    },
+    computed: {
+        binding () {
+            const binding = {}
+
+            if (this.$vuetify.breakpoint.mdAndUp) {
+                binding.row = true
+            }
+            else {
+                binding.column = true
+            }
+
+            return binding
+        },
     }
 }
 </script>
+<style lang="scss" scoped>
+.row {
+    .sidebar {
+        margin-right: 20px;
+    }
+}
+.sidebar {
+    margin-bottom: 20px;
+}
+</style>
