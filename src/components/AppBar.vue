@@ -2,7 +2,6 @@
     <v-container class="navContainer">
         <v-app-bar color="white"
             light
-            :height="60"
             width>
 
             <v-menu v-model="menu.main"
