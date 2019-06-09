@@ -38,12 +38,14 @@
                 </v-alert>
             </template>
         </taxonomy>
-        
+
     </div>
 </template>
 <script>
 import taxonomy from '@/components/Taxonomy.vue';
 import { filterTaxonomy, addTaxonomy } from '@/utils/taxonomy';
+import getColorFromImage from '@/utils/getColorFromImage';
+import uploadFile from '@/utils/uploadFile';
 
 export default {
     name: 'AdminTaxonomy',
@@ -61,13 +63,10 @@ export default {
                 parent: null,
                 description: null,
                 config: {
+                    requiredQuestions: 5,
                     background: {
-                        image: {
-                            url: null,
-                            colors: []
-                        },
-                        color: null,
-                        mode: 0 /// 0: Image ; 1: color
+                        url: null,
+                        colors: []
                     }
                 },
                 counter: {
@@ -102,11 +101,40 @@ export default {
     },
     methods: {
         filterTaxonomy,
-        addTaxonomy () {
+        randomID () {
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            for (var i = 0; i < 8; i++)
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+            return text;
+        },
+        getRandomPic: async function () {
+            return fetch("https://source.unsplash.com/200x120/?technology").then(async (response) => {   /// Fetch a random image from Unsplash, and add it to form
+                let imageFile = await fetch(response.url).then(res => {
+                    return res.blob();
+                });
+                return {
+                    url: response.url,
+                    color: await getColorFromImage(URL.createObjectURL(imageFile)),
+                    file: imageFile
+                };
+            })
+        },
+        async addTaxonomy () {
             this.form.loading = true;
+
+            if (this.form.type == 'topic') {
+                const randomPic = await this.getRandomPic();
+                /// By default, the image will be uploaded to /coverImage/ folder, because we don't have yet the topic id
+                const uploadImageURL = await uploadFile(randomPic.file, `coverImage/${this.randomID()}`);
+                this.form.config.background = {
+                    url: uploadImageURL,
+                    color: randomPic.color
+                };
+            }
+
             addTaxonomy(this.form.type, this.form).then(() => {
                 this.form.loading = false;
-                this.$forceUpdate();
             })
         }
     }
