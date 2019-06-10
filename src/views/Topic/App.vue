@@ -1,7 +1,21 @@
 <template>
     <v-container>
         <TopicHeader :topic="topic" />
-        <router-view :topic="topic" :topicId="topicId" />
+
+        <v-layout v-if="loading"
+            align-content-center
+            justify-center
+            wrap>
+            <v-flex xs4>
+                <v-progress-linear indeterminate
+                    rounded
+                    height="6"></v-progress-linear>
+            </v-flex>
+        </v-layout>
+
+        <router-view v-else
+            :topic="topic"
+            :topicId="topicId" />
     </v-container>
 </template>
 <script>
@@ -17,6 +31,11 @@ export default {
     components: {
         TopicHeader
     },
+    data () {
+        return {
+            loading: true
+        }
+    },
     mounted () {
         if (!this.topic) {
             /// Topic does not exist
@@ -27,7 +46,12 @@ export default {
             this.$store.registerModule(`topic-${this.topicId}`, {
                 ...topicPageModule(this.topicId, this.topic)
             });
-            this.$store.dispatch(`topic-${this.topicId}/init`);
+            this.$store.dispatch(`topic-${this.topicId}/init`).then(() => {
+                this.loading = false;
+            })
+        }
+        else {
+            this.loading = false;
         }
     },
     computed: {
