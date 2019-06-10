@@ -2,7 +2,7 @@
     <div class="questionList">
         <v-card v-for="question in topicStore.questions"
             :key="question.id"
-            :loading="!questionReady(question)">
+            :loading="!questionReady(question)" class="questionCard">
 
             <v-card-title v-if="getUserData(question.author)">
                 <v-list-item class="grow">
@@ -35,6 +35,9 @@
             </v-card-title>
 
             <v-card-text>
+                <span class="body-1 black--text pl-3 pr-3">
+                    {{ question.title }}
+                </span>
                 <v-list>
                     <v-list-item v-for="(option,index) in question.options"
                         :key="index">
@@ -102,6 +105,10 @@ export default {
 .questionList {
     .v-list-item {
         user-select: text !important; /// Overite Vuetify's default style, which doesn't allow text to be selected
+    }
+
+    .questionCard{
+        margin-bottom: 20px;
     }
 }
 </style>
