@@ -13,6 +13,19 @@
 
                     <v-list-item-content>
                         <v-list-item-title>{{ getUserData(question.author).displayName }}</v-list-item-title>
+                        
+                        <v-list-item-subtitle>
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on }">
+
+                                    <span v-on="on">
+                                        <timeago :datetime="question.date.toDate()"></timeago>
+                                    </span>
+
+                                </template>
+                                <span>{{ question.date.toDate() }}</span>
+                            </v-tooltip>
+                        </v-list-item-subtitle>
                     </v-list-item-content>
 
                     <v-layout align-center
@@ -41,6 +54,25 @@
     </div>
 </template>
 <script>
+import Vue from 'vue'
+import VueTimeago from 'vue-timeago'
+
+Vue.use(VueTimeago, {
+    name: 'Timeago', // Component name, `Timeago` by default
+    locale: 'es-ES',
+    locales: {
+        'es-ES': [
+            "ahora", ["hace %s segundo", "hace %s segundos"],
+            ["hace %s minuto", "hace %s minutos"],
+            ["hace %s hora", "hace %s horas"],
+            ["hace %s día", "hace %s días"],
+            ["hace %s semana", "hace %s semanas"],
+            ["hace %s mes", "hace %s meses"],
+            ["hace %s año", "hace %s años"]
+        ]
+    }
+})
+
 export default {
     name: "QuestionList",
     props: {
@@ -68,9 +100,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.questionList{
-    .v-list-item{
-        user-select: text!important; /// Overite Vuetify's default style, which doesn't allow text to be selected
+.questionList {
+    .v-list-item {
+        user-select: text !important; /// Overite Vuetify's default style, which doesn't allow text to be selected
     }
 }
 </style>
