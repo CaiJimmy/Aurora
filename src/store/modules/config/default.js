@@ -22,6 +22,11 @@ const defaultConfig = {
             y: 'bottom'
         },
         timeout: 5000
+    },
+    topic: {
+        paging: {
+            per_page: 10   /* Number of questions per page */
+        }
     }
 }
 

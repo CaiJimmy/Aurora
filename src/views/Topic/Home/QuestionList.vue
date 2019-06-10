@@ -37,7 +37,8 @@
                 <v-pagination v-model="currentPage"
                     :length="paginationLength"
                     :total-visible="7"
-                    @input="handlePagination" :disabled="topicStore.loading"></v-pagination>
+                    @input="handlePagination"
+                    :disabled="topicStore.loading"></v-pagination>
             </template>
         </v-banner>
     </div>
@@ -59,20 +60,26 @@ export default {
         QuestionCard
     },
     created () {
-        this.currentPage = this.topicStore.paging.currentPage;
+        this.currentPage = this.paging.currentPage;
     },
     computed: {
+        paging () {
+            return {
+                ...this.topicStore.paging,
+                ...this.config.topic.paging
+            }
+        },
         paginationRange () {
-            return `${(this.currentPage - 1) * this.topicStore.paging.per_page} - 
-            ${(this.currentPage) * this.topicStore.paging.per_page}`
+            return `${(this.currentPage - 1) * this.paging.per_page} - 
+            ${(this.currentPage) * this.paging.per_page}`
         },
         paginationLength () {
-            return Math.ceil(this.questions.length / this.topicStore.paging.per_page);
+            return Math.ceil(this.questions.length / this.paging.per_page);
         },
         questionList () {
             return this.questions.slice(
-                (this.currentPage - 1) * this.topicStore.paging.per_page,
-                (this.currentPage) * this.topicStore.paging.per_page,
+                (this.currentPage - 1) * this.paging.per_page,
+                (this.currentPage) * this.paging.per_page,
             )
         },
         topicStore () {

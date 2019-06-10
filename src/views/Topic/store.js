@@ -10,17 +10,22 @@ const topicPageModule = (topicId, topicData) => {
             return {
                 questions: [],  /* Old questions (existed before page loaded) are stored here */
                 newQuestions: [], /* New questions (created after page loaded) are stored here */
-                paging: {
-                    per_page: 1,   /* Number of questions per page */
-                    loaded: []   /* Loaded pages, to avoid querying data again */,
-                    currentPage: 1,
-                },
                 ref: {
                     questions: null
                 },
                 topicId: topicId,
                 topicData: topicData,
-                loading: false
+                loading: false,
+
+                paging: {
+                    loaded: []   /* Loaded pages, to avoid querying data again */,
+                    currentPage: 1,
+                }
+            }
+        },
+        getters: {
+            per_page (_state, _getters, _rootState, rootGetters) {
+                return rootGetters['config/merged'].topic.paging.per_page;
             }
         },
         mutations: {
@@ -85,11 +90,12 @@ const topicPageModule = (topicId, topicData) => {
             },
             async onPageChange ({
                 state,
+                getters,
                 commit,
                 dispatch
             }, payload) {
                 const currentPage = payload.toPage,
-                    per_page = state.paging.per_page;
+                    per_page = getters.per_page;
 
                 let startAfter = null,
                     limit = per_page,
