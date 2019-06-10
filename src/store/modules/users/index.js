@@ -23,6 +23,11 @@ const users = {
             if (state.hasOwnProperty(userEmail)) {
                 return;
             }
+            
+            commit('addUser', {
+                email: userEmail,
+                loading: true
+            });
 
             Firestore.collection('users').doc(userEmail).get().then((doc) => {
                 if (!doc.exists) {
