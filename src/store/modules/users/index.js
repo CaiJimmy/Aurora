@@ -1,10 +1,13 @@
 import Vue from 'vue';
+import {
+    Firestore
+} from '@/firebase/firestore';
 
 const users = {
     namespaced: true,
     state: {},
     mutations: {
-        addUser(state, userData) {
+        addUser (state, userData) {
             /** 
              *  Example of payload:
              *  {
@@ -15,7 +18,25 @@ const users = {
             Vue.set(state, userData.email, userData);
         },
     },
-    actions: {}
+    actions: {
+        async requestUser ({ state, commit }, userEmail) {
+            if (state.hasOwnProperty(userEmail)) {
+                return;
+            }
+
+            Firestore.collection('users').doc(userEmail).get().then((doc) => {
+                if (!doc.exists) {
+                    return;
+                }
+
+                commit('addUser', {
+                    ...doc.data(),
+                    email: userEmail
+                })
+            })
+
+        }
+    }
 };
 
 export default users;
