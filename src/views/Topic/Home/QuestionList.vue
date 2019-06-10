@@ -7,13 +7,12 @@
             <v-card-title v-if="getUserData(question.author)">
                 <v-list-item class="grow">
                     <v-list-item-avatar color="grey darken-3">
-                        <v-img class="elevation-6"
-                            :src="getUserData(question.author).photoURL"></v-img>
+                        <v-img :src="getUserData(question.author).photoURL"></v-img>
                     </v-list-item-avatar>
 
                     <v-list-item-content>
                         <v-list-item-title>{{ getUserData(question.author).displayName }}</v-list-item-title>
-                        
+
                         <v-list-item-subtitle>
                             <v-tooltip bottom>
                                 <template v-slot:activator="{ on }">
