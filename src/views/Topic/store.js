@@ -1,13 +1,15 @@
 import { Firestore } from '@/firebase/firestore';
 import Vue from 'vue';
 import Console from '@/utils/Console';
+import { firestoreAction } from 'vuexfire'
 
 const topicPageModule = (topicId, topicData) => {
     return {
         namespaced: true,
         state () {
             return {
-                questions: [],  /* Old questions (existed before page loaded) are  stored here */
+                questions: [],  /* Old questions (existed before page loaded) are stored here */
+                newQuestions: [], /* New questions (created after page loaded) are stored here */
                 paginate: ['questions'],  /* Vue-Paginate config */
                 paging: {
                     question_per_page: 20,   /* Number of questions per page */
@@ -35,6 +37,9 @@ const topicPageModule = (topicId, topicData) => {
             }
         },
         actions: {
+            bindNewQuestions: firestoreAction(({ state, bindFirestoreRef }) => {
+                return bindFirestoreRef('newQuestions', state.ref.questions.where('date', '>', new Date()))
+            }),
             async handleQuestions ({ commit, dispatch }, payload) {
                 /*
                     Fetch questions of given reference
@@ -199,7 +204,10 @@ const topicPageModule = (topicId, topicData) => {
                 /// Load first page
                 dispatch('onPageChange', {
                     toPage: 0
-                })
+                });
+
+                /// Subscribe to new questions
+                dispatch('bindNewQuestions');
             }
         }
     }
