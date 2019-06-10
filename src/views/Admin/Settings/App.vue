@@ -85,22 +85,6 @@ export default {
                             name: "Fondo de inicio de sesión"
                         }
                     ]
-                },
-                {
-                    name: "Tema",
-                    id: 'theme',
-                    inputs: [
-                        {
-                            type: "color",
-                            id: "primary",
-                            name: "Color primario"
-                        },
-                        {
-                            type: "color",
-                            id: "secondary",
-                            name: "Color secundario"
-                        }
-                    ]
                 }
             ]
         }
