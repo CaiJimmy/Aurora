@@ -104,7 +104,7 @@ export default {
             collection.add({
                 ...this.form,
                 date: firestore.FieldValue.serverTimestamp()
-            }).then((ref) => {
+            }).then(() => {
                 this.reset();
                 this.initialize();
                 this.loading = false;
