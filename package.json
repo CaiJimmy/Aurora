@@ -21,6 +21,7 @@
         "vue": "^2.6.10",
         "vue-meta": "^1.6.0",
         "vue-router": "^3.0.6",
+        "vue-timeago": "^5.1.2",
         "vuetify": "^2.0.0-beta.1",
         "vuetify-loader": "^1.2.2",
         "vuex": "^3.1.1",
