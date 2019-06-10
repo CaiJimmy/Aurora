@@ -28,6 +28,11 @@ export default {
     props: {
         topicId: String
     },
+    metaInfo () {
+        return {
+            title: this.topic.name || 'Tema'
+        }
+    },
     components: {
         TopicHeader
     },
