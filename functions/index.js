@@ -5,6 +5,9 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 const db = admin.firestore();
 
+const TAXONOMY_COLLECTION = db.collection('taxonomy');
+const QUESTION_COLLECTION = db.collection('questions');
+
 exports.questionChange = functions.firestore.document('questions/{questionID}').onWrite(
     async (change, context) => {
 
@@ -19,12 +22,12 @@ exports.questionChange = functions.firestore.document('questions/{questionID}').
         /* Load variables */
         if (change.before.exists) {
             oldTopic = oldQuestion.topic;
-            oldTopicRef = db.collection('taxonomy').doc(oldTopic);
+            oldTopicRef = TAXONOMY_COLLECTION.doc(oldTopic);
         }
 
         if (change.after.exists) {
             newTopic = newQuestion.topic;
-            newTopicRef = db.collection('taxonomy').doc(newTopic);
+            newTopicRef = TAXONOMY_COLLECTION.doc(newTopic);
         }
 
         if (!change.before.exists) {
@@ -148,14 +151,14 @@ app.use(cors);
 
 app.get('/', async (req, res) => {
     const topicID = req.query.topic,
-        topicRef = db.collection('topics').doc(topicID);
+        topicRef = TAXONOMY_COLLECTION.doc(topicID);
 
     if (!topicID) {
         res.send("Topic ID is required");
         return;
     }
 
-    const allQuestions = await db.collection('questions').where('topic', '==', topicID).get();
+    const allQuestions = await QUESTION_COLLECTION.where('topic', '==', topicID).get();
 
     let totalCount = allQuestions.size,
         hiddenCount = 0;
@@ -165,7 +168,7 @@ app.get('/', async (req, res) => {
             0: Hidden
             1: Visible
         */
-       
+
         if (item.data().status === 0) {
             hiddenCount++;
         }
