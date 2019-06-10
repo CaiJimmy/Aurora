@@ -1,9 +1,13 @@
 <template>
-    <TopicStat :topic="topic" />
+    <div>
+        <TopicStat :topic="topic" />
+        <UserStat :topic="topic" />
+    </div>
 </template>
 
 <script>
 import TopicStat from './Widgets/TopicStat.vue';
+import UserStat from './Widgets/UserStat.vue';
 
 export default {
     name: "TopicPage-Sidebar",
@@ -11,7 +15,13 @@ export default {
         topic: Object
     },
     components: {
-        TopicStat
+        TopicStat,
+        UserStat
     }
 }
 </script>
+<style lang="scss" scoped>
+.v-card {
+    margin-bottom: 20px;
+}
+</style>
