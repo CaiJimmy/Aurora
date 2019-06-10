@@ -35,7 +35,7 @@ const topicPageModule = (topicId, topicData) => {
             }
         },
         actions: {
-            async handleQuestions ({ commit }, payload) {
+            async handleQuestions ({ commit, dispatch }, payload) {
                 /*
                     Fetch questions of given reference
                     And if user is admin, query userdata of each question (Check /methods/fetchUserDatas.js)
@@ -59,7 +59,7 @@ const topicPageModule = (topicId, topicData) => {
                             });
                             _index++;
 
-                            ///fetchUserDatas(questionData.author);
+                            dispatch('users/requestUser', questionData.author, { root: true });
                         });
 
                         resolve(documentSnapshots);
