@@ -70,8 +70,14 @@ export default {
             }
         },
         paginationRange () {
-            return `${(this.currentPage - 1) * this.paging.question_per_page} - 
-            ${(this.currentPage) * this.paging.question_per_page}`
+            let start = (this.currentPage - 1) * this.paging.question_per_page,
+                end = (this.currentPage) * this.paging.question_per_page
+
+            if (end > this.questions.length) {
+                end = this.questions.length
+            }
+
+            return `${start} - ${end}`;
         },
         paginationLength () {
             return Math.ceil(this.questions.length / this.paging.question_per_page);
