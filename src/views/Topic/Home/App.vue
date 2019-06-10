@@ -8,6 +8,7 @@
         </v-flex>
 
         <v-flex xs12>
+            <FormWrapper :topicId="topicId" />
             <QuestionList :topic="topic"
                 :topicId="topicId" />
         </v-flex>
@@ -17,6 +18,7 @@
 <script>
 import QuestionList from './QuestionList.vue';
 import Sidebar from './Sidebar.vue';
+import FormWrapper from './FormWrapper.vue';
 
 export default {
     name: "TopicPage-Home",
@@ -26,7 +28,8 @@ export default {
     },
     components: {
         QuestionList,
-        Sidebar
+        Sidebar,
+        FormWrapper
     },
     computed: {
         binding () {
