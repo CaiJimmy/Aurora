@@ -29,7 +29,7 @@ const authStore = {
         }
     },
     mutations: {
-        authStateChange(state, payload) {
+        authStateChange (state, payload) {
             if (!state.firebaseReady) {
                 state.firebaseReady = true;
             }
@@ -37,7 +37,7 @@ const authStore = {
             state.loggedIn = payload.loggedIn;
             state.firebaseCurrentUser = payload.firebaseCurrentUser;
         },
-        userValidation(state, isUserValid) {
+        userValidation (state, isUserValid) {
             /**
              *  After OAuth login, Login.vue will attempt to validate user
              */
@@ -56,7 +56,7 @@ const authStore = {
         }) => {
             return unbindFirestoreRef('cloudCurrentUser')
         }),
-        async suscribe({
+        async suscribe ({
             commit,
             dispatch
         }) {
@@ -69,7 +69,10 @@ const authStore = {
                         loggedIn: true,
                         firebaseCurrentUser: firebaseCurrentUser
                     });
-                    dispatch('bindCurrentUser', firebaseCurrentUser)
+                    dispatch('bindCurrentUser', firebaseCurrentUser);
+
+                    /// Add current user data to store.state.users
+                    commit('users/addUser', firebaseCurrentUser, { root: true });
                 } else {
                     commit('authStateChange', {
                         loggedIn: false,
