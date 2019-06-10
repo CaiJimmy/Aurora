@@ -27,20 +27,32 @@
             </v-flex>
         </v-layout>
 
-        <QuestionCard v-for="question in questionList"
-            :key="question.id"
-            :question="question" />
+        <template v-else>
+            <template v-if="questions.length">
+                <QuestionCard v-for="question in questionList"
+                    :key="question.id"
+                    :question="question" />
 
-        <v-banner single-line>
-            Mostrando {{ paginationRange }} resultados de {{ questions.length }}
-            <template #actions>
-                <v-pagination v-model="currentPage"
-                    :length="paginationLength"
-                    :total-visible="7"
-                    @input="handlePagination"
-                    :disabled="topicStore.loading"></v-pagination>
+                <v-banner single-line>
+                    Mostrando {{ paginationRange }} resultados de {{ questions.length }}
+                    <template #actions>
+                        <v-pagination v-model="currentPage"
+                            :length="paginationLength"
+                            :total-visible="7"
+                            @input="handlePagination"
+                            :disabled="topicStore.loading"></v-pagination>
+                    </template>
+                </v-banner>
             </template>
-        </v-banner>
+
+            <v-alert v-else-if="!newQuestions.length"
+                text
+                prominent
+                type="info"
+                icon="question_answer">
+                Parece ser que no hay ninguna pregunta en este tema
+            </v-alert>
+        </template>
     </div>
 </template>
 <script>
