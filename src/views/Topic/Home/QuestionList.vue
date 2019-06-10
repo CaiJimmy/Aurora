@@ -11,9 +11,35 @@
             </div>
         </section>
 
-        <QuestionCard v-for="question in questions"
+        <v-layout v-if="topicStore.loading"
+            align-content-center
+            justify-center
+            wrap>
+            <v-flex xs12
+                subtitle-2
+                text-xs-center>
+                Obteniendo datos
+            </v-flex>
+            <v-flex xs2>
+                <v-progress-linear indeterminate
+                    rounded
+                    height="6"></v-progress-linear>
+            </v-flex>
+        </v-layout>
+
+        <QuestionCard v-for="question in questionList"
             :key="question.id"
             :question="question" />
+
+        <v-banner single-line>
+            Mostrando {{ paginationRange }} resultados de {{ questions.length }}
+            <template #actions>
+                <v-pagination v-model="currentPage"
+                    :length="paginationLength"
+                    :total-visible="7"
+                    @input="handlePagination" :disabled="topicStore.loading"></v-pagination>
+            </template>
+        </v-banner>
     </div>
 </template>
 <script>
@@ -24,10 +50,31 @@ export default {
         topicId: String,
         topic: Object
     },
+    data () {
+        return {
+            currentPage: 1,
+        }
+    },
     components: {
         QuestionCard
     },
+    created () {
+        this.currentPage = this.topicStore.paging.currentPage;
+    },
     computed: {
+        paginationRange () {
+            return `${(this.currentPage - 1) * this.topicStore.paging.per_page} - 
+            ${(this.currentPage) * this.topicStore.paging.per_page}`
+        },
+        paginationLength () {
+            return Math.ceil(this.questions.length / this.topicStore.paging.per_page);
+        },
+        questionList () {
+            return this.questions.slice(
+                (this.currentPage - 1) * this.topicStore.paging.per_page,
+                (this.currentPage) * this.topicStore.paging.per_page,
+            )
+        },
         topicStore () {
             return this.$store.state[`topic-${this.topicId}`]
         },
@@ -36,6 +83,13 @@ export default {
         },
         questions () {
             return this.topicStore.questions
+        }
+    },
+    methods: {
+        handlePagination (currentPage) {
+            this.$store.dispatch(`topic-${this.topicId}/onPageChange`, {
+                toPage: currentPage
+            })
         }
     }
 }

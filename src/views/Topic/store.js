@@ -10,16 +10,17 @@ const topicPageModule = (topicId, topicData) => {
             return {
                 questions: [],  /* Old questions (existed before page loaded) are stored here */
                 newQuestions: [], /* New questions (created after page loaded) are stored here */
-                paginate: ['questions'],  /* Vue-Paginate config */
                 paging: {
-                    question_per_page: 20,   /* Number of questions per page */
-                    loaded: []   /* Loaded pages, to avoid querying data again */
+                    per_page: 1,   /* Number of questions per page */
+                    loaded: []   /* Loaded pages, to avoid querying data again */,
+                    currentPage: 1,
                 },
                 ref: {
                     questions: null
                 },
                 topicId: topicId,
-                topicData: topicData
+                topicData: topicData,
+                loading: false
             }
         },
         mutations: {
@@ -30,7 +31,18 @@ const topicPageModule = (topicId, topicData) => {
                 });
             },
             addLoadedPage (state, pageNumber) {
-                Vue.set(state.paging, 'loaded', state.paging.loaded.concat(pageNumber))
+                if (typeof pageNumber == 'number') {
+                    if (!state.paging.loaded.includes(pageNumber)) {
+                        state.paging.loaded.push(pageNumber);
+                    }
+                }
+                else if (typeof pageNumber == 'object') {
+                    pageNumber.forEach(num => {
+                        if (!state.paging.loaded.includes(num)) {
+                            state.paging.loaded.push(num);
+                        }
+                    })
+                }
             },
             setValue (state, payload) {
                 Vue.set(state, payload.key, payload.value);
@@ -77,7 +89,7 @@ const topicPageModule = (topicId, topicData) => {
                 dispatch
             }, payload) {
                 const currentPage = payload.toPage,
-                    per_page = state.paging.question_per_page;
+                    per_page = state.paging.per_page;
 
                 let startAfter = null,
                     limit = per_page,
@@ -87,6 +99,11 @@ const topicPageModule = (topicId, topicData) => {
                 if (state.paging.loaded.includes(currentPage)) {
                     return;
                 }
+
+                commit('setValue', {
+                    key: 'loading',
+                    value: true
+                });
 
                 /* Display progress spinner */
                 const questionBefore = state.questions[index - 1];
@@ -130,7 +147,7 @@ const topicPageModule = (topicId, topicData) => {
                     ref: startAfter,
                     index: index
                 }).then(() => {
-                    if (startAfterAvailable) {
+                    if (startAfterAvailable || currentPage === 1) {
                         /*  startAfterAvailable = true
                                 => Only requested current page 
                             Add current page to paging.loaded to avoid requesting the data again
@@ -144,8 +161,16 @@ const topicPageModule = (topicId, topicData) => {
                             Add those pages to paging.loaded 
                         */
 
-                        commit('addLoadedPage', Array.from(Array(currentPage).keys()));
+                        let loadedPageArray = Array.from(Array(currentPage + 1).keys());
+
+                        loadedPageArray.shift(); /// Remove page 0
+                        commit('addLoadedPage', loadedPageArray);
                     }
+
+                    commit('setValue', {
+                        key: 'loading',
+                        value: false
+                    });
                 })
             },
             async init ({
@@ -203,7 +228,7 @@ const topicPageModule = (topicId, topicData) => {
 
                 /// Load first page
                 dispatch('onPageChange', {
-                    toPage: 0
+                    toPage: 1
                 });
 
                 /// Subscribe to new questions
