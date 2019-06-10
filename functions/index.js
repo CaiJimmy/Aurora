@@ -161,7 +161,12 @@ app.get('/', async (req, res) => {
         hiddenCount = 0;
 
     allQuestions.forEach(async item => {
-        if (item.data().hidden === true) {
+        /*
+            0: Hidden
+            1: Visible
+        */
+       
+        if (item.data().status === 0) {
             hiddenCount++;
         }
 
