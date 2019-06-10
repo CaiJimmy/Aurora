@@ -24,8 +24,8 @@ const topicPageModule = (topicId, topicData) => {
             }
         },
         getters: {
-            per_page (_state, _getters, _rootState, rootGetters) {
-                return rootGetters['config/merged'].topic.paging.per_page;
+            question_per_page (_state, _getters, _rootState, rootGetters) {
+                return rootGetters['config/merged'].topic.question_per_page;
             }
         },
         mutations: {
@@ -95,7 +95,7 @@ const topicPageModule = (topicId, topicData) => {
                 dispatch
             }, payload) {
                 const currentPage = payload.toPage,
-                    per_page = getters.per_page;
+                    per_page = getters.question_per_page;
 
                 let startAfter = null,
                     limit = per_page,

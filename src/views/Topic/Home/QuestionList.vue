@@ -66,20 +66,20 @@ export default {
         paging () {
             return {
                 ...this.topicStore.paging,
-                ...this.config.topic.paging
+                question_per_page: this.config.topic.question_per_page
             }
         },
         paginationRange () {
-            return `${(this.currentPage - 1) * this.paging.per_page} - 
-            ${(this.currentPage) * this.paging.per_page}`
+            return `${(this.currentPage - 1) * this.paging.question_per_page} - 
+            ${(this.currentPage) * this.paging.question_per_page}`
         },
         paginationLength () {
-            return Math.ceil(this.questions.length / this.paging.per_page);
+            return Math.ceil(this.questions.length / this.paging.question_per_page);
         },
         questionList () {
             return this.questions.slice(
-                (this.currentPage - 1) * this.paging.per_page,
-                (this.currentPage) * this.paging.per_page,
+                (this.currentPage - 1) * this.paging.question_per_page,
+                (this.currentPage) * this.paging.question_per_page,
             )
         },
         topicStore () {

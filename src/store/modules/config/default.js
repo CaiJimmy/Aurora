@@ -24,9 +24,7 @@ const defaultConfig = {
         timeout: 5000
     },
     topic: {
-        paging: {
-            per_page: 10   /* Number of questions per page */
-        }
+        question_per_page: 10   /* Number of questions per page */
     }
 }
 
