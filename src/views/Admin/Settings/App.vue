@@ -27,6 +27,15 @@
                                     </v-flex>
                                 </template>
 
+                                <template v-else-if="input.type == 'number'">
+                                    <v-flex :key="input.id">
+                                        <v-subheader class="pl-0">{{ input.name }}</v-subheader>
+                                        <v-slider v-model="section.reference[input.id]"
+                                            thumb-label="always"
+                                            :max="30"
+                                            :min="1"></v-slider>
+                                    </v-flex>
+                                </template>
                             </template>
                         </v-layout>
                     </v-container>
@@ -39,7 +48,8 @@
             <v-spacer></v-spacer>
             <v-btn text
                 color="primary"
-                v-on:click="saveConfig()" :loading="loading">Guardar</v-btn>
+                v-on:click="saveConfig()"
+                :loading="loading">Guardar</v-btn>
         </v-card-actions>
     </v-card>
 </template>
@@ -83,6 +93,17 @@ export default {
                             type: "text",
                             id: "background",
                             name: "Fondo de inicio de sesión"
+                        }
+                    ]
+                },
+                {
+                    name: "Tema",
+                    id: 'topic',
+                    inputs: [
+                        {
+                            type: "number",
+                            id: "question_per_page",
+                            name: "Número de preguntas por página"
                         }
                     ]
                 }
