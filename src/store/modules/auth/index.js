@@ -82,8 +82,13 @@ const authStore = {
                 }
 
                 Sentry.configureScope((scope) => {
+                    let email = null;
+                    if (user) {
+                        email = user.email;
+                    }
+
                     scope.setUser({
-                        "email": user.email || null
+                        "email": email
                     });
                 });
             });
