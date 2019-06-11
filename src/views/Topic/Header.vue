@@ -12,20 +12,22 @@
             <h2 class="font-weight-thin">{{ topic.description }}</h2>
         </div>
 
-        <template v-if="$route.path == `/t/${topic.id}`">
-            <v-btn class="settingsButton"
-                text
-                dark
-                outline
-                :to="`/t/${topic.id}/settings`">Editar</v-btn>
-        </template>
+        <template v-if="currentUser.isAdmin">
+            <template v-if="$route.path == `/t/${topic.id}`">
+                <v-btn class="settingsButton"
+                    text
+                    dark
+                    outline
+                    :to="`/t/${topic.id}/settings`">Editar</v-btn>
+            </template>
 
-        <template v-else-if="$route.path == `/t/${topic.id}/settings`">
-            <v-btn class="settingsButton"
-                text
-                dark
-                outline
-                :to="`/t/${topic.id}`">Volver</v-btn>
+            <template v-else-if="$route.path == `/t/${topic.id}/settings`">
+                <v-btn class="settingsButton"
+                    text
+                    dark
+                    outline
+                    :to="`/t/${topic.id}`">Volver</v-btn>
+            </template>
         </template>
     </header>
 </template>
