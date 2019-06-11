@@ -56,10 +56,18 @@
 
         <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn text
-                color="primary"
-                v-on:click="createQuestion()"
-                :disabled="loading">Enviar</v-btn>
+            <template v-if="mode == 'edit'">
+                <v-btn text
+                    color="primary"
+                    v-on:click="editQuestion()"
+                    :disabled="loading">Guardar</v-btn>
+            </template>
+            <template v-else>
+                <v-btn text
+                    color="primary"
+                    v-on:click="createQuestion()"
+                    :disabled="loading">Enviar</v-btn>
+            </template>
         </v-card-actions>
     </v-card>
 
@@ -80,7 +88,8 @@ export default {
     props: {
         mode: String,
         topicId: String,
-        questionData: Object
+        questionData: Object,
+        callback: Function
     },
     data () {
         return {
@@ -93,6 +102,26 @@ export default {
         this.initialize()
     },
     methods: {
+        async editQuestion () {
+            let validatorResult = await this.$validator.validateAll();
+            if (!validatorResult) return;
+
+            this.loading = true;
+
+            let questionRef = Firestore.collection('questions').doc(this.questionData.id);
+
+            questionRef.set(this.form, { merge: true }).then(() => {
+                if (this.callback) {
+                    this.callback({
+                        type: 'edit',
+                        edited: true,
+                        question: this.form
+                    });
+                }
+
+                this.loading = false;
+            })
+        },
         async createQuestion () {
             let validatorResult = await this.$validator.validateAll();
             if (!validatorResult) return;
@@ -114,10 +143,15 @@ export default {
             return this.$store.state.users[userEmail];
         },
         initialize () {
-            this.form = {
-                ...this.form,
-                author: this.currentUser.email,
-                topic: this.topicId
+            if (this.mode == 'edit') {
+                this.form = Object.assign({}, this.questionData);  /// Don't mutate the original data
+            }
+            else {
+                this.form = {
+                    ...this.form,
+                    author: this.currentUser.email,
+                    topic: this.topicId
+                }
             }
         },
         reset () {

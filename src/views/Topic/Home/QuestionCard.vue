@@ -1,58 +1,69 @@
 <template>
-    <v-card :loading="!questionReady(question)"
-        class="questionCard">
-        <template v-if="questionReady(question)">
-            <v-card-title v-if="shouldDisplayAuthorData">
-                <v-list-item class="grow">
-                    <v-list-item-avatar color="grey darken-3">
-                        <v-img :src="getUserData(question.author).photoURL"></v-img>
-                    </v-list-item-avatar>
-
-                    <v-list-item-content>
-                        <v-list-item-title>{{ getUserData(question.author).displayName }}</v-list-item-title>
-
-                        <v-list-item-subtitle>
-                            <v-tooltip bottom>
-                                <template v-slot:activator="{ on }">
-
-                                    <span v-on="on">
-                                        <timeago :datetime="question.date.toDate()"
-                                            locale="es-ES"></timeago>
-                                    </span>
-
-                                </template>
-                                <span>{{ question.date.toDate() }}</span>
-                            </v-tooltip>
-                        </v-list-item-subtitle>
-                    </v-list-item-content>
-
-                    <v-layout align-center
-                        justify-end>
-                        <v-icon class="mr-1">mdi-share-variant</v-icon>
-                    </v-layout>
-                </v-list-item>
-            </v-card-title>
-
-            <v-card-text>
-                <span class="body-1 black--text pl-3 pr-3">
-                    {{ question.title }}
-                </span>
-                <v-list>
-                    <v-list-item v-for="(option,index) in question.options"
-                        :key="index">
+    <div class="questionCard">
+        <QuestionForm v-if="editing"
+            :questionData="question"
+            :callback="formCallback"
+            mode="edit" />
+        <v-card :loading="!questionReady(question)"
+            v-else>
+            <template v-if="questionReady(question)">
+                <v-card-title v-if="shouldDisplayAuthorData">
+                    <v-list-item class="grow">
+                        <v-list-item-avatar color="grey darken-3">
+                            <v-img :src="getUserData(question.author).photoURL"></v-img>
+                        </v-list-item-avatar>
 
                         <v-list-item-content>
-                            <v-list-item-title><strong>{{ (index + 10).toString(36).toUpperCase() }}</strong>. {{ option }}</v-list-item-title>
+                            <v-list-item-title>{{ getUserData(question.author).displayName }}</v-list-item-title>
+
+                            <v-list-item-subtitle>
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on }">
+
+                                        <span v-on="on">
+                                            <timeago :datetime="question.date.toDate()"
+                                                locale="es-ES"></timeago>
+                                        </span>
+
+                                    </template>
+                                    <span>{{ question.date.toDate() }}</span>
+                                </v-tooltip>
+                            </v-list-item-subtitle>
                         </v-list-item-content>
 
-                        <v-list-item-icon v-if="index == question.correctAnswer">
-                            <v-icon>star</v-icon>
-                        </v-list-item-icon>
+                        <v-layout align-center
+                            justify-end>
+                            <v-icon class="mr-1">mdi-share-variant</v-icon>
+                        </v-layout>
                     </v-list-item>
-                </v-list>
-            </v-card-text>
-        </template>
-    </v-card>
+                </v-card-title>
+
+                <v-card-text>
+                    <span class="body-1 black--text pl-3 pr-3">
+                        {{ question.title }}
+                    </span>
+                    <v-list>
+                        <v-list-item v-for="(option,index) in question.options"
+                            :key="index">
+
+                            <v-list-item-content>
+                                <v-list-item-title><strong>{{ (index + 10).toString(36).toUpperCase() }}</strong>. {{ option }}</v-list-item-title>
+                            </v-list-item-content>
+
+                            <v-list-item-icon v-if="index == question.correctAnswer">
+                                <v-icon>star</v-icon>
+                            </v-list-item-icon>
+                        </v-list-item>
+                    </v-list>
+                </v-card-text>
+                <v-card-actions v-if="shouldDisplayActions">
+                    <v-spacer></v-spacer>
+                    <v-btn text
+                        v-on:click="startEdit()">Editar</v-btn>
+                </v-card-actions>
+            </template>
+        </v-card>
+    </div>
 </template>
 <script>
 import Vue from 'vue'
@@ -62,10 +73,21 @@ Vue.use(VueTimeago, {
     name: 'Timeago'
 })
 
+import QuestionForm from './Form.vue';
+
 export default {
     name: "QuestionList",
     props: {
-        question: Object
+        question: Object,
+        editCallback: Function
+    },
+    components: {
+        QuestionForm
+    },
+    data () {
+        return {
+            editing: false
+        }
     },
     computed: {
         shouldDisplayAuthorData () {
@@ -85,8 +107,37 @@ export default {
                 return this.getUserData(this.question.author)
             }
         },
+        shouldDisplayActions () {
+            if (!this.editCallback) {
+                return;
+            }
+
+            const questionEditable = this.config.topic.questionEditable,
+                isAdmin = this.currentUser.isAdmin;
+
+            if (!isAdmin) {
+                /*
+                    If current user is not admin, it depends on site config
+                    If config.topic.questionEditable == true, and current user is the author, then show the edit button
+                */
+                return questionEditable && this.question.author == this.currentUser.email;
+            }
+            else {
+                /*
+                    If current user is admin, display always the edit button
+                */
+                return true;
+            }
+        }
     },
     methods: {
+        formCallback (data) {
+            this.editing = false;
+            this.editCallback(data);
+        },
+        startEdit () {
+            this.editing = true;
+        },
         getUserData (userEmail) {
             if (!userEmail) {
                 return;

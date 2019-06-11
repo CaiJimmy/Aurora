@@ -29,6 +29,19 @@ const topicPageModule = (topicId, topicData) => {
             }
         },
         mutations: {
+            editQuestion (state, payload) {
+                const index = payload.index,
+                    questionData = payload.questionData;
+
+                if (index === null || !questionData) return;
+
+                Vue.set(state.questions, index, questionData)
+            },
+            deleteQuestion (state, questionIndex) {
+                if (questionIndex === null) return;
+                
+                Vue.delete(state.questions, questionIndex)
+            },
             setQuestion (state, payload) {
                 Vue.set(state.questions, payload._index, {
                     loading: false,
