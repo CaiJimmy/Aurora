@@ -55,8 +55,34 @@
         </v-card-text>
 
         <v-card-actions>
-            <v-spacer></v-spacer>
             <template v-if="mode == 'edit'">
+
+                <v-dialog v-model="deleteDialog"
+                    persistent
+                    max-width="400">
+                    <template v-slot:activator="{ on }">
+                        <v-btn v-if="questionRemovable"
+                            color="error"
+                            text
+                            v-on="on">Eliminar</v-btn>
+                    </template>
+                    <v-card>
+                        <v-card-title class="headline">Confirmación</v-card-title>
+                        <v-card-text v-html="removeConfirmContent"></v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="green darken-1"
+                                text
+                                @click="deleteDialog = false">Cancelar</v-btn>
+                            <v-btn color="green darken-1"
+                                text
+                                v-on:click="removeQuestion()">Eliminar</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+
+                <v-spacer></v-spacer>
+
                 <v-btn text
                     color="primary"
                     v-on:click="editQuestion()"
@@ -70,7 +96,6 @@
             </template>
         </v-card-actions>
     </v-card>
-
 </template>
 
 <script>
@@ -79,6 +104,8 @@ import VeeValidate from 'vee-validate'
 Vue.use(VeeValidate)
 
 import { Firestore, firestore } from '@/firebase/firestore'
+
+import getUserData from '@/utils/getUserData/'
 
 export default {
     name: "QuestionForm",
@@ -94,14 +121,49 @@ export default {
     data () {
         return {
             loading: false,
-            form: {}
+            form: {},
+            deleteDialog: false
         }
     },
     created () {
         this.reset();
         this.initialize()
     },
+    computed: {
+        removeConfirmContent () {
+            let questionTitle = this.questionData.title,
+                authorDisplayName = getUserData(this.questionData.author).displayName;
+
+            return 'Estas seguro de que quieres eliminar la pregunta <strong>' + questionTitle + '</strong>, publicado por <strong>' + authorDisplayName + '</strong>?'
+        },
+        questionRemovable () {
+            /*
+                If current user is not admin, and questionRemovable is true, 
+                then the question is only removable when current user is the author
+            */
+
+            const questionRemovable = this.config.topic.questionRemovable,
+                isAdmin = this.currentUser.isAdmin;
+
+            return (isAdmin) || (!isAdmin && questionRemovable && this.question.author == this.currentUser.email);
+        }
+    },
     methods: {
+        getUserData,
+        removeQuestion () {
+            const questionData = this.questionData,
+                questionId = questionData.id;
+
+            Firestore.collection('questions').doc(questionId).delete().then(() => {
+                if (this.callback) {
+                    this.callback({
+                        type: 'delete',
+                        deleted: true,
+                        question: questionData
+                    })
+                }
+            });
+        },
         async editQuestion () {
             let validatorResult = await this.$validator.validateAll();
             if (!validatorResult) return;
@@ -110,7 +172,7 @@ export default {
 
             let questionRef = Firestore.collection('questions').doc(this.questionData.id);
 
-            questionRef.set(this.form, { merge: true }).then(() => {
+            return questionRef.set(this.form, { merge: true }).then(() => {
                 if (this.callback) {
                     this.callback({
                         type: 'edit',
@@ -138,9 +200,6 @@ export default {
                 this.initialize();
                 this.loading = false;
             })
-        },
-        getUserData (userEmail) {
-            return this.$store.state.users[userEmail];
         },
         initialize () {
             if (this.mode == 'edit') {

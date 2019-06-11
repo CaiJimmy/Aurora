@@ -37,10 +37,12 @@ const topicPageModule = (topicId, topicData) => {
 
                 Vue.set(state.questions, index, questionData)
             },
-            deleteQuestion (state, questionIndex) {
-                if (questionIndex === null) return;
+            deleteQuestion (state, payload) {
+                const index = payload.index;
                 
-                Vue.delete(state.questions, questionIndex)
+                if (index === null) return;
+                
+                Vue.delete(state.questions, index)
             },
             setQuestion (state, payload) {
                 Vue.set(state.questions, payload._index, {

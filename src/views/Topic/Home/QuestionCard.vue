@@ -68,6 +68,7 @@
 <script>
 import Vue from 'vue'
 import VueTimeago from 'vue-timeago'
+import getUserData from '@/utils/getUserData/'
 
 Vue.use(VueTimeago, {
     name: 'Timeago'
@@ -131,24 +132,13 @@ export default {
         }
     },
     methods: {
+        getUserData,
         formCallback (data) {
             this.editing = false;
             this.editCallback(data);
         },
         startEdit () {
             this.editing = true;
-        },
-        getUserData (userEmail) {
-            if (!userEmail) {
-                return;
-            }
-
-            /// Start fetching in case it has not been triggered, like when it's a new question
-            if (!this.$store.state.users.hasOwnProperty(userEmail)) {
-                this.$store.dispatch('users/requestUser', userEmail);
-            }
-
-            return this.$store.state.users[userEmail];
         },
         questionReady (question) {
             if (this.currentUser.isAdmin) {
