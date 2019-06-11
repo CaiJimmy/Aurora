@@ -128,7 +128,8 @@ export default {
                 color: color,
                 url: imageURL
             };
-            
+
+            this.loading.imageUploader = false;
             this.saveConfig();
         },
         async saveConfig () {
