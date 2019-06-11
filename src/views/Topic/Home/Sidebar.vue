@@ -1,6 +1,6 @@
 <template>
     <div>
-        <TopicStat :topic="topic" />
+        <TopicStat :topic="topic" v-if="currentUser.isAdmin" />
         <UserStat :topic="topic" />
     </div>
 </template>
