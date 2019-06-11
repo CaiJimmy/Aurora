@@ -170,7 +170,7 @@ export default {
                             index: index,
                             questionData: data.question
                         })
-                    };
+                    }
 
                     break;
                 case 'delete':
