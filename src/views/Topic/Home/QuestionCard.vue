@@ -2,7 +2,7 @@
     <v-card :loading="!questionReady(question)"
         class="questionCard">
         <template v-if="questionReady(question)">
-            <v-card-title v-if="shouldDisplayAuthorData(question)">
+            <v-card-title v-if="shouldDisplayAuthorData">
                 <v-list-item class="grow">
                     <v-list-item-avatar color="grey darken-3">
                         <v-img :src="getUserData(question.author).photoURL"></v-img>
@@ -67,8 +67,8 @@ export default {
     props: {
         question: Object
     },
-    methods: {
-        shouldDisplayAuthorData (question) {
+    computed: {
+        shouldDisplayAuthorData () {
             const displayAuthorData = this.config.topic.displayAuthorData,
                 isAdmin = this.currentUser.isAdmin;
 
@@ -82,9 +82,11 @@ export default {
                 /*
                     Otherwise, start loading user data
                 */
-                return this.getUserData(question.author)
+                return this.getUserData(this.question.author)
             }
         },
+    },
+    methods: {
         getUserData (userEmail) {
             if (!userEmail) {
                 return;
