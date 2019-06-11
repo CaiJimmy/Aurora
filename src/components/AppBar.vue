@@ -16,8 +16,7 @@
 
                 <v-card>
                     <v-list>
-                        <v-list-item
-                            link
+                        <v-list-item link
                             :to="item.link"
                             v-for="item in menuItems"
                             :key="item.link">
@@ -80,10 +79,10 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
 
-                        <v-btn flat
+                        <v-btn text
                             color="primary"
                             v-on:click="$router.push({ path: '/user/' + currentUser.email})">Perfil</v-btn>
-                        <v-btn flat
+                        <v-btn text
                             color="warning"
                             v-on:click="signOut($route, $router)">Cerrar sesión</v-btn>
                     </v-card-actions>
