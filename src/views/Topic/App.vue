@@ -13,15 +13,18 @@
             </v-flex>
         </v-layout>
 
-        <router-view v-else
-            :topic="topic"
-            :topicId="topicId" />
+        <transition-page v-else>
+            <router-view :topic="topic"
+                :topicId="topicId" />
+        </transition-page>
     </v-container>
 </template>
 <script>
 import { getTopicById } from '@/utils/taxonomy/';
 import TopicHeader from './Header.vue';
 import topicPageModule from './store';
+
+import TransitionPage from '@/transitions/TransitionPage.vue';
 
 export default {
     name: 'TopicPage',
@@ -34,7 +37,8 @@ export default {
         }
     },
     components: {
-        TopicHeader
+        TopicHeader,
+        TransitionPage
     },
     data () {
         return {
