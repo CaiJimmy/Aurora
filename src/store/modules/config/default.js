@@ -24,7 +24,8 @@ const defaultConfig = {
         timeout: 5000
     },
     topic: {
-        question_per_page: 10   /* Number of questions per page */
+        question_per_page: 10,   /* Number of questions per page */
+        displayAuthorData: false   /* Display question author data (name and email adress) for everyone. */
     }
 }
 

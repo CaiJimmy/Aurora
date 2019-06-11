@@ -2,7 +2,7 @@
     <v-card :loading="!questionReady(question)"
         class="questionCard">
         <template v-if="questionReady(question)">
-            <v-card-title v-if="getUserData(question.author)">
+            <v-card-title v-if="shouldDisplayAuthorData(question)">
                 <v-list-item class="grow">
                     <v-list-item-avatar color="grey darken-3">
                         <v-img :src="getUserData(question.author).photoURL"></v-img>
@@ -68,6 +68,23 @@ export default {
         question: Object
     },
     methods: {
+        shouldDisplayAuthorData (question) {
+            const displayAuthorData = this.config.topic.displayAuthorData,
+                isAdmin = this.currentUser.isAdmin;
+
+            if (!isAdmin && !displayAuthorData) {
+                /*
+                    If current user is not admin, and displayAuthorData is false, then only show author data when it's user's own publication
+                */
+                return this.question.author == this.currentUser.email;
+            }
+            else {
+                /*
+                    Otherwise, start loading user data
+                */
+                return this.getUserData(question.author)
+            }
+        },
         getUserData (userEmail) {
             if (!userEmail) {
                 return;

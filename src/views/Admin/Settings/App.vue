@@ -6,7 +6,7 @@
                 <v-tab :key="section.name">{{ section.name }}</v-tab>
                 <v-tab-item :key="section.id">
                     <v-container>
-                        <v-layout>
+                        <v-layout column>
                             <template v-for="input in section.inputs">
                                 <template v-if="input.type == 'text'">
                                     <v-text-field v-model="section.reference[input.id]"
@@ -36,6 +36,14 @@
                                             :min="1"></v-slider>
                                     </v-flex>
                                 </template>
+
+                                <template v-else-if="input.type == 'boolean'">
+                                    <v-flex :key="input.id">
+                                        <v-checkbox v-model="section.reference[input.id]"
+                                            :label="input.name"></v-checkbox>
+                                    </v-flex>
+                                </template>
+
                             </template>
                         </v-layout>
                     </v-container>
@@ -104,6 +112,11 @@ export default {
                             type: "number",
                             id: "question_per_page",
                             name: "Número de preguntas por página"
+                        },
+                        {
+                            type: "boolean",
+                            id: "displayAuthorData",
+                            name: "Mostrar datos del autor de la pregunta para todos los usuarios."
                         }
                     ]
                 }
