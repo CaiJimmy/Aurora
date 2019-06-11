@@ -33,8 +33,6 @@ export default {
              *  Then display the banner, asking user to manually refresh and re-login
             */
 
-            console.log(newVal, 'newVal');
-            console.log(oldVal, 'oldVal');
             if (oldVal && !newVal) {
                 this.showDialog = true;
             }
