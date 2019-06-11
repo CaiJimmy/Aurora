@@ -2,12 +2,12 @@ import {
     Firestore
 } from '@/firebase/firestore';
 import {
-    firestoreAction 
+    firestoreAction
 } from 'vuexfire';
 
 const TAXONOMY_COLLECTION = Firestore.collection('taxonomy');
 
-const taxonomy = {
+const moduleTaxonomy = {
     namespaced: true,
     state: {
         taxonomies: []
@@ -26,4 +26,7 @@ const taxonomy = {
     }
 };
 
-export default taxonomy;
+export {
+    TAXONOMY_COLLECTION,
+    moduleTaxonomy
+};

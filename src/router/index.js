@@ -75,6 +75,10 @@ var router = new Router({
                 {
                     path: '',
                     component: loadView('Topic/Home/App')
+                },
+                {
+                    path: 'settings',
+                    component: loadView('Topic/Settings/App')
                 }
             ]
         }

@@ -11,6 +11,22 @@
             <h1 class="font-weight-lighter">{{ topic.name }}</h1>
             <h2 class="font-weight-thin">{{ topic.description }}</h2>
         </div>
+
+        <template v-if="$route.path == `/t/${topic.id}`">
+            <v-btn class="settingsButton"
+                text
+                dark
+                outline
+                :to="`/t/${topic.id}/settings`">Editar</v-btn>
+        </template>
+
+        <template v-else-if="$route.path == `/t/${topic.id}/settings`">
+            <v-btn class="settingsButton"
+                text
+                dark
+                outline
+                :to="`/t/${topic.id}`">Volver</v-btn>
+        </template>
     </header>
 </template>
 <script>
@@ -67,6 +83,12 @@ export default {
         h1 {
             font-size: 2em;
         }
+    }
+
+    .settingsButton {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
     }
 }
 </style>

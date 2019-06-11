@@ -7,7 +7,7 @@ import moduleAuth from './modules/auth';
 import moduleQueue from './modules/queue';
 import moduleTheme from './modules/theme';
 import moduleUsers from './modules/users';
-import moduleTaxonomy from './modules/taxonomy';
+import { moduleTaxonomy } from './modules/taxonomy';
 
 Vue.use(Vuex);
 
