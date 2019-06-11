@@ -43,7 +43,7 @@
 
             <v-spacer></v-spacer>
 
-            <v-menu v-model="menu.user"
+            <v-menu v-if="auth.loggedIn" v-model="menu.user"
                 left
                 :close-on-content-click="true"
                 bottom>

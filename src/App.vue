@@ -1,5 +1,6 @@
 <template>
     <v-app>
+        <LogOutMessage />
         <v-progress-linear :indeterminate="true"
             height="4"
             v-if="$store.state.queue.pending.length || !auth.firebaseReady"></v-progress-linear>
@@ -17,12 +18,14 @@
 <script>
 import TransitionPage from './transitions/TransitionPage.vue';
 import AppBar from './components/AppBar.vue';
+import LogOutMessage from './components/LogOutMessage.vue';
 
 export default {
     name: "app",
     components: {
         TransitionPage,
-        AppBar
+        AppBar,
+        LogOutMessage
     },
     metaInfo: {
         changed (newInfo) {
@@ -47,11 +50,3 @@ export default {
     }
 };
 </script>
-<style lang="scss">
-.v-progress-linear {
-    margin: 0;
-}
-.v-toolbar {
-    z-index: 5;
-}
-</style>
