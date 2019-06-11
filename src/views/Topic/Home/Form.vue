@@ -145,7 +145,7 @@ export default {
             const questionRemovable = this.config.topic.questionRemovable,
                 isAdmin = this.currentUser.isAdmin;
 
-            return (isAdmin) || (!isAdmin && questionRemovable && this.question.author == this.currentUser.email);
+            return (isAdmin) || (questionRemovable && this.questionData.author === this.currentUser.email);
         }
     },
     methods: {
