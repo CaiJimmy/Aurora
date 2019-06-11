@@ -16,7 +16,7 @@
                         <v-list-item-content>
                             <v-list-item-title>{{ getUserData(question.author).displayName }}</v-list-item-title>
 
-                            <v-list-item-subtitle>
+                            <v-list-item-subtitle v-if="question.date">
                                 <v-tooltip bottom>
                                     <template v-slot:activator="{ on }">
 
