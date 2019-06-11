@@ -39,7 +39,8 @@
 
                                 <template v-else-if="input.type == 'boolean'">
                                     <v-flex :key="input.id">
-                                        <v-checkbox v-model="section.reference[input.id]"
+                                        <v-checkbox color="primary"
+                                            v-model="section.reference[input.id]"
                                             :label="input.name"></v-checkbox>
                                     </v-flex>
                                 </template>
@@ -116,7 +117,17 @@ export default {
                         {
                             type: "boolean",
                             id: "displayAuthorData",
-                            name: "Mostrar datos del autor de la pregunta para todos los usuarios."
+                            name: "Mostrar datos del autor de la pregunta para todos los usuarios"
+                        },
+                        {
+                            type: "boolean",
+                            id: "questionEditable",
+                            name: "Los usuarios pueden editar sus preguntas"
+                        },
+                        {
+                            type: "boolean",
+                            id: "questionRemovable",
+                            name: "Los usuarios pueden eliminar sus preguntas"
                         }
                     ]
                 }
