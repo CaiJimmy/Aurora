@@ -82,13 +82,15 @@
                 </v-dialog>
 
                 <v-spacer></v-spacer>
-
+                <v-btn text
+                    v-on:click="cancelEdit()">Cancelar</v-btn>
                 <v-btn text
                     color="primary"
                     v-on:click="editQuestion()"
                     :disabled="loading">Guardar</v-btn>
             </template>
             <template v-else>
+                <v-spacer></v-spacer>
                 <v-btn text
                     color="primary"
                     v-on:click="createQuestion()"
@@ -150,6 +152,12 @@ export default {
     },
     methods: {
         getUserData,
+        cancelEdit () {
+            /// If there's no payload, nothing will be done.
+            if (this.callback) {
+                this.callback({});
+            }
+        },
         removeQuestion () {
             const questionData = this.questionData,
                 questionId = questionData.id;
