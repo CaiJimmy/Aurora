@@ -13,10 +13,7 @@
 
                 <v-flex>
                     <v-text-field v-model="newConfig.description"
-                        label="Descripción del tema"
-                        v-validate="'required'"
-                        :error-messages="errors.collect('description')"
-                        data-vv-name="description"></v-text-field>
+                        label="Descripción del tema"></v-text-field>
                 </v-flex>
 
                 <v-flex>
@@ -131,7 +128,7 @@ export default {
                 color: color,
                 url: imageURL
             };
-
+            
             this.saveConfig();
         },
         async saveConfig () {
