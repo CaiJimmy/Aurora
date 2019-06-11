@@ -17,7 +17,7 @@
                 <v-btn class="settingsButton"
                     text
                     dark
-                    outline
+                    outlined
                     :to="`/t/${topic.id}/settings`">Editar</v-btn>
             </template>
 
@@ -25,7 +25,7 @@
                 <v-btn class="settingsButton"
                     text
                     dark
-                    outline
+                    outlined
                     :to="`/t/${topic.id}`">Volver</v-btn>
             </template>
         </template>
