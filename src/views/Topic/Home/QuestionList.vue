@@ -1,5 +1,7 @@
 <template>
     <div class="questionList">
+
+        <!-- New Questions Section -->
         <section class="newQuestionsList"
             v-if="newQuestions.length">
             <QuestionCard v-for="question in newQuestions"
@@ -11,6 +13,7 @@
             </div>
         </section>
 
+        <!-- Display loader while topic data is initializing -->
         <v-layout v-if="topicStore.loading"
             align-content-center
             justify-center
@@ -28,13 +31,15 @@
         </v-layout>
 
         <template v-else>
+
+            <!-- Loop though questionList and display -->
             <template v-if="questions.length">
                 <QuestionCard v-for="question in questionList"
                     :key="question.id"
                     :question="question" />
 
                 <v-banner single-line>
-                    Mostrando {{ paginationRange }} resultados de {{ questions.length }}
+                    Mostrando {{ paginationInterval }} resultados de {{ questions.length }}
                     <template #actions>
                         <v-pagination v-model="currentPage"
                             :length="paginationLength"
@@ -45,6 +50,7 @@
                 </v-banner>
             </template>
 
+            <!-- If there's no questions, neither new questions, then display an alert -->
             <v-alert v-else-if="!newQuestions.length"
                 text
                 prominent
@@ -72,16 +78,30 @@ export default {
         QuestionCard
     },
     created () {
+        /*
+            Change currentPage to topicStore's currentPage
+            This doesn't make sense now, as `this.paging.currentPage` is always 1.
+            It might be necessary to store current page to store in the future.
+        */
+
         this.currentPage = this.paging.currentPage;
     },
     computed: {
         paging () {
+            /*
+                Merge topicStore.paging with config.topic.question_per_page
+            */
+
             return {
                 ...this.topicStore.paging,
                 question_per_page: this.config.topic.question_per_page
             }
         },
-        paginationRange () {
+        paginationInterval () {
+            /*
+                Calculate the interval of questions displayed
+            */
+
             let start = (this.currentPage - 1) * this.paging.question_per_page,
                 end = (this.currentPage) * this.paging.question_per_page
 
@@ -92,9 +112,18 @@ export default {
             return `${start} - ${end}`;
         },
         paginationLength () {
+            /*
+                Calculate number of pages available.
+                The Math.ceil() function method always **rounds a number up** to the next largest whole number or integer.
+            */
+
             return Math.ceil(this.questions.length / this.paging.question_per_page);
         },
         questionList () {
+            /*
+                Slice question list into different pages.
+            */
+
             return this.questions.slice(
                 (this.currentPage - 1) * this.paging.question_per_page,
                 (this.currentPage) * this.paging.question_per_page,
@@ -112,6 +141,10 @@ export default {
     },
     methods: {
         handlePagination (currentPage) {
+            /*
+                When pagination is clicked, request new page
+            */
+           
             this.$store.dispatch(`topic-${this.topicId}/onPageChange`, {
                 toPage: currentPage
             })
