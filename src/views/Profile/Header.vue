@@ -1,36 +1,97 @@
 <template>
-    <div>
-        <!-- Profile header start -->
-        <header class="userProfile--header elevation-1"
-            :style="{'background': config.theme.primary}">
-        </header>
-        <userCard :user="user"
-            class="userProfile--card"></userCard>
-        <!-- Profile header end -->
-    </div>
+    <!-- Profile header start -->
+    <v-layout column
+        justify-center
+        class="userProfile--header elevation-1"
+        :style="{'background': config.theme.primary}">
+        <div class="userProfile--background"
+            :style="background"></div>
+
+        <div class="userProfile--color"
+            :style="{ background: `linear-gradient(0deg, ${config.theme.primary} 0%, ${config.theme.secondary} 100%)`}"></div>
+
+        <v-layout row
+            wrap
+            justify-center
+            align-center
+            class="userProfile--meta">
+            <v-flex shrink
+                class="mr-4">
+                <v-avatar :size="100">
+                    <img :src="user.photoURL"
+                        :alt="user.displayName">
+                </v-avatar>
+            </v-flex>
+
+            <v-flex>
+                <h1 class="headline font-weight-light">{{ user.displayName }}</h1>
+                <h2 class="subtitle-1 font-weight-thin">{{ user.id }} |
+                    <strong>{{ userRole }}</strong>
+                </h2>
+                <h3 class="overline"
+                    v-if="user.lastLogin">Last Login: <strong>{{ user.lastLogin.toDate() }}</strong></h3>
+            </v-flex>
+        </v-layout>
+    </v-layout>
 </template>
 
 <script>
-import userCard from '@/components/UserCard.vue';
-
 export default {
     name: "ProfileHeader",
     props: {
         user: Object
     },
-    components: {
-        userCard
+    computed: {
+        background () {
+            return {
+                "background-image": `url(${this.user.photoURL})`
+            }
+        },
+        userRole () {
+            if (this.user.isAdmin) {
+                return 'Admin'
+            }
+            else {
+                return 'Alumno'
+            }
+        },
     }
 }
 </script>
 
 <style lang="scss" scoped>
 .userProfile--header {
-    padding: 80px 0;
+    padding: 50px 25px;
     border-radius: 5px;
-}
-.userProfile--card {
-    margin-top: -70px;
+    position: relative;
+    margin-bottom: 20px;
+    overflow: hidden;
+
+    .userProfile--background,
+    .userProfile--color {
+        height: 100%;
+        width: 100%;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .userProfile--background {
+        background-position: center center !important;
+        background-size: cover !important;
+        transition: all 0.5s ease;
+        filter: blur(5px);
+    }
+
+    .userProfile--color {
+        opacity: 0.9;
+    }
+
+    .userProfile--meta {
+        z-index: 0;
+        color: #fff;
+    }
 }
 </style>
 
