@@ -50,6 +50,21 @@
                                 :data-vv-as="`opción ${(index + 10).toString(36).toUpperCase()}`"></v-text-field>
                         </v-flex>
                     </v-layout>
+
+                    <v-layout v-if="mode == 'edit' && currentUser.isAdmin">
+                        <v-flex xs12>
+                            <v-select v-model="form.status"
+                                :items="statusOptions"
+                                item-text="name"
+                                item-value="value"
+                                label="Visibilidad"></v-select>
+                        </v-flex>
+                        <v-flex xs12>
+                            <v-select v-model="form.topic"
+                                :items="topicList"
+                                label="Tema al que pertenece"></v-select>
+                        </v-flex>
+                    </v-layout>
                 </v-container>
             </v-form>
             <!-- Form end -->
@@ -109,6 +124,7 @@ Vue.use(VeeValidate)
 import { Firestore, firestore } from '@/firebase/firestore'
 
 import getUserData from '@/utils/getUserData/'
+import { filterTaxonomy, getTopicsByCategory } from '@/utils/taxonomy/'
 
 export default {
     name: "QuestionForm",
@@ -125,7 +141,17 @@ export default {
         return {
             loading: false,
             form: {},
-            deleteDialog: false
+            deleteDialog: false,
+            statusOptions: [
+                {
+                    name: "Visible",
+                    value: 1
+                },
+                {
+                    name: "Oculto",
+                    value: 0
+                }
+            ]
         }
     },
     created () {
@@ -133,6 +159,26 @@ export default {
         this.initialize()
     },
     computed: {
+        topicList () {
+            let result = [],
+                categories = [],
+                taxonomies = this.$store.state.taxonomy.taxonomies;
+
+            categories = filterTaxonomy('category', taxonomies);
+
+            categories.forEach(category => {
+                let topics = getTopicsByCategory(category.id, taxonomies);
+
+                topics.forEach(topic => {
+                    result.push({
+                        text: `${topic.name} / ${category.name}`,
+                        value: topic.id
+                    })
+                })
+            });
+
+            return result;
+        },
         removeConfirmContent () {
             let questionTitle = this.questionData.title,
                 authorDisplayName = getUserData(this.questionData.author).displayName;
@@ -183,11 +229,26 @@ export default {
 
             return questionRef.set(this.form, { merge: true }).then(() => {
                 if (this.callback) {
-                    this.callback({
-                        type: 'edit',
-                        edited: true,
-                        question: this.form
-                    });
+                    const oldTopicId = this.questionData.topic,
+                        newTopicId = this.form.topic;
+
+                    if (oldTopicId !== newTopicId) {
+                        /* Question has been moved */
+
+                        this.callback({
+                            type: 'move',
+                            oldTopicId: oldTopicId,
+                            newTopicId: newTopicId,
+                            question: this.form
+                        });
+                    }
+                    else {
+                        this.callback({
+                            type: 'edit',
+                            edited: true,
+                            question: this.form
+                        });
+                    }
                 }
 
                 this.loading = false;

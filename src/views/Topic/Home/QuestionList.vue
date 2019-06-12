@@ -161,6 +161,10 @@ export default {
                 index = this.questions.findIndex((question) => question.id == data.question.id);
             }
 
+            /* These two properties are available when type == 'move' */
+            const oldTopicId = data.oldTopicId,
+                newTopicId = data.newTopicId;
+
             switch (type) {
                 case 'edit':
                     /* Replace old question data with new one, passed as parameter `data.question` */
@@ -174,13 +178,29 @@ export default {
 
                     break;
                 case 'delete':
-                case 'move':
-                    /* Remove question from `questions` array if it has been moved or deleted */
+                    /* Remove question from `questions` array if it has been deleted */
                     if (index > -1) {
                         this.$store.commit(`topic-${this.topicId}/deleteQuestion`, {
                             index: index
                         })
                     }
+                    break;
+                case 'move':
+                    /* Remove question from old topic's `questions` array if it has been moved */
+
+                    if (index > -1) {
+                        this.$store.commit(`topic-${oldTopicId}/deleteQuestion`, {
+                            index: index
+                        })
+                    }
+
+                    /* 
+                        As we can't know if that question's index inside new topic's question array
+                        it is easier to just unregister module, and reset state.
+                    */
+
+                    this.$store.unregisterModule(`topic-${newTopicId}`);
+                    break;
             }
         },
         handlePagination (currentPage) {
