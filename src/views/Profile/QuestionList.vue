@@ -27,7 +27,7 @@
                     :editCallback="editCallback" />
 
                 <v-banner single-line>
-                    Mostrando {{ paginationInterval }} resultados de {{ questions.length }}
+                    Mostrando {{ paginationInterval }} resultados de {{ filteredQuestions.length }}
                     <template #actions>
                         <v-pagination v-model="paging.currentPage"
                             :length="paginationLength"
@@ -45,7 +45,7 @@
                 El usuario no ha publicado ninguna pregunta
             </v-alert>
         </template>
-        
+
     </div>
 </template>
 <script>
@@ -69,10 +69,28 @@ export default {
             }
         }
     },
-    created () {
-
+    watch: {
+        selectedTopic () {
+            /// Reset pagination when a topic is selected
+            this.paging.currentPage = 1;
+        }
     },
     computed: {
+        filteredQuestions () {
+            /*
+                Build filtered question array
+            */
+            if (this.selectedTopic) {
+                return this.questions.filter((question) => {
+                    return question.topic == this.selectedTopic
+                })
+            } else {
+                return this.questions;
+            }
+        },
+        selectedTopic () {
+            return this.$route.query.topic;
+        },
         question_per_page () {
             return this.config.topic.question_per_page;
         },
@@ -84,8 +102,8 @@ export default {
             let start = (this.paging.currentPage - 1) * this.question_per_page,
                 end = (this.paging.currentPage) * this.question_per_page
 
-            if (end > this.questions.length) {
-                end = this.questions.length
+            if (end > this.filteredQuestions.length) {
+                end = this.filteredQuestions.length
             }
 
             return `${start} - ${end}`;
@@ -96,14 +114,14 @@ export default {
                 The Math.ceil() function method always **rounds a number up** to the next largest whole number or integer.
             */
 
-            return Math.ceil(this.questions.length / this.question_per_page);
+            return Math.ceil(this.filteredQuestions.length / this.question_per_page);
         },
         questionList () {
             /*
                 Slice question list into different pages.
             */
 
-            return this.questions.slice(
+            return this.filteredQuestions.slice(
                 (this.paging.currentPage - 1) * this.question_per_page,
                 (this.paging.currentPage) * this.question_per_page,
             )

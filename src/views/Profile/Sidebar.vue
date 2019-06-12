@@ -19,7 +19,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.v-card:not(:last-child) {
+.v-card {
     margin-bottom: 20px;
 }
 </style>

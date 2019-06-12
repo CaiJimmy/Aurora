@@ -41,7 +41,8 @@
                     <v-flex xs12
                         md3
                         class="sidebar">
-                        <Sidebar :user="user" />
+                        <Sidebar :user="user"
+                            :questions="questions" />
                     </v-flex>
 
                     <v-flex xs12>
@@ -141,3 +142,10 @@ export default {
     }
 }
 </script>
+<style lang="scss" scoped>
+.row {
+    .sidebar {
+        margin-right: 20px;
+    }
+}
+</style>
