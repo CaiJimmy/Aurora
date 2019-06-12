@@ -30,7 +30,7 @@
                 <v-flex>
                     <v-subheader class="pl-0">Número de preguntas que se tiene que publicar cada usuario</v-subheader>
                     <v-slider v-model="newConfig.config.requiredQuestions"
-                        thumb-label="always"
+                        thumb-label
                         :max="30"
                         :min="1"></v-slider>
                 </v-flex>
