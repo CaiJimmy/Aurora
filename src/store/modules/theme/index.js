@@ -3,9 +3,7 @@ import merge from 'deepmerge';
 const getDefaultState = () => {
     return {
         toolbar: {
-            flat: false,
-            color: 'primary',
-            hidden: false,
+            hidden: false
         }
     }
 }
@@ -13,7 +11,7 @@ const theme = {
     namespaced: true,
     state: getDefaultState(),
     mutations: {
-        set(state, payload) {
+        set (state, payload) {
             /*
              *   payload:
              *       {
@@ -27,7 +25,7 @@ const theme = {
         }
     },
     actions: {
-        reset({
+        reset ({
             commit
         }) {
             commit('set', getDefaultState());
