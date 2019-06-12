@@ -39,9 +39,9 @@ const topicPageModule = (topicId, topicData) => {
             },
             deleteQuestion (state, payload) {
                 const index = payload.index;
-                
+
                 if (index === null) return;
-                
+
                 Vue.delete(state.questions, index)
             },
             setQuestion (state, payload) {
@@ -197,14 +197,16 @@ const topicPageModule = (topicId, topicData) => {
             async init ({
                 state,
                 commit,
-                dispatch
+                dispatch,
+                rootGetters
             }) {
                 /// Initialize Firestore references and laod the first page
                 /// This action should be only called once, after module registration
 
-                const counter = state.topicData.counter;
+                const counter = state.topicData.counter,
+                    isAdmin = rootGetters['auth/currentUser'];
 
-                if (this.isAdmin) {
+                if (isAdmin) {
                     /* 
                         Hidden questions are visible to admins
                     */
