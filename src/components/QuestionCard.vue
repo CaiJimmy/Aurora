@@ -5,9 +5,9 @@
             :questionData="question"
             :callback="formCallback"
             mode="edit" />
-        <v-card :loading="!questionReady(question)"
+        <v-card :loading="question.loading"
             v-else>
-            <template v-if="questionReady(question)">
+            <template v-if="!question.loading">
 
                 <v-card-title v-if="shouldDisplayAuthorData || profilePage">
                     <v-list-item class="grow">
@@ -194,14 +194,6 @@ export default {
         },
         startEdit () {
             this.editing = true;
-        },
-        questionReady (question) {
-            if (this.currentUser.isAdmin) {
-                return !question.loading && this.$store.state.users.hasOwnProperty(question.author);
-            }
-            else {
-                return !question.loading;
-            }
         }
     }
 }
