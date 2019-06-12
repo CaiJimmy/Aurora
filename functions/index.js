@@ -78,29 +78,18 @@ exports.questionChange = functions.firestore.document('questions/{questionID}').
                 const oldTopicData = await oldTopicRef.get().then(snap => snap.data()),
                     newTopicData = await newTopicRef.get().then(snap => snap.data());
 
-                oldTopicRef.set({
-                    counter: {
-                        total: oldTopicData.counter.total - 1
-                    }
-                }, {
-                        merge: true
-                    });
+                let wasHidden = false,
+                    isHidden = false;
 
                 if (oldQuestion.status === 0) {
                     /// Subtract one from old topic count.hidden if that question was hidden
-                    oldTopicRef.set({
-                        counter: {
-                            hidden: oldTopicData.counter.hidden - 1
-                        }
-                    }, {
-                            merge: true
-                        });
+                    wasHidden = true;
                 }
 
-                /// Plus one to new topic counter.total
-                newTopicRef.set({
+                oldTopicRef.set({
                     counter: {
-                        total: newTopicData.counter.total + 1
+                        total: oldTopicData.counter.total - 1,
+                        hidden: oldTopicData.counter.hidden + (wasHidden ? -1 : 0)
                     }
                 }, {
                         merge: true
@@ -108,16 +97,19 @@ exports.questionChange = functions.firestore.document('questions/{questionID}').
 
                 if (newQuestion.status === 0) {
                     /// Plus one to new topic counter.hidden if that question is hidden
-                    return newTopicRef.set({
-                        counter: {
-                            hidden: newTopicData.counter.hidden + 1
-                        }
-                    }, {
-                            merge: true
-                        });
-                } else {
-                    return true;
+                    isHidden = true
                 }
+
+                /// Plus one to new topic counter.total
+                return newTopicRef.set({
+                    counter: {
+                        total: newTopicData.counter.total + 1,
+                        hidden: newTopicData.counter.hidden + (isHidden ? 1 : 0)
+                    }
+                }, {
+                        merge: true
+                    });
+
             } else if (oldQuestion.status !== newQuestion.status) { /* Case 2 */
 				/*
 					If status was 1, that means the question **was** visible. 
