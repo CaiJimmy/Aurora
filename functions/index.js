@@ -86,7 +86,7 @@ exports.questionChange = functions.firestore.document('questions/{questionID}').
                         merge: true
                     });
 
-                if (oldQuestion.hidden === true) {
+                if (oldQuestion.status === 0) {
                     /// Subtract one from old topic count.hidden if that question was hidden
                     oldTopicRef.set({
                         counter: {
@@ -106,7 +106,7 @@ exports.questionChange = functions.firestore.document('questions/{questionID}').
                         merge: true
                     });
 
-                if (newQuestion.hidden === true) {
+                if (newQuestion.status === 0) {
                     /// Plus one to new topic counter.hidden if that question is hidden
                     return newTopicRef.set({
                         counter: {
@@ -118,12 +118,12 @@ exports.questionChange = functions.firestore.document('questions/{questionID}').
                 } else {
                     return true;
                 }
-            } else if (oldQuestion.hidden !== newQuestion.hidden) { /* Case 2 */
+            } else if (oldQuestion.status !== newQuestion.status) { /* Case 2 */
 				/*
-					If isHidden is true, that means the question **was** visible. 
+					If status was 1, that means the question **was** visible. 
 				*/
 
-                const isHidden = newQuestion.hidden;
+                const isHidden = newQuestion.status === 0;
 
                 const newTopicData = await newTopicRef.get().then(snap => snap.data());
 
