@@ -45,7 +45,7 @@ export default {
                 return;
             }
 
-            this.$vuetify.theme = this.config.theme;
+            this.$vuetify.theme.setTheme('light', this.config.theme)
         }
     }
 };
