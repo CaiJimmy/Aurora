@@ -31,9 +31,22 @@
                                     <v-flex :key="input.id">
                                         <v-subheader class="pl-0">{{ input.name }}</v-subheader>
                                         <v-slider v-model="section.reference[input.id]"
-                                            thumb-label="always"
-                                            :max="30"
-                                            :min="1"></v-slider>
+                                            thumb-label
+                                            :max="input.max"
+                                            :min="input.min"
+                                            :step="input.step"
+                                            ticks>
+                                            <template #append>
+                                                <v-text-field v-model="section.reference[input.id]"
+                                                    class="mt-0 pt-0"
+                                                    hide-details
+                                                    single-line
+                                                    type="number"
+                                                    :max="input.max"
+                                                    :min="input.min"
+                                                    style="width: 60px"></v-text-field>
+                                            </template>
+                                        </v-slider>
                                     </v-flex>
                                 </template>
 
@@ -112,7 +125,9 @@ export default {
                         {
                             type: "number",
                             id: "question_per_page",
-                            name: "Número de preguntas por página"
+                            name: "Número de preguntas por página",
+                            min: 1,
+                            max: 30
                         },
                         {
                             type: "boolean",
@@ -128,6 +143,19 @@ export default {
                             type: "boolean",
                             id: "questionRemovable",
                             name: "Los usuarios pueden eliminar sus preguntas"
+                        },
+                        {
+                            type: "text",
+                            id: "defaultHeaderImage",
+                            name: "URL de la imagen del tema por defecto (Se recomienda que sea un fuente que permite obtener imágenes aleatorias)"
+                        },
+                        {
+                            type: "number",
+                            id: "headerImageMaxWidth",
+                            name: "Ancho máximo de la imagen del tema (Se recorta automáticamente)",
+                            min: 500,
+                            max: 2000,
+                            step: 50
                         }
                     ]
                 }
