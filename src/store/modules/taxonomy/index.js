@@ -5,7 +5,7 @@ import {
     firestoreAction
 } from 'vuexfire';
 
-const TAXONOMY_COLLECTION = Firestore.collection('taxonomy');
+const TAXONOMY_COLLECTION = Firestore.collection('taxonomy').orderBy("name", 'asc');
 
 const moduleTaxonomy = {
     namespaced: true,
