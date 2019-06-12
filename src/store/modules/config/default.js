@@ -27,7 +27,9 @@ const defaultConfig = {
         question_per_page: 10,   /* Number of questions per page */
         displayAuthorData: false,   /* Display question author data (name and email adress) for everyone. */
         questionEditable: true,  /* Question editable by author after being published */
-        questionRemovable: false /* Question removable by author after being published */
+        questionRemovable: false, /* Question removable by author after being published */
+        defaultHeaderImage: 'https://source.unsplash.com/1000x1000/?technology',
+        headerImageMaxWidth: 1000
     }
 }
 

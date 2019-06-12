@@ -122,7 +122,7 @@ export default {
             return text;
         },
         getRandomPic: async function () {
-            return fetch("https://source.unsplash.com/500x500/?technology").then(async (response) => {   /// Fetch a random image from Unsplash, and add it to form
+            return fetch(this.config.topic.defaultHeaderImage).then(async (response) => {   /// Fetch a random image from Unsplash, and add it to form
                 let imageFile = await fetch(response.url).then(res => {
                     return res.blob();
                 });

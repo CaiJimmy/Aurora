@@ -120,7 +120,7 @@ export default {
 
             this.loading.imageUploader = true;
 
-            let resizedImage = await resizeImage(imageFile, 1000),
+            let resizedImage = await resizeImage(imageFile, this.config.topic.headerImageMaxWidth),
                 color = await getColorFromImage(URL.createObjectURL(resizedImage)),
                 imageURL = await uploadFile(resizedImage, `${this.topicId}/${imageFile.name}`)
 
