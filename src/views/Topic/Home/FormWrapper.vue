@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import QuestionForm from './Form.vue';
+import QuestionForm from '@/components/Form.vue';
 
 export default {
     name: "QuestionFormWrapper",

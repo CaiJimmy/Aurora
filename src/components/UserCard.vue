@@ -10,7 +10,7 @@
         </figure>
         <div class="userCard--meta">
             <h1>{{ user.displayName }}</h1>
-            <h2>{{ user.email }} |
+            <h2>{{ user.id }} |
                 <strong>{{ userRole }}</strong>
             </h2>
             <h3 v-if="user.lastLogin"

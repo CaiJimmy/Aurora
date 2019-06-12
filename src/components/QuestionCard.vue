@@ -8,29 +8,56 @@
         <v-card :loading="!questionReady(question)"
             v-else>
             <template v-if="questionReady(question)">
-                <v-card-title v-if="shouldDisplayAuthorData">
+
+                <v-card-title v-if="shouldDisplayAuthorData || profilePage">
                     <v-list-item class="grow">
-                        <v-list-item-avatar color="grey darken-3">
-                            <v-img :src="getUserData(question.author).photoURL"></v-img>
-                        </v-list-item-avatar>
+                        <template v-if="profilePage">
+                            <v-list-item-avatar color="grey darken-3">
+                                <v-img :src="topicData.config.background.url"></v-img>
+                            </v-list-item-avatar>
 
-                        <v-list-item-content>
-                            <v-list-item-title>{{ getUserData(question.author).displayName }}</v-list-item-title>
+                            <v-list-item-content>
+                                <v-list-item-title>{{ topicData.name }}</v-list-item-title>
 
-                            <v-list-item-subtitle v-if="question.date">
-                                <v-tooltip bottom>
-                                    <template v-slot:activator="{ on }">
+                                <v-list-item-subtitle>
+                                    <v-tooltip bottom>
+                                        <template v-slot:activator="{ on }">
 
-                                        <span v-on="on">
-                                            <timeago :datetime="question.date.toDate()"
-                                                locale="es-ES"></timeago>
-                                        </span>
+                                            <span v-on="on">
+                                                <timeago :datetime="question.date.toDate()"
+                                                    locale="es-ES"></timeago>
+                                            </span>
 
-                                    </template>
-                                    <span>{{ question.date.toDate() }}</span>
-                                </v-tooltip>
-                            </v-list-item-subtitle>
-                        </v-list-item-content>
+                                        </template>
+                                        <span>{{ question.date.toDate() }}</span>
+                                    </v-tooltip>
+                                </v-list-item-subtitle>
+                            </v-list-item-content>
+                        </template>
+
+                        <template v-else-if="shouldDisplayAuthorData">
+                            <v-list-item-avatar color="grey darken-3">
+                                <v-img :src="getUserData(question.author).photoURL"></v-img>
+                            </v-list-item-avatar>
+
+                            <v-list-item-content>
+                                <v-list-item-title>{{ getUserData(question.author).displayName }}</v-list-item-title>
+
+                                <v-list-item-subtitle v-if="question.date">
+                                    <v-tooltip bottom>
+                                        <template v-slot:activator="{ on }">
+
+                                            <span v-on="on">
+                                                <timeago :datetime="question.date.toDate()"
+                                                    locale="es-ES"></timeago>
+                                            </span>
+
+                                        </template>
+                                        <span>{{ question.date.toDate() }}</span>
+                                    </v-tooltip>
+                                </v-list-item-subtitle>
+                            </v-list-item-content>
+                        </template>
 
                         <v-layout align-center
                             justify-end
@@ -71,6 +98,7 @@
 import Vue from 'vue'
 import VueTimeago from 'vue-timeago'
 import getUserData from '@/utils/getUserData/'
+import { getTopicById } from '@/utils/taxonomy/'
 
 Vue.use(VueTimeago, {
     name: 'Timeago'
@@ -82,7 +110,8 @@ export default {
     name: "QuestionList",
     props: {
         question: Object,
-        editCallback: Function
+        editCallback: Function,
+        profilePage: Boolean
     },
     components: {
         QuestionForm
@@ -93,6 +122,10 @@ export default {
         }
     },
     computed: {
+        topicData () {
+            const topicId = this.question.topic;
+            return getTopicById(topicId, this.$store.state.taxonomy.taxonomies);
+        },
         cardStyle () {
             const style = {};
 

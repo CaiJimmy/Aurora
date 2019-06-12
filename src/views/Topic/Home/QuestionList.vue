@@ -63,7 +63,8 @@
     </div>
 </template>
 <script>
-import QuestionCard from './QuestionCard.vue';
+import QuestionCard from '@/components/QuestionCard.vue';
+
 export default {
     name: "QuestionList",
     props: {
