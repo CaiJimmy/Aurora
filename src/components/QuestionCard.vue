@@ -107,7 +107,7 @@ Vue.use(VueTimeago, {
 import QuestionForm from './Form.vue';
 
 export default {
-    name: "QuestionList",
+    name: "QuestionCard",
     props: {
         question: Object,
         editCallback: Function,
