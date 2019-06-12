@@ -24,7 +24,7 @@
                     :key="question.id"
                     :question="question"
                     :profilePage="true"
-                    :editCallback="editCallback()" />
+                    :editCallback="editCallback" />
 
                 <v-banner single-line>
                     Mostrando {{ paginationInterval }} resultados de {{ questions.length }}
