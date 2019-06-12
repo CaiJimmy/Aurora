@@ -6,7 +6,8 @@
             v-if="newQuestions.length">
             <QuestionCard v-for="question in newQuestions"
                 :key="question.id"
-                :question="question" />
+                :question="question"
+                :profileLink="true" />
             <div v-if="newQuestions.length && questions.length"
                 class="separator">
                 <span class="elevation-1">Preguntas Antiguas</span>
@@ -37,7 +38,8 @@
                 <QuestionCard v-for="question in questionList"
                     :key="question.id"
                     :question="question"
-                    :editCallback="handleQuestionChange" />
+                    :editCallback="handleQuestionChange"
+                    :profileLink="true" />
 
                 <v-banner single-line>
                     Mostrando {{ paginationInterval }} resultados de {{ questions.length }}

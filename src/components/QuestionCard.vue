@@ -41,7 +41,17 @@
                             </v-list-item-avatar>
 
                             <v-list-item-content>
-                                <v-list-item-title>{{ getUserData(question.author).displayName }}</v-list-item-title>
+                                <v-list-item-title>
+                                    <router-link v-if="profileLink"
+                                        :to="`/user/${question.author}?topic=${question.topic}`"
+                                        target="_blank">
+                                        {{ getUserData(question.author).displayName }}
+                                    </router-link>
+
+                                    <template v-else>
+                                        {{ getUserData(question.author).displayName }}
+                                    </template>
+                                </v-list-item-title>
 
                                 <v-list-item-subtitle v-if="question.date">
                                     <v-tooltip bottom>
@@ -111,7 +121,8 @@ export default {
     props: {
         question: Object,
         editCallback: Function,
-        profilePage: Boolean
+        profilePage: Boolean,
+        profileLink: Boolean
     },
     components: {
         QuestionForm
