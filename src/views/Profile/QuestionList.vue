@@ -42,7 +42,7 @@
                 prominent
                 type="info"
                 icon="question_answer">
-                Parece ser que no hay ninguna pregunta en este tema
+                El usuario no ha publicado ninguna pregunta
             </v-alert>
         </template>
         
