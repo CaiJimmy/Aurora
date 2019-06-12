@@ -1,5 +1,6 @@
 <template>
-    <div class="questionCard">
+    <div class="questionCard"
+        :style="cardStyle">
         <QuestionForm v-if="editing"
             :questionData="question"
             :callback="formCallback"
@@ -32,8 +33,9 @@
                         </v-list-item-content>
 
                         <v-layout align-center
-                            justify-end>
-                            <v-icon class="mr-1">mdi-share-variant</v-icon>
+                            justify-end
+                            v-if="question.status == 0">
+                            <v-icon class="mr-1">visibility_off</v-icon>
                         </v-layout>
                     </v-list-item>
                 </v-card-title>
@@ -91,6 +93,15 @@ export default {
         }
     },
     computed: {
+        cardStyle () {
+            const style = {};
+
+            if (this.question.status == 0) {
+                style.opacity = '0.6';
+            }
+
+            return style;
+        },
         shouldDisplayAuthorData () {
             const displayAuthorData = this.config.topic.displayAuthorData,
                 isAdmin = this.currentUser.isAdmin;
