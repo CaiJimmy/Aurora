@@ -74,10 +74,10 @@ export default {
                 Add current topic config to Vuex config store
             */
             let topicConfig = {
-                ...this.topic.config,
                 theme: {
                     primary: this.topic.config.background.color.Vibrant
-                }
+                },
+                topic: this.topic.config
             };
 
             this.$store.commit('config/addTopicConfig', topicConfig);
