@@ -36,7 +36,8 @@
 
                         <v-flex shrink>
                             <v-radio-group v-model="form.correctAnswer">
-                                <v-radio :value="index"></v-radio>
+                                <v-radio :value="index"
+                                    color="primary"></v-radio>
                             </v-radio-group>
                         </v-flex>
                         <v-flex>
