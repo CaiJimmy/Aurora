@@ -67,6 +67,28 @@ export default {
         topic () {
             return getTopicById(this.topicId, this.$store.state.taxonomy.taxonomies)
         }
+    },
+    watch: {
+        "topic.config" () {
+            /*
+                Add current topic config to Vuex config store
+            */
+            let topicConfig = {
+                ...this.topic.config,
+                theme: {
+                    primary: this.topic.config.background.color.Vibrant
+                }
+            };
+
+            this.$store.commit('config/addTopicConfig', topicConfig);
+        }
+    },
+    beforeRouteLeave (to, from, next) {
+        /*
+            Remove current topic config before leaving topic page
+        */
+        this.$store.commit('config/removeTopicConfig');
+        next();
     }
 }
 </script>

@@ -3,9 +3,11 @@ import {
     Firestore
 } from '@/firebase/firestore';
 import {
-    firestoreAction 
+    firestoreAction
 } from 'vuexfire'
 import merge from 'deepmerge'
+
+import Vue from 'vue';
 
 const CONFIG_DOC = Firestore.collection('config').doc('default');
 
@@ -13,17 +15,26 @@ let moduleConfig = {
     namespaced: true,
     state: {
         defaultConfig: defaultConfig,
-        cloudConfig: {}
+        cloudConfig: {},
+        topicConfig: {}
     },
     getters: {
         merged: state => {
-            return merge(
-                state.defaultConfig,
-                state.cloudConfig
+            return merge.all(
+                [state.defaultConfig,
+                state.cloudConfig,
+                state.topicConfig]
             )
         }
     },
-    mutations: {},
+    mutations: {
+        addTopicConfig (state, payload) {
+            Vue.set(state, 'topicConfig', payload)
+        },
+        removeTopicConfig (state) {
+            Vue.set(state, 'topicConfig', {})
+        }
+    },
     actions: {
         bindCloudConfig: firestoreAction(({
             bindFirestoreRef

@@ -44,7 +44,8 @@ export default {
             if (!this.config) {
                 return;
             }
-
+        },
+        "config.theme" () {
             this.$vuetify.theme.setTheme('light', this.config.theme)
         }
     }
