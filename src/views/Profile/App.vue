@@ -69,8 +69,15 @@ Vue.use(firestorePlugin)
 export default {
     name: 'Profile',
     metaInfo () {
-        return {
-            title: this.user.displayName || 'Perfil'
+        if (this.user) {
+            return {
+                title: this.user.displayName
+            }
+        }
+        else {
+            return {
+                title: 'Perfil'
+            }
         }
     },
     props: {
@@ -111,6 +118,17 @@ export default {
     },
     created () {
         this.init();
+    },
+    watch: {
+        userEmail (userEmail) {
+            if (userEmail) {
+                this.loading.user = true;
+                this.loading.questions = true;
+                this.notFound = false;
+                this.$unbind('user');
+                this.init();
+            }
+        }
     },
     methods: {
         bindQuestions () {

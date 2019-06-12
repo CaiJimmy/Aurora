@@ -74,6 +74,8 @@ export default {
     },
     methods: {
         buildFilter () {
+            /// Reset options before start building
+            this.filter.options = {};
             this.questions.forEach((question) => {
                 const taxonomies = this.$store.state.taxonomy.taxonomies,
                     topicId = question.topic,   /* Topic that current question belongs to */
@@ -119,7 +121,7 @@ export default {
                         };
                     }
                     else {
-                        category.topics[topicId].count++;
+                        category.topics[topicId].count += 1;
                     }
                 }
 
