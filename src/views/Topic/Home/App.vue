@@ -7,7 +7,7 @@
             <Sidebar :topic="topic" />
         </v-flex>
 
-        <v-flex xs12>
+        <v-flex xs12 md9>
             <FormWrapper :topicId="topicId" />
             <QuestionList :topic="topic"
                 :topicId="topicId" />
