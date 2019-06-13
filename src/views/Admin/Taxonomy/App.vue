@@ -57,6 +57,27 @@ import VeeValidate from 'vee-validate'
 
 Vue.use(VeeValidate)
 
+const getDefaultForm = () => {
+    return {
+        name: null,
+        type: "category",
+        parent: null,
+        description: null,
+        config: {
+            requiredQuestions: 5,
+            background: {
+                url: null,
+                colors: []
+            }
+        },
+        counter: {
+            total: 0,
+            hidden: 0
+        },
+        loading: false
+    }
+}
+
 export default {
     $_veeValidate: {
         validator: 'new'
@@ -70,24 +91,7 @@ export default {
     },
     data () {
         return {
-            form: {
-                name: null,
-                type: "category",
-                parent: null,
-                description: null,
-                config: {
-                    requiredQuestions: 5,
-                    background: {
-                        url: null,
-                        colors: []
-                    }
-                },
-                counter: {
-                    total: 0,
-                    hidden: 0
-                },
-                loading: false
-            },
+            form: getDefaultForm(),
             type: [
                 {
                     name: "Tema",
@@ -150,6 +154,8 @@ export default {
 
                     addTaxonomy(this.form.type, this.form).then(() => {
                         this.form.loading = false;
+                        this.form = getDefaultForm();
+                        this.$validator.reset();
                     })
                 }
             });
