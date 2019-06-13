@@ -2,7 +2,8 @@ const defaultConfig = {
     siteName: 'Aurora',
     logo: 'https://i.imgur.com/wu5BCXq.png',
     login: {
-        background: 'https://i.imgur.com/a0cAhUZ.jpg'
+        background: 'https://i.imgur.com/a0cAhUZ.jpg',
+        defaultRole: 'student'
     },
     theme: {
         primary: '#1976D2',
