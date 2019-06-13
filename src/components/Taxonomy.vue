@@ -13,9 +13,10 @@
                     <slot name="emptyCategory"
                         v-if="!getTopicsByCategory(category.id, taxonomies).length"></slot>
 
-                    <v-flex xs12
+                    <v-flex xs6
                         md4
                         lg3
+                        xl2
                         v-for="topic in getTopicsByCategory(category.id, taxonomies)"
                         :key="topic.id">
                         <router-link :to="`/t/${topic.id}`"
@@ -76,13 +77,12 @@ export default {
     margin: 10px;
     flex-grow: 1;
 
-    @media (max-width: 960px) {
+    @media (max-width: 600px) {
+        min-height: 100px;
+    }
+
+    @media (min-width: 600px) and (max-width: 960px) {
         min-height: 150px;
-        .taxonomyList--item-meta {
-            h1 {
-                font-size: 1.25em;
-            }
-        }
     }
 
     &:hover {
@@ -117,8 +117,21 @@ export default {
         padding: 20px;
         color: #fff;
         font-weight: lighter;
+
+        @media (max-width: 600px) {
+            padding: 15px;
+        }
+
         h1 {
             font-size: 1.5em;
+
+            @media (min-width: 600px) and (max-width: 960px) {
+                font-size: 1.25em;
+            }
+
+            @media (max-width: 600px) {
+                font-size: 1em;
+            }
         }
     }
 }
