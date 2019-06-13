@@ -28,10 +28,7 @@ export default {
         LogOutMessage
     },
     metaInfo: {
-        changed (newInfo) {
-            this.$root.title = newInfo.titleChunk;
-        },
-        titleTemplate: function (titleChunk) {
+        titleTemplate (titleChunk) {
             // If undefined or blank then we don't need the hyphen
             return titleChunk ? `${titleChunk} | ${this.config.siteName}` : this.config.siteName;
         }
