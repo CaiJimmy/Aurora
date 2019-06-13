@@ -133,7 +133,7 @@ export default {
                 if (item.admin && userUtil(this.currentUser).isAdmin()) {
                     return item;
                 }
-                else {
+                else if(!item.admin){
                     return item;
                 }
             })
