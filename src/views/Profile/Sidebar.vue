@@ -1,13 +1,16 @@
 <template>
     <div>
         <QuestionFilter :questions="questions" />
-        <UserManager :user="user" />
+        <UserManager :user="user"
+            v-if="isAdmin" />
     </div>
 </template>
 
 <script>
 import QuestionFilter from './Widgets/Filter.vue';
 import UserManager from './Widgets/UserManager.vue';
+
+import userUtil from '@/utils/user';
 
 export default {
     name: "Profile-Sidebar",
@@ -18,6 +21,11 @@ export default {
     components: {
         QuestionFilter,
         UserManager
+    },
+    computed: {
+        isAdmin () {
+            return userUtil(this.currentUser).isAdmin();
+        }
     }
 }
 </script>
