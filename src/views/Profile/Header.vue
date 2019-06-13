@@ -50,10 +50,10 @@ export default {
             }
         },
         userRole () {
-            if (userUtil(this.currentUser).isAdmin()) {
+            if (userUtil(this.user).isAdmin()) {
                 return 'Administrador'
             }
-            else if (userUtil(this.currentUser).isStudent()) {
+            else if (userUtil(this.user).isStudent()) {
                 return 'Alumno'
             }
         }
