@@ -84,10 +84,13 @@ export default {
     methods: {
         afterValidation () {
             /*
-				Start downloading taxonomy datas (levels and topics)
-			*/
-            this.$store.dispatch('taxonomy/bindTaxonomy');
+                Start downloading taxonomy datas (levels and topics)
+                Use `queue/add`. Because it blocks main route-view from rendering before data is ready
+            */
+            
+            this.$store.commit('queue/add', 'taxonomy/bindTaxonomy');
             this.$store.commit('auth/userValidation', true);
+            this.$store.dispatch('queue/process');
         },
         redirect () {
             this.$router.replace({
@@ -105,8 +108,8 @@ export default {
                      * Check if user has a valid email account
                     */
                     if (validAccount == true) {
-                        this.redirect();
                         this.afterValidation();
+                        this.redirect();
                     }
                     else {
                         this.$store.commit('auth/userValidation', false);
