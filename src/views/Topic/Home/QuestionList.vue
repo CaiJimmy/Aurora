@@ -41,16 +41,18 @@
                     :editCallback="handleQuestionChange"
                     :profileLink="true" />
 
-                <v-banner single-line>
-                    Mostrando {{ paginationInterval }} resultados de {{ questions.length }}
-                    <template #actions>
+                <div class="elevation-1">
+                    <v-banner>
+                        Mostrando {{ paginationInterval }} resultados de {{ questions.length }}
+                    </v-banner>
+                    <v-toolbar flat>
                         <v-pagination v-model="currentPage"
                             :length="paginationLength"
-                            :total-visible="7"
+                            :total-visible="6"
                             @input="handlePagination"
                             :disabled="topicStore.loading"></v-pagination>
-                    </template>
-                </v-banner>
+                    </v-toolbar>
+                </div>
             </template>
 
             <!-- If there's no questions, neither new questions, then display an alert -->
