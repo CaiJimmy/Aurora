@@ -1,7 +1,7 @@
 const queue = {
     namespaced: true,
     state: {
-        pending: ['config/bindCloudConfig', 'auth/suscribe', 'taxonomy/bindTaxonomy']
+        pending: ['config/bindCloudConfig', 'auth/suscribe']
     },
     mutations: {
         add(state, payload) {

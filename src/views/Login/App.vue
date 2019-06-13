@@ -65,22 +65,15 @@ export default {
         if (this.auth.loggedIn) {
             /*
                 User already logged in
-            */
 
-			/*
-				Start downloading datas (levels and topics)
-			*/
-            ///this.$store.dispatch('initApp');
-
-			/*
 				If the user was logged in, he/she must have passed domain validation
 				So there's no need to do it again.
-			*/
-            this.$store.commit('auth/userValidation', true);
+            */
 
+            this.afterValidation();
             this.redirect();
         }
-        else{
+        else {
             this.$store.commit('theme/set', {
                 toolbar: {
                     hidden: true
@@ -89,6 +82,13 @@ export default {
         }
     },
     methods: {
+        afterValidation () {
+            /*
+				Start downloading taxonomy datas (levels and topics)
+			*/
+            this.$store.dispatch('taxonomy/bindTaxonomy');
+            this.$store.commit('auth/userValidation', true);
+        },
         redirect () {
             this.$router.replace({
                 path: this.$route.query.go || '/'
@@ -106,8 +106,7 @@ export default {
                     */
                     if (validAccount == true) {
                         this.redirect();
-                        ///this.$store.dispatch('initApp');
-                        this.$store.commit('auth/userValidation', true);
+                        this.afterValidation();
                     }
                     else {
                         this.$store.commit('auth/userValidation', false);
@@ -137,58 +136,58 @@ export default {
 
 <style lang="scss" scoped>
 #loginPage {
-  display: flex;
-  position: relative;
-  min-height: 100vh;
-  width: 100%;
-  #loginPage--background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-position: center center;
-    background-size: cover;
-  }
-  .main {
-    align-self: center;
-    width: 100%;
-  }
-
-  #loginCard {
-    margin: 0 auto;
-    width: 100%;
-    max-width: 400px;
-    max-height: 400px;
-    width: 100vw;
-    height: 100vw;
-    text-align: center;
-    border-radius: 100%;
-    padding: 20px;
-
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    #loginPage--background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-position: center center;
+        background-size: cover;
+    }
+    .main {
+        align-self: center;
+        width: 100%;
+    }
 
-    background: rgba(255, 255, 255, 0.75);
-    .logo {
-      margin: 0;
-      img {
-        width: 120px;
-        height: 120px;
-        border-radius: 100%;
-        display: block;
+    #loginCard {
         margin: 0 auto;
-      }
-    }
+        width: 100%;
+        max-width: 400px;
+        max-height: 400px;
+        width: 100vw;
+        height: 100vw;
+        text-align: center;
+        border-radius: 100%;
+        padding: 20px;
 
-    .loginCard--content {
-      padding-top: 30px;
-      h1 {
-        margin-bottom: 15px;
-      }
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        background: rgba(255, 255, 255, 0.75);
+        .logo {
+            margin: 0;
+            img {
+                width: 120px;
+                height: 120px;
+                border-radius: 100%;
+                display: block;
+                margin: 0 auto;
+            }
+        }
+
+        .loginCard--content {
+            padding-top: 30px;
+            h1 {
+                margin-bottom: 15px;
+            }
+        }
     }
-  }
 }
 </style>
