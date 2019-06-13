@@ -185,7 +185,7 @@ export default {
     methods: {
         saveConfig () {
             this.loading = true;
-            CONFIG_DOC.update(this.newConfig).then(() => {
+            CONFIG_DOC.set(this.newConfig, { merge: true }).then(() => {
                 this.loading = false;
             })
         }
