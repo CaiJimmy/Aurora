@@ -43,7 +43,8 @@
 
             <v-spacer></v-spacer>
 
-            <v-menu v-if="auth.loggedIn" v-model="menu.user"
+            <v-menu v-if="auth.loggedIn"
+                v-model="menu.user"
                 left
                 :close-on-content-click="true"
                 bottom>
@@ -93,6 +94,8 @@
 </template>
 <script>
 import signOut from '@/utils/signOut';
+import userUtil from '@/utils/user';
+
 export default {
     name: "AppBar",
     data () {
@@ -118,19 +121,17 @@ export default {
     },
     computed: {
         userRole () {
-            if (this.currentUser.isAdmin) {
-                return 'Admin'
+            if (userUtil(this.currentUser).isAdmin()) {
+                return 'Administrador'
             }
-            else {
+            else if (userUtil(this.currentUser).isStudent()) {
                 return 'Alumno'
             }
         },
         menuItems () {
             return this.menu.items.filter(item => {
-                if (item.admin) {
-                    if (this.currentUser.isAdmin) {
-                        return item;
-                    }
+                if (item.admin && userUtil(this.currentUser).isAdmin()) {
+                    return item;
                 }
                 else {
                     return item;

@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import userUtil from '@/utils/user';
+
 export default {
     name: "ProfileHeader",
     props: {
@@ -48,13 +50,13 @@ export default {
             }
         },
         userRole () {
-            if (this.user.isAdmin) {
-                return 'Admin'
+            if (userUtil(this.currentUser).isAdmin()) {
+                return 'Administrador'
             }
-            else {
+            else if (userUtil(this.currentUser).isStudent()) {
                 return 'Alumno'
             }
-        },
+        }
     }
 }
 </script>

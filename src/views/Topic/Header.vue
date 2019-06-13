@@ -12,7 +12,7 @@
             <h2 class="font-weight-thin">{{ topic.description }}</h2>
         </div>
 
-        <template v-if="currentUser.isAdmin">
+        <template v-if="isAdmin">
             <template v-if="$route.path == `/t/${topic.id}`">
                 <v-btn class="settingsButton"
                     text
@@ -32,10 +32,17 @@
     </header>
 </template>
 <script>
+import userUtil from '@/utils/user';
+
 export default {
     name: "TopicHeader",
     props: {
         topic: Object
+    },
+    computed: {
+        isAdmin () {
+            return userUtil(this.currentUser).isAdmin();
+        }
     }
 }
 </script>

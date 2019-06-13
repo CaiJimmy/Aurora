@@ -51,7 +51,7 @@
                         </v-flex>
                     </v-layout>
 
-                    <v-layout v-if="mode == 'edit' && currentUser.isAdmin">
+                    <v-layout v-if="mode == 'edit' && isAdmin">
                         <v-flex xs12>
                             <v-select v-model="form.status"
                                 :items="statusOptions"
@@ -125,6 +125,7 @@ import { Firestore, firestore } from '@/firebase/firestore'
 
 import getUserData from '@/utils/getUserData/'
 import { filterTaxonomy, getTopicsByCategory } from '@/utils/taxonomy/'
+import userUtil from '@/utils/user';
 
 export default {
     name: "QuestionForm",
@@ -159,6 +160,9 @@ export default {
         this.initialize()
     },
     computed: {
+        isAdmin(){
+            return userUtil(this.currentUser).isAdmin();
+        },
         topicList () {
             let result = [],
                 categories = [],
@@ -192,7 +196,7 @@ export default {
             */
 
             const questionRemovable = this.config.topic.questionRemovable,
-                isAdmin = this.currentUser.isAdmin;
+                isAdmin = this.isAdmin;
 
             return (isAdmin) || (questionRemovable && this.questionData.author === this.currentUser.email);
         }

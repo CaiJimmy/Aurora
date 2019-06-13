@@ -2,6 +2,7 @@ import { Firestore } from '@/firebase/firestore';
 import Vue from 'vue';
 import Console from '@/utils/Console';
 import { firestoreAction } from 'vuexfire'
+import userUtil from '@/utils/user';
 
 const topicPageModule = (topicId, topicData) => {
     return {
@@ -204,7 +205,7 @@ const topicPageModule = (topicId, topicData) => {
                 /// This action should be only called once, after module registration
 
                 const counter = state.topicData.counter,
-                    isAdmin = rootGetters['auth/currentUser'];
+                    isAdmin = userUtil(rootGetters['auth/currentUser']).isAdmin();
 
                 if (isAdmin) {
                     /* 

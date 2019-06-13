@@ -1,11 +1,13 @@
 <template>
     <div>
         <QuestionFilter :questions="questions" />
+        <UserManager :user="user" />
     </div>
 </template>
 
 <script>
 import QuestionFilter from './Widgets/Filter.vue';
+import UserManager from './Widgets/UserManager.vue';
 
 export default {
     name: "Profile-Sidebar",
@@ -14,7 +16,8 @@ export default {
         questions: Array
     },
     components: {
-        QuestionFilter
+        QuestionFilter,
+        UserManager
     }
 }
 </script>

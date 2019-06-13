@@ -1,6 +1,6 @@
 <template>
     <v-container fill-height
-        v-if="auth.firebaseReady && !currentUser.isAdmin">
+        v-if="auth.firebaseReady && !isAdmin">
         <v-layout row
             wrap
             align-center
@@ -28,7 +28,10 @@
         </v-layout>
     </v-container>
 </template>
+
 <script>
+import userUtil from '@/utils/user';
+
 export default {
     name: "Restricted",
     metaInfo: {
@@ -43,13 +46,18 @@ export default {
         this.redirect();
     },
     watch: {
-        "currentUser.isAdmin" () {
+        isAdmin () {
             this.redirect()
+        }
+    },
+    computed: {
+        isAdmin () {
+            return userUtil(this.currentUser).isAdmin();
         }
     },
     methods: {
         redirect () {
-            if (this.currentUser.isAdmin) {
+            if (this.isAdmin) {
                 /*
                     User is an admin, redirected to this page due because Firebase's data was not loaded yet.
                 */

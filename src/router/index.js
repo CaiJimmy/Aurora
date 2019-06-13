@@ -10,6 +10,8 @@ import Meta from 'vue-meta';
 Vue.use(Router)
 Vue.use(Meta);
 
+import userUtil from '@/utils/user';
+
 function loadView (view) {
     return () =>
         import( /* webpackChunkName: "view-[request]" */ `@/views/${view}.vue`)
@@ -99,7 +101,7 @@ router.beforeEach((to, from, next) => {
             replace: true
         })
     } else {
-        if (to.matched.some(m => m.meta.isAdmin) && !store.getters["auth/currentUser"].isAdmin) {
+        if (to.matched.some(m => m.meta.isAdmin) && !userUtil(store.getters["auth/currentUser"]).isAdmin()) {
             next({
                 path: '/restricted',
                 query: {

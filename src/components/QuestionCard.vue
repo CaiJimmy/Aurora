@@ -110,6 +110,8 @@ import VueTimeago from 'vue-timeago'
 import getUserData from '@/utils/getUserData/'
 import { getTopicById } from '@/utils/taxonomy/'
 
+import userUtil from '@/utils/user';
+
 Vue.use(VueTimeago, {
     name: 'Timeago'
 })
@@ -148,7 +150,7 @@ export default {
         },
         shouldDisplayAuthorData () {
             const displayAuthorData = this.config.topic.displayAuthorData,
-                isAdmin = this.currentUser.isAdmin;
+                isAdmin = userUtil(this.currentUser).isAdmin();
 
             if (!isAdmin && !displayAuthorData) {
                 /*
@@ -169,7 +171,7 @@ export default {
             }
 
             const questionEditable = this.config.topic.questionEditable,
-                isAdmin = this.currentUser.isAdmin;
+                isAdmin = userUtil(this.currentUser).isAdmin();
 
             if (!isAdmin) {
                 /*
