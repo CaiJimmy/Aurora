@@ -45,7 +45,7 @@
                             :questions="questions" />
                     </v-flex>
 
-                    <v-flex xs12>
+                    <v-flex xs12 md9>
                         <QuestionList :questions="questions"
                             :user="user"
                             :loading="loading.questions" />
