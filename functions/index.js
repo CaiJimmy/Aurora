@@ -164,21 +164,21 @@ app.get('/', async (req, res) => {
         if (item.data().status === 0) {
             hiddenCount++;
         }
+    })
 
-        await topicRef.set({
-            counter: {
-                total: totalCount,
-                hidden: hiddenCount
-            }
-        }, {
-                merge: true
-            });
-
-        res.json({
+    await topicRef.set({
+        counter: {
             total: totalCount,
             hidden: hiddenCount
+        }
+    }, {
+            merge: true
         });
-    })
+
+    return res.json({
+        total: totalCount,
+        hidden: hiddenCount
+    });
 });
 
 exports.reCount = functions.https.onRequest(app);
