@@ -139,6 +139,9 @@ export default {
         }
     },
     computed: {
+        isTopicArchived(){
+            return this.topicData.status == 'archived';
+        },
         topicData () {
             const topicId = this.question.topic;
             return getTopicById(topicId, this.$store.state.taxonomy.taxonomies);
@@ -176,6 +179,11 @@ export default {
 
             const questionEditable = this.config.topic.questionEditable,
                 isAdmin = userUtil(this.currentUser).isAdmin();
+
+            if (this.isTopicArchived) {
+                /// If topic is archived, don't display edit option
+                return false;
+            }
 
             if (!isAdmin) {
                 /*
