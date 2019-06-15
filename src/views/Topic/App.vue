@@ -13,7 +13,7 @@
             </v-flex>
         </v-layout>
 
-        <tempalte v-else>
+        <template v-else>
             <v-banner v-if="isTopicArchived"
                 two-line
                 :elevation="1"
@@ -35,7 +35,7 @@
                 <router-view :topic="topic"
                     :topicId="topicId" />
             </transition-page>
-        </tempalte>
+        </template>
     </v-container>
 </template>
 <script>
