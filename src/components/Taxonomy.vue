@@ -20,7 +20,8 @@
                         v-for="topic in getTopicsByCategory(category.id, taxonomies)"
                         :key="topic.id">
                         <router-link :to="`/t/${topic.id}`"
-                            class="taxonomyList--item elevation-1">
+                            class="taxonomyList--item elevation-1"
+                            v-bind:class="topicClass(topic)">
                             <div class="taxonomyList--item-background"
                                 v-if="topic.config.background.url"
                                 :style="{ background: `url(${topic.config.background.url})`}"></div>
@@ -51,7 +52,14 @@ export default {
     },
     methods: {
         filterTaxonomy,
-        getTopicsByCategory
+        getTopicsByCategory,
+        topicClass (topic) {
+            if (topic.status == 'archived') {
+                return {
+                    archived: true
+                }
+            }
+        }
     },
     computed: {
         taxonomies () {
@@ -98,6 +106,33 @@ export default {
         .taxonomyList--item-color {
             opacity: 0.7;
         }
+    }
+
+    &.archived:before {
+        content: "";
+        background-image: -webkit-repeating-linear-gradient(
+            -135deg,
+            transparent,
+            transparent 0.5625rem,
+            rgba(255, 255, 255, 0.3) 0.5625rem,
+            rgba(255, 255, 255, 0.3) 0.625rem
+        );
+        background-image: repeating-linear-gradient(
+            -135deg,
+            transparent,
+            transparent 0.5625rem,
+            rgba(255, 255, 255, 0.3) 0.5625rem,
+            rgba(255, 255, 255, 0.3) 0.625rem
+        );
+        background-size: 0.88388348rem 0.88388348rem;
+        bottom: -50%;
+        left: -50%;
+        pointer-events: none;
+        position: absolute;
+        right: -50%;
+        top: -50%;
+        transform: rotateZ(15deg);
+        z-index: 1;
     }
 
     .taxonomyList--item-background,
