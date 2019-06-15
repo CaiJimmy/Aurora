@@ -13,10 +13,29 @@
             </v-flex>
         </v-layout>
 
-        <transition-page v-else>
-            <router-view :topic="topic"
-                :topicId="topicId" />
-        </transition-page>
+        <tempalte v-else>
+            <v-banner v-if="isTopicArchived"
+                two-line
+                :elevation="1"
+                sticky
+                class="archivedBanner">
+                <v-avatar slot="icon"
+                    color="primary"
+                    size="40">
+                    <v-icon icon="mdi-lock"
+                        color="white">
+                        mdi-lock
+                    </v-icon>
+                </v-avatar>
+
+                El tema está archivado. No se puede añadir ni editar preguntas.
+            </v-banner>
+
+            <transition-page>
+                <router-view :topic="topic"
+                    :topicId="topicId" />
+            </transition-page>
+        </tempalte>
     </v-container>
 </template>
 <script>
@@ -64,6 +83,9 @@ export default {
         }
     },
     computed: {
+        isTopicArchived () {
+            return this.topic.status == 'archived';
+        },
         topic () {
             return getTopicById(this.topicId, this.$store.state.taxonomy.taxonomies)
         }
@@ -92,3 +114,9 @@ export default {
     }
 }
 </script>
+<style lang="scss" scoped>
+.archivedBanner {
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+</style>

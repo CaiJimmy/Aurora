@@ -124,7 +124,11 @@ export default {
         question: Object,
         editCallback: Function,
         profilePage: Boolean,
-        profileLink: Boolean
+        profileLink: Boolean,
+        editable: {
+            type: Boolean,
+            default: true
+        }
     },
     components: {
         QuestionForm
@@ -166,7 +170,7 @@ export default {
             }
         },
         shouldDisplayActions () {
-            if (!this.editCallback) {
+            if (!this.editCallback || !this.editable) {
                 return;
             }
 

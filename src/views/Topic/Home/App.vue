@@ -7,8 +7,10 @@
             <Sidebar :topic="topic" />
         </v-flex>
 
-        <v-flex xs12 md9>
-            <FormWrapper :topicId="topicId" />
+        <v-flex xs12
+            md9>
+            <FormWrapper :topicId="topicId"
+                v-if="!isTopicArchived" />
             <QuestionList :topic="topic"
                 :topicId="topicId" />
         </v-flex>
@@ -32,6 +34,9 @@ export default {
         FormWrapper
     },
     computed: {
+        isTopicArchived () {
+            return this.topic.status == 'archived';
+        },
         binding () {
             const binding = {}
 

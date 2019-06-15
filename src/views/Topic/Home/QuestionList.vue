@@ -39,7 +39,8 @@
                     :key="question.id"
                     :question="question"
                     :editCallback="handleQuestionChange"
-                    :profileLink="true" />
+                    :profileLink="true"
+                    :editable="!isTopicArchived" />
 
                 <div class="elevation-1">
                     <v-banner>
@@ -93,6 +94,9 @@ export default {
         this.currentPage = this.paging.currentPage;
     },
     computed: {
+        isTopicArchived () {
+            return this.topic.status == 'archived';
+        },
         paging () {
             /*
                 Merge topicStore.paging with config.topic.question_per_page
