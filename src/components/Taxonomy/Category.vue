@@ -11,14 +11,17 @@
             </v-flex>
 
             <v-btn text
+                fab
+                color="primary"
                 :loading="loading"
                 v-on:click="editCategoryName()">
-                Guardar
+                <v-icon>save</v-icon>
             </v-btn>
             <v-btn text
+                fab
                 v-on:click="editingName = false"
                 :disabled="loading">
-                Cancelar
+                <v-icon>close</v-icon>
             </v-btn>
         </v-layout>
 
