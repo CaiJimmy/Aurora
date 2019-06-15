@@ -131,7 +131,7 @@ export default {
 
             let resizedImage = await resizeImage(imageFile, this.config.topic.headerImageMaxWidth),
                 color = await getColorFromImage(URL.createObjectURL(resizedImage)),
-                imageURL = await uploadFile(resizedImage, `${this.topicId}/${imageFile.name}`)
+                imageURL = await uploadFile(resizedImage, `coverImage/${this.topicId}`)
 
             this.newConfig.config.background = {
                 color: color,
