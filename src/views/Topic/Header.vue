@@ -8,6 +8,7 @@
             v-if="topic.config.background.url"
             :style="{ background: `linear-gradient(0deg, ${topic.config.background.color.Vibrant} 0%, ${topic.config.background.color.Muted} 100%)`}"></div>
         <div class="topicHeader--meta">
+            <span class="overline mb-3">{{ categoryName }}</span>
             <h1 class="font-weight-lighter">{{ topic.name }}</h1>
             <h2 class="font-weight-thin">{{ topic.description }}</h2>
         </div>
@@ -33,6 +34,7 @@
 </template>
 <script>
 import userUtil from '@/utils/user';
+import { getCategoryById } from '@/utils/taxonomy';
 
 export default {
     name: "TopicHeader",
@@ -42,6 +44,9 @@ export default {
     computed: {
         isAdmin () {
             return userUtil(this.currentUser).isAdmin();
+        },
+        categoryName () {
+            return getCategoryById(this.topic.parent, this.$store.state.taxonomy.taxonomies).name;
         }
     }
 }
