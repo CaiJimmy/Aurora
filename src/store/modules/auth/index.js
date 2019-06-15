@@ -49,7 +49,9 @@ const authStore = {
         bindCurrentUser: firestoreAction(({
             bindFirestoreRef
         }, firebaseCurrentUser) => {
-            return bindFirestoreRef('cloudCurrentUser', USER_COLLECTION.doc(firebaseCurrentUser.email), { reset: () => new Object() })
+            return bindFirestoreRef('cloudCurrentUser', USER_COLLECTION.doc(firebaseCurrentUser.email), { reset: () => new Object() }).catch(e => {
+                /// Catch error, in case user hasn't got a valid account, "Missing or insufficient permissions." error will pop out.
+            })
         }),
         unbindCurrentUser: firestoreAction(({
             unbindFirestoreRef
