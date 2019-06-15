@@ -1,8 +1,8 @@
 <template>
     <div>
-        <QuestionFilter :questions="questions" />
         <UserManager :user="user"
             v-if="isAdmin" />
+        <QuestionFilter :questions="questions" />
     </div>
 </template>
 
