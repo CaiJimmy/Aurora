@@ -17,7 +17,12 @@
                             </v-list-item-avatar>
 
                             <v-list-item-content>
-                                <v-list-item-title>{{ topicData.name }}</v-list-item-title>
+                                <v-list-item-title>
+                                    {{ topicData.name }}
+                                    <strong v-if="isTopicArchived">
+                                        (Archivado)
+                                    </strong>
+                                </v-list-item-title>
 
                                 <v-list-item-subtitle>
                                     <v-tooltip bottom>
