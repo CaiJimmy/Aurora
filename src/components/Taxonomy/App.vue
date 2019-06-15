@@ -4,7 +4,8 @@
             :key="category.id">
             <TaxonomyCategory :category="category"
                 :showEmptyCategories="showEmptyCategories"
-                :taxonomies="taxonomies" />
+                :taxonomies="taxonomies"
+                :canEditCategoryName="canEditCategoryName" />
         </div>
     </section>
 </template>
@@ -17,7 +18,11 @@ export default {
     name: 'TaxonomyList',
     props: {
         showEmptyCategories: Boolean,
-        topicStatus: String
+        topicStatus: String,
+        canEditCategoryName: {
+            type: Boolean,
+            default: false
+        }
     },
     components: {
         TaxonomyCategory

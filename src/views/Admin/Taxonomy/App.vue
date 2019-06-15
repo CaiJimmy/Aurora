@@ -36,7 +36,8 @@
             </v-card-actions>
         </v-card>
 
-        <taxonomy :showEmptyCategories="true">
+        <taxonomy :showEmptyCategories="true"
+            :canEditCategoryName="true">
             <template v-slot:emptyCategory>
                 <v-alert type="info">
                     No hay ningún tema debajo de esta categoria

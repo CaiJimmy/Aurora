@@ -43,5 +43,6 @@ export {
     getTopicsByCategory,
     addTaxonomy,
     getTopicById,
-    getCategoryById
+    getCategoryById,
+    TAXONOMY_COLLECTION
 }
