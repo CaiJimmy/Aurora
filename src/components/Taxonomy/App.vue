@@ -4,7 +4,13 @@
             :key="category.id">
             <template v-if="getTopicsByCategory(category.id, taxonomies).length || showEmptyCategories">
 
-                <h3 class="taxonomyList--name font-weight-light">{{ category.name }}</h3>
+                <h3 class="taxonomyList--name font-weight-light">
+                    {{ category.name }}
+
+                    <v-btn flat fab>
+                        <v-icon>edit</v-icon>
+                    </v-btn>
+                </h3>
 
                 <v-layout class="taxonomyList--items"
                     row

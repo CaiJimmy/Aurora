@@ -4,7 +4,7 @@
     </v-container>
 </template>
 <script>
-import taxonomy from '@/components/Taxonomy.vue';
+import taxonomy from '@/components/Taxonomy/App.vue';
 
 export default {
     name: "Archived",

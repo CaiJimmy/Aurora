@@ -47,7 +47,7 @@
     </div>
 </template>
 <script>
-import taxonomy from '@/components/Taxonomy.vue';
+import taxonomy from '@/components/Taxonomy/App.vue';
 import { filterTaxonomy, addTaxonomy } from '@/utils/taxonomy';
 import getColorFromImage from '@/utils/getColorFromImage';
 import uploadFile from '@/utils/uploadFile';
