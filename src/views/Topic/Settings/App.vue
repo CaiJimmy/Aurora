@@ -28,6 +28,12 @@
                 </v-flex>
 
                 <v-flex>
+                    <v-select v-model="newConfig.status"
+                        :items="statusOptions"
+                        label="Estado del tema"></v-select>
+                </v-flex>
+
+                <v-flex>
                     <v-subheader class="pl-0">Número de preguntas que se tiene que publicar cada usuario</v-subheader>
                     <v-slider v-model="newConfig.config.requiredQuestions"
                         thumb-label
@@ -111,6 +117,9 @@ export default {
     computed: {
         taxonomies () {
             return this.$store.state.taxonomy.taxonomies;
+        },
+        statusOptions () {
+            return this.config.topic.statusOptions;
         }
     },
     methods: {

@@ -34,6 +34,11 @@ var router = new Router({
             auth: true
         },
         {
+            path: '/archived',
+            component: loadView('Archived/App'),
+            auth: true
+        },
+        {
             path: '/login',
             component: loadView('Login/App'),
         },

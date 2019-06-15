@@ -1,18 +1,18 @@
 <template>
     <v-container>
-        <taxonomy :topicStatus="'active'"></taxonomy>
+        <taxonomy :topicStatus="'archived'"></taxonomy>
     </v-container>
 </template>
 <script>
 import taxonomy from '@/components/Taxonomy.vue';
 
 export default {
-    name: 'Home',
-    metaInfo: {
-        title: 'Inicio'
-    },
+    name: "Archived",
     components: {
         taxonomy
     }
 }
 </script>
+
+<style>
+</style>

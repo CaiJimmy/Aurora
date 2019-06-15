@@ -74,7 +74,8 @@ const getDefaultForm = () => {
             total: 0,
             hidden: 0
         },
-        loading: false
+        loading: false,
+        status: null
     }
 }
 
@@ -150,6 +151,8 @@ export default {
                             url: uploadImageURL,
                             color: randomPic.color
                         };
+
+                        this.form.status = this.config.topic.defaultStatus;
                     }
 
                     addTaxonomy(this.form.type, this.form).then(() => {

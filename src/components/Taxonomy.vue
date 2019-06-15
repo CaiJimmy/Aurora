@@ -46,7 +46,8 @@ import { filterTaxonomy, getTopicsByCategory } from '@/utils/taxonomy';
 export default {
     name: 'TaxonomyList',
     props: {
-        showEmptyCategories: Boolean
+        showEmptyCategories: Boolean,
+        topicStatus: String
     },
     methods: {
         filterTaxonomy,
@@ -54,7 +55,15 @@ export default {
     },
     computed: {
         taxonomies () {
-            return this.$store.state.taxonomy.taxonomies;
+            const taxonomies = this.$store.state.taxonomy.taxonomies;
+
+            if (!this.topicStatus) {
+                return taxonomies;
+            }
+
+            return taxonomies.filter((item) => {
+                return (item.status === this.topicStatus) || item.type === 'category';
+            });
         }
     }
 }

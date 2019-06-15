@@ -27,7 +27,18 @@ const defaultConfig = {
         questionEditable: true,  /* Question editable by author after being published */
         questionRemovable: false, /* Question removable by author after being published */
         defaultHeaderImage: 'https://source.unsplash.com/1000x1000/?technology',
-        headerImageMaxWidth: 1000
+        headerImageMaxWidth: 1000,
+        statusOptions: [
+            {
+                text: 'Activo',
+                value: 'active'
+            },
+            {
+                text: 'Archivado',
+                value: 'archived'
+            }
+        ],
+        defaultStatus: 'active'
     }
 }
 

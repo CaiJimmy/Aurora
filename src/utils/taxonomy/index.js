@@ -23,7 +23,7 @@ function getCategoryById (categoryId, taxonomies) {
 async function addTaxonomy (type, data) {
     let allowedFields = ['name', 'type', 'description']
     if (type == 'topic') {
-        allowedFields.push('parent', 'config', 'counter')
+        allowedFields.push('parent', 'config', 'counter', 'status')
     }
 
     let filteredData = {};
