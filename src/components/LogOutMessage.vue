@@ -26,14 +26,14 @@ export default {
         }
     },
     watch: {
-        "auth.loggedIn" (newVal, oldVal) {
+        auth (newVal, oldVal) {
             /**
              *  If oldVal.loggedIn is true, means that user had logged in
              *  And if newVal.loggedIn is false, user has logged out. 
              *  Then display the banner, asking user to manually refresh and re-login
             */
 
-            if (oldVal && !newVal) {
+            if (oldVal.loggedIn && !newVal.loggedIn && oldVal.validUser) {
                 this.showDialog = true;
             }
         }
