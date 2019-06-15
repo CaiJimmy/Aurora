@@ -144,7 +144,7 @@ export default {
         }
     },
     computed: {
-        isTopicArchived(){
+        isTopicArchived () {
             return this.topicData.status == 'archived';
         },
         topicData () {
@@ -218,5 +218,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.v-list-item {
+    user-select: text !important;
+}
 </style>
