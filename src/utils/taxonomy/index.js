@@ -20,7 +20,7 @@ function getCategoryById (categoryId, taxonomies) {
     return filterTaxonomy('category', taxonomies).filter(category => category.id === categoryId)[0];
 }
 
-async function addTaxonomy (type, data) {
+async function addTaxonomy (type, data, taxonomyId) {
     let allowedFields = ['name', 'type', 'description']
     if (type == 'topic') {
         allowedFields.push('parent', 'config', 'counter', 'status')
@@ -35,8 +35,13 @@ async function addTaxonomy (type, data) {
             filteredData[key] = value;
         }
     }
-
-    return TAXONOMY_COLLECTION.add(filteredData);
+    
+    if(taxonomyId){
+        return TAXONOMY_COLLECTION.doc(taxonomyId).set(filteredData)
+    }
+    else{
+        return TAXONOMY_COLLECTION.add(filteredData);
+    }
 }
 export {
     filterTaxonomy,

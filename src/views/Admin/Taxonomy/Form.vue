@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { filterTaxonomy, addTaxonomy } from '@/utils/taxonomy';
+import { filterTaxonomy, addTaxonomy, TAXONOMY_COLLECTION } from '@/utils/taxonomy';
 import getColorFromImage from '@/utils/getColorFromImage';
 import uploadFile from '@/utils/uploadFile';
 
@@ -102,13 +102,6 @@ export default {
 
     methods: {
         filterTaxonomy,
-        randomID () {
-            var text = "";
-            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            for (var i = 0; i < 8; i++)
-                text += possible.charAt(Math.floor(Math.random() * possible.length));
-            return text;
-        },
         getRandomPic: async function () {
             return fetch(this.config.topic.defaultHeaderImage).then(async (response) => {   /// Fetch a random image from Unsplash, and add it to form
                 let imageFile = await fetch(response.url).then(res => {
@@ -122,29 +115,30 @@ export default {
             })
         },
         async addTaxonomy () {
-            this.$validator.validateAll().then(async result => {
-                if (result) {
-                    this.form.loading = true;
+            let validatorResult = await this.$validator.validateAll();
+            if (!validatorResult) return;
 
-                    if (this.form.type == 'topic') {
-                        const randomPic = await this.getRandomPic();
-                        /// By default, the image will be uploaded to /coverImage/ folder, because we don't have yet the topic id
-                        const uploadImageURL = await uploadFile(randomPic.file, `coverImage/${this.randomID()}`);
-                        this.form.config.background = {
-                            url: uploadImageURL,
-                            color: randomPic.color
-                        };
+            this.form.loading = true;
 
-                        this.form.status = this.config.topic.defaultStatus;
-                    }
+            const newTaxonomyId = TAXONOMY_COLLECTION.doc().id;
 
-                    addTaxonomy(this.form.type, this.form).then(() => {
-                        this.form.loading = false;
-                        this.form = getDefaultForm();
-                        this.$validator.reset();
-                    })
-                }
-            });
+            if (this.form.type == 'topic') {
+                const randomPic = await this.getRandomPic();
+                /// By default, the image will be uploaded to /coverImage/ folder, named with newTaxonomyId
+                const uploadImageURL = await uploadFile(randomPic.file, `coverImage/${newTaxonomyId}`);
+                this.form.config.background = {
+                    url: uploadImageURL,
+                    color: randomPic.color
+                };
+
+                this.form.status = this.config.topic.defaultStatus;
+            }
+
+            addTaxonomy(this.form.type, this.form, newTaxonomyId).then(() => {
+                this.form.loading = false;
+                this.form = getDefaultForm();
+                this.$validator.reset();
+            })
         }
     }
 }
