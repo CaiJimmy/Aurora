@@ -38,6 +38,9 @@
 </template>
 
 <script>
+import { Functions } from '@/firebase/functions';
+import Console from '@/utils/Console';
+
 export default {
     name: "TopicStat",
     props: {
@@ -68,12 +71,13 @@ export default {
     },
     methods: {
         reCount () {
-            /// TODO: Move to config
-            const VUE_APP_FIREBASE_FUNCTION_DOMAIN = process.env.VUE_APP_FIREBASE_FUNCTION_DOMAIN;
+            const recountFn = Functions.httpsCallable('reCount')
 
             this.reCounting = true;
-
-            fetch(`${VUE_APP_FIREBASE_FUNCTION_DOMAIN}/reCount/?topic=${this.topic.id}`).then(() => {
+            recountFn({ topic: this.topic.id }).then(() => {
+                this.reCounting = false;
+            }).catch((e) => {
+                Console.error(e);
                 this.reCounting = false;
             })
         }

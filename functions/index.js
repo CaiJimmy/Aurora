@@ -133,21 +133,18 @@ exports.questionChange = functions.firestore.document('questions/{questionID}').
     });
 
 /* HTTP Function to initialize/reset question counter manually */
-
-const express = require('express');
-const cors = require('cors')({
-    origin: true
-});
-const app = express();
-app.use(cors);
-
-app.get('/', async (req, res) => {
-    const topicID = req.query.topic,
+exports.reCount = functions.https.onCall(async (data, context) => {
+    const topicID = data.topic,
         topicRef = TAXONOMY_COLLECTION.doc(topicID);
 
     if (!topicID) {
-        res.send("Topic ID is required");
-        return;
+        throw new functions.https.HttpsError('no-topicId', 'Topic ID is required');
+    }
+
+    const topicData = await topicRef.get();
+
+    if (!topicData.exists) {
+        throw new functions.https.HttpsError('topicId-invalid', 'Topic does not exist');
     }
 
     const allQuestions = await QUESTION_COLLECTION.where('topic', '==', topicID).get();
@@ -175,10 +172,8 @@ app.get('/', async (req, res) => {
             merge: true
         });
 
-    return res.json({
+    return {
         total: totalCount,
         hidden: hiddenCount
-    });
+    }
 });
-
-exports.reCount = functions.https.onRequest(app);
