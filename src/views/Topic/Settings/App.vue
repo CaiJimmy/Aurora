@@ -68,6 +68,10 @@
             </v-layout>
         </v-container>
         <v-card-actions>
+            <v-btn text
+                color="error"
+                to="delete">Eliminar</v-btn>
+
             <v-spacer></v-spacer>
 
             <v-btn text

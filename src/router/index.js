@@ -86,6 +86,10 @@ var router = new Router({
                 {
                     path: 'settings',
                     component: loadView('Topic/Settings/App')
+                },
+                {
+                    path: 'delete',
+                    component: loadView('Topic/Delete/App')
                 }
             ]
         }

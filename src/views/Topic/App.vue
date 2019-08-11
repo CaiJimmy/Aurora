@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-container v-if="topic">
         <TopicHeader :topic="topic" />
 
         <v-layout v-if="loading"
@@ -51,6 +51,10 @@ export default {
         topicId: String
     },
     metaInfo () {
+        if (!this.topic) {
+            return 'Tema';
+        }
+
         return {
             title: this.topic.name || 'Tema'
         }
@@ -95,6 +99,11 @@ export default {
             /*
                 Add current topic config to Vuex config store
             */
+
+            if (!this.topic) {
+                return;
+            }
+
             let topicConfig = {
                 theme: {
                     primary: this.topic.config.background.color.Vibrant
