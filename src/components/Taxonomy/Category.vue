@@ -1,5 +1,5 @@
 <template >
-    <div v-if="getTopicsByCategory(category.id, taxonomies).length || showEmptyCategories">
+    <div v-if="!isEmpty || showEmptyCategories">
 
         <v-layout v-if="editingName"
             justify-center
@@ -17,12 +17,50 @@
                 v-on:click="editCategoryName()">
                 <v-icon>save</v-icon>
             </v-btn>
+
             <v-btn text
                 fab
                 v-on:click="editingName = false"
                 :disabled="loading">
                 <v-icon>close</v-icon>
             </v-btn>
+
+            <!-- Delete category dialog -->
+            <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                    <span v-on="on">
+                        <v-btn text
+                            fab
+                            color="error"
+                            :disabled="!isEmpty"
+                            @click.stop="deleteCategoryDialog = true">
+                            <v-icon>delete</v-icon>
+                        </v-btn>
+                    </span>
+                </template>
+                <span v-if="isEmpty">Eliminar la categoria</span>
+                <span v-else>No puedes eliminar la categoria porque no está vacío</span>
+            </v-tooltip>
+
+            <v-dialog v-model="deleteCategoryDialog"
+                persistent
+                max-width="290">
+                <v-card>
+                    <v-card-title class="headline">Confirmación</v-card-title>
+                    <v-card-text>
+                        Eliminar la categoria <strong>{{ categoryName }}</strong>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn text
+                            @click="deleteCategoryDialog = false">Cancelar</v-btn>
+                        <v-btn color="error"
+                            text
+                            @click="deleteCurrentCategory()">Eliminar</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+
         </v-layout>
 
         <h3 class="taxonomyList--name font-weight-light"
@@ -42,7 +80,7 @@
             wrap>
 
             <slot name="emptyCategory"
-                v-if="!getTopicsByCategory(category.id, taxonomies).length"></slot>
+                v-if="isEmpty"></slot>
 
             <v-flex xs6
                 md4
@@ -77,13 +115,18 @@ export default {
         canEditCategoryName: {
             type: Boolean,
             default: false
+        },
+        canDeleteEmptyCategory: {
+            type: Boolean,
+            default: false
         }
     },
     data () {
         return {
             editingName: false,
             categoryName: null,
-            loading: false
+            loading: false,
+            deleteCategoryDialog: false
         }
     },
     components: {
@@ -98,9 +141,20 @@ export default {
         },
         shouldDisplayEditButton () {
             return this.canEditCategoryName && this.isAdmin;
+        },
+        isEmpty () {
+            return getTopicsByCategory(this.category.id, this.taxonomies).length === 0;
         }
     },
     methods: {
+        deleteCurrentCategory () {
+            this.deleteCategoryDialog = false;
+
+            const categoryId = this.category.id,
+                categoryRef = TAXONOMY_COLLECTION.doc(categoryId);
+
+            categoryRef.delete();
+        },
         getTopicsByCategory,
         editCategoryName () {
             const categoryRef = TAXONOMY_COLLECTION.doc(this.category.id);

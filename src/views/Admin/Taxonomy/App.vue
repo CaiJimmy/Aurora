@@ -3,7 +3,8 @@
         <TaxonomyForm class="taxonomyForm" />
 
         <taxonomy :showEmptyCategories="true"
-            :canEditCategoryName="true">
+            :canEditCategoryName="true"
+            :canDeleteEmptyCategory="true">
             <template v-slot:emptyCategory>
                 <v-alert type="info">
                     No hay ningún tema debajo de esta categoria
