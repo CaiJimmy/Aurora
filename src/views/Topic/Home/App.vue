@@ -1,5 +1,5 @@
 <template>
-    <v-layout justify-space-between
+    <v-layout wrap
         v-bind="binding">
         <v-flex xs12
             md3
@@ -8,7 +8,8 @@
         </v-flex>
 
         <v-flex xs12
-            md9>
+            md9
+            :class="{'pl-5': $vuetify.breakpoint.mdAndUp}">
             <FormWrapper :topicId="topicId"
                 v-if="!isTopicArchived" />
             <QuestionList :topic="topic"
@@ -53,11 +54,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.row {
-    .sidebar {
-        margin-right: 20px;
-    }
-}
 .sidebar {
     margin-bottom: 20px;
 }

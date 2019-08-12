@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-layout align-center
+        <div align-center
             row
             class="questionFormWrapper elevation-1"
             v-if="!formExpanded"
@@ -14,7 +14,7 @@
                 ellipsis>
                 Añadir una pregunta...
             </v-flex>
-        </v-layout>
+        </div>
         <QuestionForm v-else
             :topicId="topicId"
             class="questionForm" />
@@ -45,6 +45,9 @@ export default {
     background: #fff;
     border-radius: 5px;
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
 }
 

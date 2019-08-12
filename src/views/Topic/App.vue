@@ -1,5 +1,5 @@
 <template>
-    <v-container v-if="topic">
+    <v-container v-if="topic" grid-list-md>
         <TopicHeader :topic="topic" />
 
         <v-layout v-if="loading"
