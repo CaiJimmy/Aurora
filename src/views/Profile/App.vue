@@ -1,5 +1,6 @@
 <template>
-    <v-container class="userProfile">
+    <v-container class="userProfile"
+        grid-list-md>
         <!-- Wait until user data is loaded -->
         <v-layout v-if="loading.user"
             align-content-center
@@ -33,7 +34,8 @@
             <div v-else>
 
                 <!-- Profile header start -->
-                <Header :user="user" />
+                <Header :user="user"
+                    class="mb-2" />
                 <!-- Profile header end -->
 
                 <v-layout justify-space-between
@@ -45,7 +47,9 @@
                             :questions="questions" />
                     </v-flex>
 
-                    <v-flex xs12 md9>
+                    <v-flex xs12
+                        md9
+                        :class="{'pl-5': $vuetify.breakpoint.mdAndUp}">
                         <QuestionList :questions="questions"
                             :user="user"
                             :loading="loading.questions" />
@@ -160,10 +164,3 @@ export default {
     }
 }
 </script>
-<style lang="scss" scoped>
-.row {
-    .sidebar {
-        margin-right: 20px;
-    }
-}
-</style>
