@@ -7,11 +7,14 @@
                 :taxonomies="taxonomies"
                 :canEditCategoryName="canEditCategoryName" />
         </div>
+
+        <slot name="emptyTaxonomy"
+            v-if="isEmpty"></slot>
     </section>
 </template>
 
 <script>
-import { filterTaxonomy } from '@/utils/taxonomy';
+import { filterTaxonomy, getTopicsByCategory } from '@/utils/taxonomy';
 import TaxonomyCategory from './Category.vue';
 
 export default {
@@ -31,6 +34,19 @@ export default {
         filterTaxonomy
     },
     computed: {
+        isEmpty () {
+            const categories = filterTaxonomy('category', this.taxonomies);
+            let isEmpty = true;
+
+            for (let category of categories) {
+                if(getTopicsByCategory(category.id, this.taxonomies).length !== 0){
+                    isEmpty = false;
+                    break;
+                }
+            }
+
+            return isEmpty;
+        },
         taxonomies () {
             const taxonomies = this.$store.state.taxonomy.taxonomies;
 

@@ -1,4 +1,4 @@
-<template >
+<template>
     <div v-if="!isEmpty || showEmptyCategories">
 
         <v-layout v-if="editingName"

@@ -110,6 +110,11 @@ export default {
                         link: "/"
                     },
                     {
+                        title: "Temas archivados",
+                        icon: "inbox",
+                        link: "/archived/"
+                    },
+                    {
                         title: "Panel de control",
                         icon: "settings",
                         admin: true,
@@ -133,7 +138,7 @@ export default {
                 if (item.admin && userUtil(this.currentUser).isAdmin()) {
                     return item;
                 }
-                else if(!item.admin){
+                else if (!item.admin) {
                     return item;
                 }
             })
