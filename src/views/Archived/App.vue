@@ -1,5 +1,5 @@
 <template>
-    <v-container fill-height>
+    <v-container>
         <taxonomy :topicStatus="'archived'">
             <template v-slot:emptyTaxonomy>
                 <div class="empty-state">
