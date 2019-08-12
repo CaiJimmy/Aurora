@@ -53,7 +53,22 @@ exports.questionChange = functions.firestore.document('questions/{questionID}').
                 wasHidden = true;
             }
 
-            const oldTopicData = await oldTopicRef.get().then(snap => snap.data());
+            const oldTopicData = await oldTopicRef.get().then(snap => {
+                if (snap.exists) {
+                    return snap.data()
+                }
+                else {
+                    return {
+                        deleted: true
+                    }
+                }
+            });
+
+            if (oldTopicData.deleted || oldTopicData.status === 'deleted') {
+                /// If the topic is being deleted / deleted (due to Cloud Functions' latency), do nothing.
+                console.log(`Question ID ${change.before.id} from topic ${oldTopic} is being deleted. Do nothing because topic is also deleted.`);
+                return false;
+            }
 
             return oldTopicRef.set({
                 counter: {
