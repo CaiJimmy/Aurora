@@ -26,14 +26,16 @@
                     :profilePage="true"
                     :editCallback="editCallback" />
 
-                <v-banner single-line>
-                    Mostrando {{ paginationInterval }} resultados de {{ filteredQuestions.length }}
-                    <template #actions>
+                <div class="elevation-1">
+                    <v-banner>
+                        Mostrando {{ paginationInterval }} resultados de {{ filteredQuestions.length }}
+                    </v-banner>
+                    <v-toolbar flat>
                         <v-pagination v-model="paging.currentPage"
                             :length="paginationLength"
-                            :total-visible="7"></v-pagination>
-                    </template>
-                </v-banner>
+                            :total-visible="6"></v-pagination>
+                    </v-toolbar>
+                </div>
             </template>
 
             <!-- If there's no questions, then display an alert -->
