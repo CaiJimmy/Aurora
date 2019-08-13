@@ -187,6 +187,9 @@ export default {
             this.loading = true;
             CONFIG_DOC.set(this.newConfig, { merge: true }).then(() => {
                 this.loading = false;
+                this.$store.commit('message/display', {
+                    content: 'Se ha guardado correctamente la configuración'
+                })
             })
         }
     }
