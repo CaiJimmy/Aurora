@@ -7,7 +7,8 @@
                     hide-overlay
                     class="elevation-1 sideNav">
                     <v-list>
-                        <v-list-item v-for="item in items"
+                        <v-list-item exact
+                            v-for="item in items"
                             :key="item.title"
                             :to="`/a/${item.id}`">
                             <v-list-item-action>
@@ -34,6 +35,11 @@ export default {
     data () {
         return {
             items: [
+                {
+                    id: '',
+                    title: "Inicio",
+                    icon: "home"
+                },
                 {
                     id: 'settings',
                     title: "Ajustes",
