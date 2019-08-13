@@ -1,6 +1,6 @@
 <template>
-    <v-container>
-        <v-layout fill-height>
+    <v-container fill-height>
+        <v-layout>
             <v-flex shrink>
                 <v-navigation-drawer :mini-variant="miniVariant"
                     permanent
