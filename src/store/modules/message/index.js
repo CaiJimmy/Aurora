@@ -4,7 +4,7 @@ import Vue from 'vue';
 const getDefaultState = () => {
     return {
         content: null,
-        timeout: 1000,
+        timeout: 5000,
         action: null
     }
 }
