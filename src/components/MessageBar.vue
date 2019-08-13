@@ -1,11 +1,11 @@
 <template>
     <v-snackbar v-model="snackbar"
         :timeout="timeout">
-        {{ content }}
-        <v-btn color="pink"
+        <span v-html="content"></span>
+        <v-btn color="primary"
             text
             @click="close()">
-            Cerrar
+            {{ buttonText }}
         </v-btn>
     </v-snackbar>
 </template>
@@ -19,7 +19,12 @@ export default {
             snackbar: false
         }
     },
-    computed: mapState('message', ['content', 'timeout', 'action']),
+    computed: {
+        ...mapState('message', ['content', 'timeout', 'action', 'actionText']),
+        buttonText () {
+            return this.actionText || 'Cerrar';
+        }
+    },
     created () {
         this.$store.subscribe(mutation => {
             if (mutation.type !== 'message/display') return;
