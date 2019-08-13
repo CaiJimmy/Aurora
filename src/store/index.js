@@ -8,6 +8,7 @@ import moduleQueue from './modules/queue';
 import moduleTheme from './modules/theme';
 import moduleUsers from './modules/users';
 import { moduleTaxonomy } from './modules/taxonomy';
+import moduleMessage from './modules/message';
 
 Vue.use(Vuex);
 
@@ -44,7 +45,8 @@ const store = new Vuex.Store({
         queue: moduleQueue,
         theme: moduleTheme,
         users: moduleUsers,
-        taxonomy: moduleTaxonomy
+        taxonomy: moduleTaxonomy,
+        message: moduleMessage
     }
 });
 
