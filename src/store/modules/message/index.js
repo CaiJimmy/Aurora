@@ -5,7 +5,8 @@ const getDefaultState = () => {
     return {
         content: null,
         timeout: 5000,
-        action: null
+        action: null,
+        actionText: null
     }
 }
 
