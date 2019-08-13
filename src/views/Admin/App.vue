@@ -24,14 +24,21 @@
             </v-flex>
 
             <v-flex>
-                <router-view />
+                <transition-page>
+                    <router-view />
+                </transition-page>
             </v-flex>
         </v-layout>
     </v-container>
 </template>
 <script>
+import TransitionPage from '@/transitions/TransitionPage.vue';
+
 export default {
     name: 'AdminPanel',
+    components: {
+        TransitionPage
+    },
     data () {
         return {
             items: [
