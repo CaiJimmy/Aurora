@@ -136,6 +136,22 @@ export default {
 
             addTaxonomy(this.form.type, this.form, newTaxonomyId).then(() => {
                 this.form.loading = false;
+
+                if (this.form.type == 'topic') {
+                    this.$store.commit('message/display', {
+                        content: `Se ha creado correctamente el tema <strong>${this.form.name}</strong>`,
+                        action: () => {
+                            this.$router.push(`/t/${newTaxonomyId}`)
+                        },
+                        actionText: 'Ir'
+                    });
+                }
+                else {
+                    this.$store.commit('message/display', {
+                        content: `Se ha creado correctamente la categoria <strong>${this.form.name}</strong>`,
+                    });
+                }
+
                 this.form = getDefaultForm();
                 this.$validator.reset();
             })
