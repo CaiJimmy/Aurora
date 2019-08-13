@@ -123,6 +123,9 @@ export default {
             }, 1000);
         },
         async deleteTopic () {
+            /// Save topic's name before being deleted
+            const topicName = String(this.topic.name);
+
             /// Change topic status to `deleted` in order to avoid Cloud Functions trying to update `counter`, which is unnecessary
             /// Still, Cloud Functions will be triggered, which will lead to a over-quota error. 
             /// The best practice would be to pause/stop the `counter` function while deleting a topic, but this is not yet possible due to Google Firebase's limitations.
@@ -182,6 +185,11 @@ export default {
 
             this.progressMessage = `Se ha eliminado el tema, redirigiendo a la página principal...`;
             this.deleteCompleted = true;
+
+            this.$store.commit('message/display', {
+                content: `Se ha eliminado el tema <strong>${topicName}</strong>`
+            });
+
             setTimeout(() => {
                 this.$router.replace('/')
             }, 2000)
