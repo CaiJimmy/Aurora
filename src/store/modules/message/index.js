@@ -1,5 +1,4 @@
 import merge from 'deepmerge';
-import Vue from 'vue';
 
 const getDefaultState = () => {
     return {
@@ -18,7 +17,7 @@ const message = {
             Object.assign(state, merge(state, payload));
         },
         reset (state) {
-            Vue.set(state, getDefaultState());
+            Object.assign(state, getDefaultState())
         }
     }
 };
