@@ -14,10 +14,7 @@ const message = {
     state: getDefaultState(),
     mutations: {
         display (state, payload) {
-            Object.assign(state, merge(state, payload));
-        },
-        reset (state) {
-            Object.assign(state, getDefaultState())
+            Object.assign(state, merge(getDefaultState(), payload));
         }
     }
 };
