@@ -38,8 +38,6 @@ export default {
             if (typeof this.action == 'function') {
                 this.action();
             }
-
-            this.$store.commit('message/reset');
         }
     }
 }
