@@ -150,7 +150,7 @@ export default {
             const userRef = Firestore.collection('users').doc(this.userEmail);
             this.$bind('user', userRef).then(user => {
                 this.loading.user = false;
-                if (user == {}) {
+                if (Object.entries(user).length === 0 && user.constructor === Object) {
                     this.notFound = true;
                     return;
                 }
