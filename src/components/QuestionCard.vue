@@ -12,7 +12,12 @@
                 <v-card-title v-if="shouldDisplayAuthorData || profilePage">
                     <v-list-item class="grow">
                         <template v-if="profilePage">
-                            <v-list-item-avatar color="grey darken-3">
+
+                            <v-list-item-icon v-if="topicData.status === 'deleted'">
+                                <v-icon>error</v-icon>
+                            </v-list-item-icon>
+
+                            <v-list-item-avatar v-else>
                                 <v-img :src="topicData.config.background.url"></v-img>
                             </v-list-item-avatar>
 
@@ -145,11 +150,21 @@ export default {
     },
     computed: {
         isTopicArchived () {
+            if (!this.topicData) return;
             return this.topicData.status == 'archived';
         },
         topicData () {
-            const topicId = this.question.topic;
-            return getTopicById(topicId, this.$store.state.taxonomy.taxonomies);
+            const topicId = this.question.topic,
+                topicData = getTopicById(topicId, this.$store.state.taxonomy.taxonomies);
+
+            if (!topicData) {
+                return {
+                    status: 'deleted',
+                    name: 'Tema eliminado'
+                }
+            }
+
+            return topicData;
         },
         cardStyle () {
             const style = {};
