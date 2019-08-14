@@ -126,10 +126,15 @@ export default {
     watch: {
         userEmail (userEmail) {
             if (userEmail) {
+                this.$unbind('user');
+                if (this.loading.questions === false) {
+                    this.$unbind('questions');
+                }
+
                 this.loading.user = true;
                 this.loading.questions = true;
                 this.notFound = false;
-                this.$unbind('user');
+
                 this.init();
             }
         }
@@ -148,7 +153,7 @@ export default {
         },
         init () {
             const userRef = Firestore.collection('users').doc(this.userEmail);
-            this.$bind('user', userRef).then(user => {
+            this.$bind('user', userRef, { reset: () => ({}) }).then(user => {
                 this.loading.user = false;
                 if (Object.entries(user).length === 0 && user.constructor === Object) {
                     this.notFound = true;
