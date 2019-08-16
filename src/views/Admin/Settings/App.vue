@@ -58,6 +58,24 @@
                                     </v-flex>
                                 </template>
 
+                                <template v-else-if="input.type == 'image'">
+                                    <v-flex :key="input.id">
+                                        <v-img :src="section.reference[input.id]"
+                                            max-height="300"
+                                            contain></v-img>
+                                        <v-text-field v-model="section.reference[input.id]"
+                                            :label="input.name"
+                                            append-icon="cloud_upload"
+                                            @click:append="$refs[input.id][0].click();"></v-text-field>
+
+                                        <input :ref="input.id"
+                                            type="file"
+                                            @change="inputUploadFile($event.target.files[0], section.reference, input.id);"
+                                            accept="image/*"
+                                            style="display:none;" />
+                                    </v-flex>
+                                </template>
+
                             </template>
                         </v-layout>
                     </v-container>
@@ -87,6 +105,7 @@
 </template>
 <script>
 import { CONFIG_DOC } from '@/store/modules/config'
+import uploadFile from '@/utils/uploadFile';
 
 export default {
     name: 'AdminSetting',
@@ -110,7 +129,7 @@ export default {
                             required: true
                         },
                         {
-                            type: "text",
+                            type: "image",
                             id: "logo",
                             name: "Logo de la página",
                             required: true
@@ -122,7 +141,7 @@ export default {
                     id: 'login',
                     inputs: [
                         {
-                            type: "text",
+                            type: "image",
                             id: "background",
                             name: "Fondo de inicio de sesión"
                         }
@@ -193,6 +212,21 @@ export default {
         }
     },
     methods: {
+        inputUploadFile (file, sectionReference, inputId) {
+            const randomFileName = Math.random().toString(36).substring(10);
+
+            uploadFile(file, `settings/${randomFileName}`).then(fileURL => {
+                this.$set(sectionReference, inputId, fileURL);
+
+                this.$store.commit('message/display', {
+                    content: 'Se ha subido el archivo correctamente.'
+                })
+            }).catch(() => {
+                this.$store.commit('message/display', {
+                    content: 'Se ha producido un error en subir archivo.'
+                })
+            })
+        },
         resetConfig () {
             CONFIG_DOC.set({}).then(() => {
                 this.loading = false;
