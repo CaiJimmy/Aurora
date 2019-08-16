@@ -67,6 +67,16 @@
         </v-tabs>
 
         <v-card-actions>
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                    <v-btn text
+                        v-on="on"
+                        color="warning"
+                        @click="resetConfig()">Resetear</v-btn>
+                </template>
+                <span>Resetear a la configuración original</span>
+            </v-tooltip>
+
             <v-spacer></v-spacer>
             <v-btn text
                 color="primary"
@@ -183,6 +193,17 @@ export default {
         }
     },
     methods: {
+        resetConfig () {
+            CONFIG_DOC.set({}).then(() => {
+                this.loading = false;
+                this.$store.commit('message/display', {
+                    content: 'Se ha reseteado a la configuración original'
+                });
+
+                /// Clone current site settings
+                this.newConfig = JSON.parse(JSON.stringify(this.config));
+            })
+        },
         saveConfig () {
             this.loading = true;
             CONFIG_DOC.set(this.newConfig, { merge: true }).then(() => {
