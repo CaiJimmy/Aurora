@@ -60,9 +60,10 @@
 
                                 <template v-else-if="input.type == 'image'">
                                     <v-flex :key="input.id">
-                                        <v-img :src="section.reference[input.id]"
-                                            max-height="300"
-                                            contain></v-img>
+                                        <img :src="section.reference[input.id]"
+                                            height="300px"
+                                            max-width="100%"
+                                            class="ma-2 elevation-2" />
                                         <v-text-field v-model="section.reference[input.id]"
                                             :label="input.name"
                                             append-icon="cloud_upload"
