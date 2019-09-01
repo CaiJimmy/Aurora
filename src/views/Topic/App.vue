@@ -1,5 +1,6 @@
 <template>
-    <v-container v-if="topic" grid-list-md>
+    <v-container v-if="topic"
+        grid-list-md>
         <TopicHeader :topic="topic" />
 
         <v-layout v-if="loading"
@@ -85,6 +86,8 @@ export default {
         else {
             this.loading = false;
         }
+
+        this.addTopicConfig();
     },
     computed: {
         isTopicArchived () {
@@ -96,6 +99,11 @@ export default {
     },
     watch: {
         "topic.config" () {
+            this.addTopicConfig();
+        }
+    },
+    methods: {
+        addTopicConfig () {
             /*
                 Add current topic config to Vuex config store
             */
