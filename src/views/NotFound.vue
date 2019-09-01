@@ -18,7 +18,7 @@
                     </v-card-text>
 
                     <v-card-actions>
-                        <v-btn flat
+                        <v-btn text
                             to="/"
                             :replace="true">Volver al inicio</v-btn>
                     </v-card-actions>
