@@ -72,7 +72,8 @@ export default {
     mounted () {
         if (!this.topic) {
             /// Topic does not exist
-            this.$router.replace('/404')
+            this.$router.replace('/404');
+            return;
         }
 
         if (!this.$store._modules.root._children[`topic-${this.topicId}`]) {
