@@ -71,6 +71,11 @@ var router = new Router({
                     path: 'user',
                     component: loadView('Admin/User/App'),
 
+                },
+                {
+                    path: 'export',
+                    component: loadView('Admin/Export/App'),
+
                 }
             ]
         },

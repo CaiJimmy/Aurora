@@ -64,8 +64,14 @@ export default {
                     title: "Usuarios",
                     description: "Buscar usuarios",
                     icon: "account_circle"
-                }],
-
+                },
+                {
+                    id: 'export',
+                    title: "Exportar",
+                    description: "Exportar datos",
+                    icon: "exit_to_app"
+                }
+            ],
             windowWidth: 0
         }
     },
