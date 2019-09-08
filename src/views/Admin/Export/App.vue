@@ -107,7 +107,6 @@ export default {
         },
         saveJSON(data, filename) {
             if (!data) {
-                console.error("No data");
                 return;
             }
             if (!filename)
