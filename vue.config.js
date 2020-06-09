@@ -8,5 +8,6 @@ module.exports = {
         // Enable CSS source maps.
         sourceMap: true
     },
-    runtimeCompiler: true
+    runtimeCompiler: true,
+    productionSourceMap: false
 }
